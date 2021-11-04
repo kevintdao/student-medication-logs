@@ -1,36 +1,4 @@
 Rails.application.routes.draw do
-  get 'forms/new'
-
-  get 'forms/create'
-
-  get 'events/new'
-
-  get 'events/create'
-
-  get 'districts/new'
-
-  get 'districts/create'
-
-  get 'nurses/new'
-
-  get 'nurses/create'
-
-  get 'admins/new'
-
-  get 'admins/create'
-
-  get 'parents/new'
-
-  get 'parents/create'
-
-  get 'students/new'
-
-  get 'students/create'
-
-  get 'users/new'
-
-  get 'users/create'
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   resources :users
