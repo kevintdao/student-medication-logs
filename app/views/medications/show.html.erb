@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Brand name:</strong>
+  <%= @medication.brand_name %>
+</p>
+
+<p>
+  <strong>Active ing:</strong>
+  <%= @medication.active_ing %>
+</p>
+
+<p>
+  <strong>Uses:</strong>
+  <%= @medication.uses %>
+</p>
+
+<p>
+  <strong>Method:</strong>
+  <%= @medication.method %>
+</p>
+
+<p>
+  <strong>Reactions:</strong>
+  <%= @medication.reactions %>
+</p>
+
+<p>
+  <strong>Side effects:</strong>
+  <%= @medication.side_effects %>
+</p>
+
+<p>
+  <strong>Array:</strong>
+  <%= @medication.array %>
+</p>
+
+<%= link_to 'Edit', edit_medication_path(@medication) %> |
+<%= link_to 'Back', medications_path %>

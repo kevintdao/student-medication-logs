@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :forms
+  resources :events
+  resources :inventories
+  resources :medications
+  resources :admins
+  resources :nurses
+  resources :students
+  resources :parents
+  resources :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   root "users#index"
