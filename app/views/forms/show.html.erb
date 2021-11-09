@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Nurse approved:</strong>
+  <%= @form.nurse_approved %>
+</p>
+
+<p>
+  <strong>Parent approved:</strong>
+  <%= @form.parent_approved %>
+</p>
+
+<p>
+  <strong>Complete boolean:</strong>
+  <%= @form.complete_boolean %>
+</p>
+
+<p>
+  <strong>Body:</strong>
+  <%= @form.body %>
+</p>
+
+<%= link_to 'Edit', edit_form_path(@form) %> |
+<%= link_to 'Back', forms_path %>
