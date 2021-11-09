@@ -5,7 +5,7 @@ class CreateMedications < ActiveRecord::Migration
       t.string :active_ing
       t.string :uses
       t.string :method
-      t.text :reactions
+      t.references :reactions
       t.string :side_effects
       t.string :array
 

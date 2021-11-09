@@ -49,7 +49,7 @@ ActiveRecord::Schema.define(version: 20211109023937) do
     t.string   "active_ing"
     t.string   "uses"
     t.string   "method"
-    t.text     "reactions"
+    t.integer  "reactions_id"
     t.string   "side_effects"
     t.string   "array"
     t.datetime "created_at",   null: false
@@ -62,30 +62,18 @@ ActiveRecord::Schema.define(version: 20211109023937) do
   end
 
   create_table "parents", force: :cascade do |t|
-    t.text     "students"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "students_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
   end
 
   create_table "students", force: :cascade do |t|
-    t.text     "meds"
-    t.text     "events"
+    t.integer  "medications_id"
+    t.integer  "events_id"
     t.string   "year"
-    t.text     "parents"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.string   "first_name"
-    t.string   "last_name"
-    t.string   "email"
-    t.string   "password_digest"
-    t.string   "role"
-    t.integer  "role_id"
-    t.string   "district_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer  "parents_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
 end
