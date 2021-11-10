@@ -1,4 +1,16 @@
 Rails.application.routes.draw do
+  get 'users/login'
+
+  get 'users/register'
+
+  get 'user/register'
+
+  get 'home/contact'
+
+  get 'home/medications'
+
+  get 'home/about'
+
   get 'home/index'
 
   resources :forms
