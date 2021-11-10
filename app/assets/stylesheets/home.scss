@@ -3,8 +3,12 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
 .main {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+#subTitle {
+  color: white;
 }
 
 .homeContainer {
@@ -15,7 +19,8 @@
 }
 
 .mainTitle {
-  margin-top: 60px;
+  background-image: url(asset_path('nurseMain.png'));
+  background-repeat: no-repeat;
 }
 
 .btn-secondary {
