@@ -9,5 +9,9 @@ class HomeController < ApplicationController
   end
 
   def contact
+    @message = params[:message]
+    ContactEmail.with(user: @message).send_message
+    flash[:message] = "Message successfully sent"
+
   end
 end
