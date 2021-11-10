@@ -1,3 +1,24 @@
 // Place all the styles related to the home controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.main {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.homeContainer {
+  background: #a9a9a9;
+  padding-top: 20px;
+  border-radius: 10px;
+  margin-top: 0px;
+}
+
+.mainTitle {
+  margin-top: 60px;
+}
+
+.btn-secondary {
+  background-color: #a9a9a9;
+  outline: #a9a9a9;
+}
