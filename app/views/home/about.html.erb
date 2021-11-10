@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Selt2021Proj02 Home Page</title>
+  <%= stylesheet_link_tag    'about', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag asset_path('favicon.ico') %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+</head>
+<body>
+<main role="main">
+  <div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row">
+      <div class="col-lg-4">
+        <%=image_tag asset_path('texts.jpg'), id: 'texts1', alt: "Person Texting", class: "rounded-circle" %>
+        <h2 align="center">Get texts when it's time for a medication</h2>
+        <p align="center">When it is time for a student to come to the nurses office to take a medication, they will receive a reminder so that they don't forget. Nurses have access to a list of all the days events so nobody misses important details.</p>
+      </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <%=image_tag asset_path('forms.jpg'), id: 'forms1', alt: "Form", class: "rounded-circle" %>
+        <h2 align="center">Guardians and school nurses can review and approve forms for new student medications</h2>
+        <p align="center">Parents and guardians want the best for their children, so we seamlessly involve them in their student's health records. Guardians must approve all new medication events and have access to their child's complete event history. They can also see upcoming events so they can be involved in the process from beginning to end.</p>
+       </div><!-- /.col-lg-4 -->
+      <div class="col-lg-4">
+        <%=image_tag asset_path('dashboard1.jfif'), id: 'dash1', alt: "Dashboard", class: "rounded-circle"%>
+        <h2 align="center">All users have access to a personalized dashboard to access and edit information</h2>
+        <p align="center">Nobody wants to worry more than they have to, so we make it easy to see all your important information quickly and easily. Each user has access to a personalized dashboard with their upcoming and past events as well as important tools such as making requests or filling out forms.</p>
+      </div><!-- /.col-lg-4 -->
+    </div><!-- /.row -->
+
+
+    <!-- START THE FEATURETTES -->
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">Getting Started is Easy! <span class="text-muted">Start by Enrolling Your District with SML Online.</span></h2>
+        <p class="lead">To get started with SML, all you need to do is fill out our easy to complete online form. After it's approved, your designated admin will have access to our suite of useful tools to start setup for your district.</p>
+      </div>
+      <div class="col-md-5">
+        <%=image_tag asset_path('school2.jfif'), id: 'school2', alt: "A School Classroom", class: "featurette-image img-fluid mx-auto" %>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7 order-md-2">
+        <h2 class="featurette-heading">Add Nurses, Students, and Guardians <span class="text-muted">Once Your District is Approved, Setup is a Breeze!</span></h2>
+        <p class="lead">After your district gets approved to use SML, administrators will be able to populate their system with ease. Designated administrators have access to an intuitive dashboard where they can fill out a form to create new Nurses, Students, or Parents. The whole district will also have immediate access to our expansive database of FDA approved medications.</p>
+      </div>
+      <div class="col-md-5 order-md-1">
+        <%=image_tag asset_path('school3.jpg'), id: 'school3', alt: "A School Exterior", class: "featurette-image img-fluid mx-auto" %>
+        <img class="featurette-image img-fluid mx-auto" data-src="holder.js/500x500/auto" alt="Generic placeholder image">
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <div class="row featurette">
+      <div class="col-md-7">
+        <h2 class="featurette-heading">You're All Done! <span class="text-muted">Get ready to Be Amazed.</span></h2>
+        <p class="lead">After the district is populated, all users will have access to personal dashboards. Nurses will be able to create events, see inventory, search medications, and so much more. Students and Guardians will have access to all the information they need about medications and events. It's that easy!</p>
+      </div>
+      <div class="col-md-5">
+        <%=image_tag asset_path('nurse3.jpg'), id: 'nurse3', alt: "A School Nurse and Student", class: "featurette-image img-fluid mx-auto" %>
+      </div>
+    </div>
+
+    <hr class="featurette-divider">
+
+    <!-- /END THE FEATURETTES -->
+
+  </div><!-- /.container -->
+</main>
+</body>
+</html>

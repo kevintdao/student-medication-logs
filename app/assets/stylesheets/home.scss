@@ -1,0 +1,33 @@
+// Place all the styles related to the home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.main {
+  margin-top: 0px;
+  margin-bottom: 0px;
+}
+
+body {
+  background-color: #f8f9fa;
+}
+
+#subTitle {
+  color: white;
+}
+
+.homeContainer {
+  background: #a9a9a9;
+  padding-top: 20px;
+  border-radius: 10px;
+  margin-top: 0px;
+}
+
+.mainTitle {
+  background-image: url(asset_path('nurseMain.png'));
+  background-repeat: no-repeat;
+}
+
+.btn-secondary {
+  background-color: #a9a9a9;
+  outline: #a9a9a9;
+}

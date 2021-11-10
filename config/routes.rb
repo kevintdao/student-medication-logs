@@ -1,4 +1,18 @@
 Rails.application.routes.draw do
+  get 'users/login'
+
+  get 'users/register'
+
+  get 'user/register'
+
+  get 'home/contact'
+
+  get 'home/medications'
+
+  get 'home/about'
+
+  get 'home/index'
+
   resources :forms
   resources :events
   resources :inventories
@@ -10,7 +24,7 @@ Rails.application.routes.draw do
   resources :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-  root "users#index"
+  root "home#index"
   resources :users
   resources :students
   resources :parents

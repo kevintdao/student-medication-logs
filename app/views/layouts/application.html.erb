@@ -7,10 +7,70 @@
   <%= csrf_meta_tags %>
   <%= favicon_link_tag asset_path('favicon.ico') %>
 </head>
-<body>
-<%=image_tag asset_path('sml-logo.png'), id: 'main-logo' %>
-<p id="coming-soon"> Coming Soon! </p>
-<%= yield %>
+<body><!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <!-- Container wrapper -->
+  <div class="container-fluid">
+    <!-- Toggle button -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
 
+    <!-- Collapsible wrapper -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <!-- Navbar brand -->
+      <%= link_to home_index_path do %>
+          <%=image_tag asset_path('sml-logo.png'), id: 'main-logo', height: "65", alt: "SML", class: "navbar-brand mt-2 mt-lg-0" %>
+      <% end %>
+      <!-- Left links -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <%= link_to "About", home_about_path, class: "nav-link"%>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Medications", home_medications_path, class: "nav-link"%>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Contact Us", home_contact_path, class: "nav-link"%>
+        </li>
+      </ul>
+    </div>
+      <!-- Left links -->
+    </div>
+    <!-- Collapsible wrapper -->
+
+    <!-- Right elements -->
+    <div class="d-flex align-items-center">
+      <!-- Icon -->
+      <a class="text-reset me-3" href="#">
+        <i class="fas fa-shopping-cart"></i>
+      </a>
+
+      <!-- Sign Up Button -->
+      <%= link_to "Register", users_register_path, class: "btn btn-outline-primary", role: "button"%>
+      <!-- Login Button -->
+      <%= link_to "Login", users_login_path, class: "btn btn-primary", role: "button"%>
+    <!-- Right elements -->
+  </div>
+  <!-- Container wrapper -->
+</nav>
+<!-- Navbar -->
+<%= yield %>
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-light text-muted">
+  <div id="footer">
+    © 2021 Copyright:
+    <p class="text-reset fw-bold">Student Medication Log</p>
+  </div>
+</footer>
+<!-- Footer -->
 </body>
 </html>

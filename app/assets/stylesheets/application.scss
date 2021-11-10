@@ -10,6 +10,33 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+@import "bootstrap";
+
+.btn-outline-primary {
+  margin-right: 10px;
+}
+
+.navbar {
+  margin-bottom: 0px;
+}
+
+.container-fluid {
+  margin-bottom: 0px;
+}
+
+.btn-primary {
+  margin-right: 8px;
+}
+
+footer {
+  height: 50px;
+  text-align: center;
+  alignment: center;
+}
+
+#footer {
+  text-align: center;
+  margin-right: auto;
+  margin-left: auto;
+}

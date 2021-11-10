@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Selt2021Proj02 Home Page</title>
+  <%= stylesheet_link_tag    'home', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag asset_path('favicon.ico') %>
+</head>
+<body>
+<main role="main" class="main">
+
+  <section class="jumbotron text-center">
+    <div class="mainTitle">
+      <h1 class="jumbotron-heading">Welcome to Student Medication Log</h1>
+      <p class="lead" id="subTitle">A secure software for educational institutions worldwide</p>
+      <p>
+        <%= link_to "Get Started", users_register_path, class: "btn btn-primary my-2"%>
+        <%= link_to "More Information", home_contact_path, class: "btn btn-secondary my-2"%>
+      </p>
+    </div>
+  </section>
+
+  <div class="album py-5">
+    <div class="container homeContainer">
+
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <%=image_tag asset_path('nurse1.jpg'), id: 'nurse1', alt: "Nurse and Students", class: "card-img-top" %>
+            <div class="card-body">
+              <p class="card-text">SML provides districts nationwide with the tools to manage medications, keeping students happy and healthy.</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <%=image_tag asset_path('meds1.jpg'), id: 'meds1', alt: "Medications", class: "card-img-top" %>
+            <div class="card-body">
+              <p class="card-text"> Our system contains expansive information about FDA approved medications and allows nurses to customize their own database.</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <%=image_tag asset_path('school1.jpg'), id: 'school1', alt: "Students at School", class: "card-img-top" %>
+            <div class="card-body">
+              <p class="card-text">The primary focus of SML is to help students and school faculty. We do this by listening to nurses to provide the tools they need.</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <%=image_tag asset_path('phone1.jpg'), id: 'phone1', alt: "Cell Phone", class: "card-img-top" %>
+            <div class="card-body">
+              <p class="card-text">SML provides timely text notifications to students when it is almost time to take a scheduled medication allowing nurses to do more with ease.</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <%=image_tag asset_path('nurse2.jpg'), id: 'nurse2', alt: "School Nurse", class: "card-img-top" %>
+            <div class="card-body">
+              <p class="card-text">We let nurses create and maintain their own medication inventories because nobody knows how to do their job better than they do.</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <%=image_tag asset_path('admin1.jpg'), id: 'admin1', alt: "School Admin", class: "card-img-top" %>
+            <div class="card-body">
+              <p class="card-text">School Administrators can create Student, Parent, and Nurse accounts in addition to monitoring system activity to keep the district running smoothly and efficiently.</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <%=image_tag asset_path('writing1.jpg'), id: 'writing1', alt: "Person Writing", class: "card-img-top" %>
+            <div class="card-body">
+              <p class="card-text">We provide daily event lists to nurses and faculty allowing for them to easily prepare for the day with the information that matters.</p>
+              <div class="d-flex justify-content-between align-items-center">
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <%=image_tag asset_path('parent1.jpg'), id: 'parent1', alt: "Parent and Child", class: "card-img-top" %>
+            <div class="card-body">
+              <p class="card-text">We require guardians to approve all new student medications and allow them to view all past and upcoming events.</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <%=image_tag asset_path('students1.jpg'), id: 'students1', alt: "Students at School", class: "card-img-top" %>
+            <div class="card-body">
+              <p class="card-text">We are committed to growth, adding new features, medications, and tools that help faculty with their tasks and keep students safe and healthy.</p>
+              <div class="d-flex justify-content-between align-items-center">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+</body>
+</html>
