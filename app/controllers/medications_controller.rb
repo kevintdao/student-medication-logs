@@ -5,6 +5,7 @@ class MedicationsController < ApplicationController
   # GET /medications.json
   def index
     @medications = Medication.all
+    @first50 = Medication.first(50)
   end
 
   # GET /medications/1
