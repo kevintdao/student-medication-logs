@@ -9,9 +9,18 @@ class HomeController < ApplicationController
   end
 
   def contact
-    @message = params[:message]
-    ContactEmail.with(user: @message).send_message
-    flash[:message] = "Message successfully sent"
+  end
 
+  def send_contact_message
+    puts "Activated"
+    @message = params[:message]
+    puts @message[:name]
+    puts @message[:email]
+    puts @message[:subject]
+    puts @message[:message]
+    #@message = params[:message]
+    #ContactEmail.send_message(@message).deliver_now
+    #flash[:message] = "Message successfully sent"
+    redirect_to home_contact_path
   end
 end
