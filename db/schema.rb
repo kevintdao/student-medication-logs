@@ -47,13 +47,11 @@ ActiveRecord::Schema.define(version: 20211109023937) do
   create_table "medications", force: :cascade do |t|
     t.string   "brand_name"
     t.string   "active_ing"
-    t.string   "uses"
     t.string   "method"
-    t.integer  "reactions_id"
-    t.string   "side_effects"
-    t.string   "array"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.string   "strength"
+    t.string   "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "nurses", force: :cascade do |t|
@@ -74,6 +72,18 @@ ActiveRecord::Schema.define(version: 20211109023937) do
     t.integer  "parents_id"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
+  end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.string   "password_digest"
+    t.string   "role"
+    t.integer  "role_id"
+    t.string   "district_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
 end
