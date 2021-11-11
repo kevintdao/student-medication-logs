@@ -1,0 +1,1 @@
+Feature: Allow user to register a school district and create admin account
