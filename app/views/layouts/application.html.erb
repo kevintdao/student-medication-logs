@@ -63,6 +63,11 @@
   <!-- Container wrapper -->
 </nav>
 <!-- Navbar -->
+<% unless flash[:message].nil? %>
+  <div class="alert alert-primary" role="alert">
+    <%= flash[:message] %>
+  </div>
+<% end %>
 <%= yield %>
 <!-- Footer -->
 <footer class="text-center text-lg-start bg-light text-muted">
