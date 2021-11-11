@@ -308,6 +308,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   launchy
+  mail (~> 2.7.1)
   pg (~> 0.15)
   rails (= 4.2.11.3)
   rails_12factor

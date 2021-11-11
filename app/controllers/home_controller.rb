@@ -14,13 +14,12 @@ class HomeController < ApplicationController
   def send_contact_message
     puts "Activated"
     @message = params[:message]
-    puts @message[:name]
-    puts @message[:email]
-    puts @message[:subject]
-    puts @message[:message]
-    #@message = params[:message]
-    #ContactEmail.send_message(@message).deliver_now
-    #flash[:message] = "Message successfully sent"
+    @name = @message[:name]
+    @email = @message[:email]
+    @subject = @message[:subject]
+    @message = @message[:message]
+    ContactEmail.send_message(@name, @email, @subject, @message).deliver_later
+    flash[:message] = "Message successfully sent"
     redirect_to home_contact_path
   end
 end
