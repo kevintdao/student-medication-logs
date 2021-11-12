@@ -1,18 +1,20 @@
 class HomeController < ApplicationController
   def index
+    session[:search_term] = nil
   end
 
   def about
+    session[:search_term] = nil
   end
 
   def medications
   end
 
   def contact
+    session[:search_term] = nil
   end
 
   def send_contact_message
-    puts "Activated"
     @message = params[:message]
     @name = @message[:name]
     @email = @message[:email]

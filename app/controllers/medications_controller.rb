@@ -5,18 +5,32 @@ class MedicationsController < ApplicationController
   # GET /medications.json
   def index
     @pages = session[:page_count]
-    @medications = if @pages.nil?
-                     #Medication.paginate(page: params[:page], per_page: 50)
-                     Medication.reorder("brand_name ASC").page(params[:page]).per_page(50)
-                   else
-                     #Medication.paginate(page: params[:page], per_page: @pages)
-                     Medication.reorder("brand_name ASC").page(params[:page]).per_page(@pages)
-                   end
+    @selection = session[:search_term]
+    if @pages.nil?
+      if @selection.nil? or @selection.empty?
+        puts "Selection is nil"
+        @medications = Medication.reorder("brand_name ASC").page(params[:page]).per_page(50)
+      else
+        @medications = Medication.where("lower(brand_name) LIKE ? OR lower(active_ing) LIKE ? OR lower(method) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("brand_name ASC").page(params[:page]).per_page(50)
+      end
+    else
+      if @selection.nil? or @selection.empty?
+        puts "Selection is nil"
+        @medications = Medication.reorder("brand_name ASC").page(params[:page]).per_page(@pages)
+      else
+        @medications = Medication.where("lower(brand_name) LIKE ? OR lower(active_ing) LIKE ? OR lower(method) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("brand_name ASC").page(params[:page]).per_page(@pages)
+      end
+    end
   end
   
   def set_page_count
     @pages = params[:page_count][:page_count]
     session[:page_count] = @pages.to_i
+    redirect_to medications_path
+  end
+
+  def search_meds
+    session[:search_term] = params[:search_term][:search_term]
     redirect_to medications_path
   end
 

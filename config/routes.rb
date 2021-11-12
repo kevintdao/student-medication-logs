@@ -17,6 +17,8 @@ Rails.application.routes.draw do
 
   post 'medications/set_page_count'
 
+  post 'medications/search_meds'
+
   resources :forms
   resources :events
   resources :inventories
