@@ -4,8 +4,7 @@ class MedicationsController < ApplicationController
   # GET /medications
   # GET /medications.json
   def index
-    @medications = Medication.all
-    @first50 = Medication.first(50)
+    @medications = Medication.paginate(page: params[:page], per_page: 30)
   end
 
   # GET /medications/1
