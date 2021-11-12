@@ -68,6 +68,21 @@
     <%= flash[:message] %>
   </div>
 <% end %>
+<% unless flash[:notice].nil? %>
+  <div class="alert alert-success" role="alert">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+<% unless flash[:warning].nil? %>
+  <div class="alert alert-warning" role="alert">
+    <%= flash[:warning] %>
+  </div>
+<% end %>
+<% unless flash[:error].nil? %>
+  <div class="alert alert-danger" role="alert">
+    <%= flash[:error] %>
+  </div>
+<% end %>
 <%= yield %>
 <!-- Footer -->
 <footer class="text-center text-lg-start bg-light text-muted">
