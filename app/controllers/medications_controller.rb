@@ -4,7 +4,20 @@ class MedicationsController < ApplicationController
   # GET /medications
   # GET /medications.json
   def index
-    @medications = Medication.paginate(page: params[:page], per_page: 30)
+    @pages = session[:page_count]
+    @medications = if @pages.nil?
+                     #Medication.paginate(page: params[:page], per_page: 50)
+                     Medication.reorder("brand_name ASC").page(params[:page]).per_page(50)
+                   else
+                     #Medication.paginate(page: params[:page], per_page: @pages)
+                     Medication.reorder("brand_name ASC").page(params[:page]).per_page(@pages)
+                   end
+  end
+  
+  def set_page_count
+    @pages = params[:page_count][:page_count]
+    session[:page_count] = @pages.to_i
+    redirect_to medications_path
   end
 
   # GET /medications/1
@@ -63,12 +76,12 @@ class MedicationsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_medication
-      @medication = Medication.find(params[:id])
-    end
+  def set_medication
+    @medication = Medication.find(params[:id])
+  end
 
     # Never trust parameters from the scary internet, only allow the white list through.
-    def medication_params
-      params.require(:medication).permit(:brand_name, :active_ing, :uses, :method, :reactions, :side_effects, :array)
-    end
+  def medication_params
+    params.require(:medication).permit(:brand_name, :active_ing, :uses, :method, :reactions, :side_effects, :array)
+  end
 end

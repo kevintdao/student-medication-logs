@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   post 'home/send_contact_message'
 
+  post 'medications/set_page_count'
+
   resources :forms
   resources :events
   resources :inventories
