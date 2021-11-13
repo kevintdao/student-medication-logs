@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get 'home/index'
 
   post 'home/send_contact_message'
+
+  get 'admins/users'
   
   resources :districts
   resources :forms
