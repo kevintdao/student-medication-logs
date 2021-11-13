@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>District name:</strong>
+  <%= @district.district_name %>
+</p>
+
+<p>
+  <strong>Address1:</strong>
+  <%= @district.address1 %>
+</p>
+
+<p>
+  <strong>Address2:</strong>
+  <%= @district.address2 %>
+</p>
+
+<p>
+  <strong>City:</strong>
+  <%= @district.city %>
+</p>
+
+<p>
+  <strong>State:</strong>
+  <%= @district.state %>
+</p>
+
+<p>
+  <strong>Zipcode:</strong>
+  <%= @district.zipcode %>
+</p>
+
+<%= link_to 'Edit', edit_district_path(@district) %> |
+<%= link_to 'Back', districts_path %>

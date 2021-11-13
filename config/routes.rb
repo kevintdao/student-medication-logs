@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get 'users/login'
 
   get 'users/register'
@@ -14,7 +15,8 @@ Rails.application.routes.draw do
   get 'home/index'
 
   post 'home/send_contact_message'
-
+  
+  resources :districts
   resources :forms
   resources :events
   resources :inventories
