@@ -1,1 +1,27 @@
-<h1>Hello World</h1>
+<div class="container">
+  <h1>Users in District</h1>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>District ID</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.first_name %></td>
+          <td><%= user.last_name %></td>
+          <td><%= user.email %></td>
+          <th><%= user.district_id %></th>
+          <th><%= user.role %></th>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

@@ -62,7 +62,8 @@ class AdminsController < ApplicationController
   end
 
   def users
-
+    # TODO: change to only display users in current user's district
+    @users = User.all
   end
 
   private
