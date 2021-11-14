@@ -7,7 +7,7 @@ class CreateUsers < ActiveRecord::Migration
       t.string :password_digest
       t.string :role
       t.integer :role_id
-      t.string :district_id
+      t.integer :district_id
 
       t.timestamps null: false
     end
