@@ -13,13 +13,10 @@ When /^I click Register District$/ do
   %(I press "submit")
 end
 
-Then /^The database should contain a school district with the name "(.*?)" and an admin with the name "(.*?)"$/ do |district_name, user_name|
-  dis = District.find_by(:district_name, district_name)
+Then /^The database should contain a school district with the name "(.*?)" and an admin with the email "(.*?)"$/ do |district_name, email|
+  dis = District.where(:district_name => district_name)
   expect(dis).to be_truthy
-  first_name = user_name.split(' ').first
-  last_name = user_name.split(' ').second
-  user = User.find_by(:first_name, first_name)
+  user = User.where(:email => email)
   expect(user).to be_truthy
-  expect(user.last_name).to eq(last_name)
 
 end
