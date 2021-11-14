@@ -63,13 +63,28 @@ class UsersController < ApplicationController
 
   def register_district_admin
     @register = params[:register]
-    @district = District.create_district(@register[:district_name], @register[:address1], @register[:address2], @register[:city], @register[:state], @register[:zipcode])
-    # user information
-    # @first_name = @register[:first_name]
-    # @last_name = @register[:last_name]
-    # @email = @register[:email]
-    # @password = @register[:password]
-    redirect_to users_login_path
+    @user = User.new(
+      first_name: @register[:first_name],
+      last_name: @register[:last_name],
+      email: @register[:email],
+      role: 'Admin',
+      password: @register[:password],
+      password_confirmation: @register[:password_confirmation]
+    )
+    if !@user.valid?
+      error_message = @user.errors.full_messages[0]
+      flash[:message] = error_message
+      redirect_to users_register_path
+    else
+      @user.save!
+      @admin = Admin.new
+      @admin.save!
+      @district = District.create_district(@register[:district_name], @register[:address1], @register[:address2], @register[:city], @register[:state], @register[:zipcode])
+      @user.role_id = @admin.id
+      @user.district_id = @district.id
+      @user.save!
+      redirect_to users_login_path
+    end
   end
 
   private
