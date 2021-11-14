@@ -9,6 +9,7 @@
         <th>Email</th>
         <th>District ID</th>
         <th>Role</th>
+        <th>Profile</th>
       </tr>
     </thead>
 
@@ -18,8 +19,9 @@
           <td><%= user.first_name %></td>
           <td><%= user.last_name %></td>
           <td><%= user.email %></td>
-          <th><%= user.district_id %></th>
-          <th><%= user.role %></th>
+          <td><%= user.district_id %></td>
+          <td><%= user.role %></td>
+          <td><%= link_to 'Show', user %></td>
         </tr>
       <% end %>
     </tbody>
