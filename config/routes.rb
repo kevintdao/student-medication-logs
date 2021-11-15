@@ -15,8 +15,11 @@ Rails.application.routes.draw do
   get 'home/index'
 
   post 'home/send_contact_message'
-  
-  resources :districts
+
+  post 'medications/set_page_count'
+
+  post 'medications/search_meds'
+
   resources :forms
   resources :events
   resources :inventories

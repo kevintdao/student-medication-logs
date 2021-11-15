@@ -3,11 +3,9 @@ class CreateMedications < ActiveRecord::Migration
     create_table :medications do |t|
       t.string :brand_name
       t.string :active_ing
-      t.string :uses
       t.string :method
-      t.references :reactions
-      t.string :side_effects
-      t.string :array
+      t.string :strength
+      t.string :notes
 
       t.timestamps null: false
     end
