@@ -5,6 +5,7 @@ class NursesController < ApplicationController
   # GET /nurses.json
   def index
     #TODO -- when login is set up, show only events with matching district ID
+    # TODO -- switch table to display student names and medication names
     @pages = session[:page_count]
     @selection = session[:search_term]
     if @pages.nil?

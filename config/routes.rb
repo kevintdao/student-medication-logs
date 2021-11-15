@@ -20,9 +20,9 @@ Rails.application.routes.draw do
 
   post 'medications/search_meds'
 
-  post 'nurses/set_page_count'
+  post 'events/set_page_count'
 
-  post 'nurses/search_events'
+  post 'events/search_events'
 
   resources :forms
   resources :events
