@@ -1,6 +1,17 @@
 <div class="container">
   <h1>Users in District</h1>
 
+  <div class="input-group">
+    <div class="form-outline">
+      <%= form_for :search_term, { url: users_path, method: 'get' } do |f|  %>
+        <div class="d-flex flex-rows">
+          <%= f.text_field :search_term, class: "form-control" %>
+          <%= f.submit :Search, class: "btn btn-primary"%>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
   <table class="table">
     <thead>
     <tr>
