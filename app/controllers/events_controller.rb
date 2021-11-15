@@ -10,15 +10,15 @@ class EventsController < ApplicationController
     @selection = session[:search_term]
     if @pages.nil?
       if @selection.nil? or @selection.blank?
-        @events = Event.reorder("time ASC").page(params[:page]).per_page(50)
+        @events = Event.where(complete: false).reorder("time ASC").page(params[:page]).per_page(50)
       else
-        @events = Event.where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("time ASC").page(params[:page]).per_page(50)
+        @events = Event.where(complete: false).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("time ASC").page(params[:page]).per_page(50)
       end
     else
       if @selection.nil? or @selection.blank?
-        @events = Event.reorder("time ASC").page(params[:page]).per_page(@pages)
+        @events = Event.where(complete: false).reorder("time ASC").page(params[:page]).per_page(@pages)
       else
-        @events = Event.where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+        @events = Event.where(complete: false).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
       end
     end
   end
