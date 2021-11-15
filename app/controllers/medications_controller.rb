@@ -7,15 +7,13 @@ class MedicationsController < ApplicationController
     @pages = session[:page_count]
     @selection = session[:search_term]
     if @pages.nil?
-      if @selection.nil? or @selection.empty?
-        puts "Selection is nil"
+      if @selection.nil? or @selection.blank?
         @medications = Medication.reorder("brand_name ASC").page(params[:page]).per_page(50)
       else
         @medications = Medication.where("lower(brand_name) LIKE ? OR lower(active_ing) LIKE ? OR lower(method) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("brand_name ASC").page(params[:page]).per_page(50)
       end
     else
-      if @selection.nil? or @selection.empty?
-        puts "Selection is nil"
+      if @selection.nil? or @selection.blank?
         @medications = Medication.reorder("brand_name ASC").page(params[:page]).per_page(@pages)
       else
         @medications = Medication.where("lower(brand_name) LIKE ? OR lower(active_ing) LIKE ? OR lower(method) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("brand_name ASC").page(params[:page]).per_page(@pages)

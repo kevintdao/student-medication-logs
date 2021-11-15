@@ -5,6 +5,6 @@ Feature: Allow users to search the medication database by name or ingredient
 
   Scenario: I do not enter a search term
     Given I am on the medication page
-    #When I enter "" in the search box
-    #And I click search
-    Then I should see all medications
+    When I enter "" in the search box
+    And I click search
+    Then I should be on the medications page

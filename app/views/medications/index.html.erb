@@ -10,7 +10,7 @@
   <div class="input-group">
     <div class="form-outline fl">
       <%= form_for :search_term, :url => medications_search_meds_path do |f|  %>
-        <%= f.text_field :search_term, class: "form-control", :html => {:id => "form1", :name => "form1"}%>
+        <%= f.text_field :search_term, class: "form-control", :html => {:id => "form1", :name => "form1"}, id:"form1"%>
         </div>
         <%= f.submit :Search, class: "btn btn-primary", id: "submit"%>
       <% end %>
@@ -48,7 +48,7 @@
         <td><%= medication.method %></td>
         <td><%= medication.strength %></td>
         <td><%= medication.notes %></td>
-        <td><%= link_to 'More Information', medication %></td>
+        <td><%= link_to 'More Information', medication, id:medication.brand_name %></td>
       </tr>
     <% end %>
   </tbody>
