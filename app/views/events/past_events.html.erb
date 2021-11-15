@@ -1,22 +1,22 @@
 <head>
-  <title>Selt2021Proj02 Events Page</title>
+  <title>Selt2021Proj02 Past Events Page</title>
   <%= stylesheet_link_tag    'medications', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag asset_path('favicon.ico') %>
 </head>
 <div class="container">
-  <h1>Incomplete Events</h1>
+  <h1>Completed Events</h1>
   <div class="input-group">
     <div class="form-outline fl">
-      <%= form_for :search_term, :url => events_search_events_path do |f|  %>
+      <%= form_for :search_term, :url => events_search_past_events_path do |f|  %>
         <%= f.text_field :search_term, class: "form-control", :html => {:id => "form1", :name => "form1"}, id:"form1"%>
         </div>
         <%= f.submit :Search, class: "btn btn-primary", id: "submit"%>
       <% end %>
       </div>
   <div class="fr">
-    <%= form_for :page_count, :url => events_set_page_count_path do |f|  %>
+    <%= form_for :page_count, :url => events_set_past_page_count_path do |f|  %>
       <div class="form-group"
       <%= f.label :page_count, "Results per page: " %>
       <%= f.select :page_count, options_for_select([10, 25, 35, 50, 75, 100, 250], @pages), {}, :onchange => 'this.form.submit()'%>

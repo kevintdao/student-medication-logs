@@ -24,6 +24,12 @@ Rails.application.routes.draw do
 
   post 'events/search_events'
 
+  get 'events/past_events'
+
+  post 'events/set_past_page_count'
+
+  post 'events/search_past_events'
+
   resources :forms
   resources :events
   resources :inventories
