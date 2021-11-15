@@ -21,3 +21,4 @@ Scenario: Register a school district and admin
 
   When I click Register District
   Then The database should contain a school district with the name "Mount Vernon Schools" and an admin with the email "aclayton@gmail.com"
+  And I should be on the login page
