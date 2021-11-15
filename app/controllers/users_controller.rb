@@ -4,6 +4,13 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    if params[:search_term].present?
+      name = params[:search_term][:search_term]
+      if name.present?
+        @users = User.where('lower(first_name) = ?', name.downcase)
+        return @users
+      end
+    end
     @users = User.all
   end
 
