@@ -83,6 +83,7 @@ class UsersController < ApplicationController
       @user.role_id = @admin.id
       @user.district_id = @district.id
       @user.save!
+      flash[:message] = 'Successfully registered your account.'
       redirect_to users_login_path
     end
   end

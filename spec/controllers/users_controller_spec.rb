@@ -23,6 +23,5 @@ describe UsersController do
       expect(flash[:message]).to eq('Successfully registered your account.')
       expect(response).to redirect_to(users_login_path)
     end
-    it ''
   end
 end
