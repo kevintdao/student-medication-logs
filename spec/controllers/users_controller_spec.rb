@@ -53,8 +53,8 @@ describe UsersController do
       no_first_name = @register_params.deep_dup
       no_first_name[:register][:first_name] = ' '
       post :register_district_admin, no_first_name
-      expect(flash[:alert]).to be_present
-      expect(flash[:alert]).to eq("First name can't be blank")
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq("First name can't be blank")
       expect(response).not_to redirect_to(users_login_path)
     end
     it 'should validate that last name is present and not redirect to login page' do
@@ -65,8 +65,8 @@ describe UsersController do
       no_last_name = @register_params.deep_dup
       no_last_name[:register][:last_name] = ' '
       post :register_district_admin, no_last_name
-      expect(flash[:alert]).to be_present
-      expect(flash[:alert]).to eq("Last name can't be blank")
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq("Last name can't be blank")
       expect(response).not_to redirect_to(users_login_path)
     end
     it 'should validate that email is present and not redirect to login page' do
@@ -77,8 +77,8 @@ describe UsersController do
       no_email = @register_params.deep_dup
       no_email[:register][:email] = ' '
       post :register_district_admin, no_email
-      expect(flash[:alert]).to be_present
-      expect(flash[:alert]).to eq("Email can't be blank")
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq("Email can't be blank")
       expect(response).not_to redirect_to(users_login_path)
     end
     it 'should validate that password matches password confirmation' do
@@ -89,8 +89,8 @@ describe UsersController do
       new_password_confirmation = @register_params.deep_dup
       new_password_confirmation[:register][:password_confirmation] = 'notoriginal'
       post :register_district_admin, new_password_confirmation
-      expect(flash[:alert]).to be_present
-      expect(flash[:alert]).to eq("Password confirmation doesn't match Password")
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq("Password confirmation doesn't match Password")
       expect(response).not_to redirect_to(users_login_path)
     end
     it 'should only accept unique email addresses' do
@@ -100,8 +100,8 @@ describe UsersController do
       allow(fake_results).to receive(:id).and_return(fake_id)
       post :register_district_admin, @register_params
       post :register_district_admin, @register_params
-      expect(flash[:alert]).to be_present
-      expect(flash[:alert]).to eq("Email has already been taken")
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq('Email has already been taken')
       expect(response).not_to redirect_to(users_login_path)
     end
   end

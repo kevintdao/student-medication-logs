@@ -73,7 +73,7 @@ class UsersController < ApplicationController
     )
     if !@user.valid?
       error_message = @user.errors.full_messages[0]
-      flash[:alert] = error_message
+      flash[:error] = error_message
       redirect_to users_register_path
     else
       @user.save!

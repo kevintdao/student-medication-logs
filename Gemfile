@@ -24,6 +24,10 @@ gem 'jbuilder', '~> 2.0'
 gem 'mail', '~> 2.7.1'
 
 gem 'figaro'
+
+gem 'will_paginate', '~> 3.3.1'
+
+gem 'will_paginate-bootstrap4'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 

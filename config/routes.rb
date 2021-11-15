@@ -16,6 +16,10 @@ Rails.application.routes.draw do
 
   post 'home/send_contact_message'
 
+  post 'medications/set_page_count'
+
+  post 'medications/search_meds'
+
   post 'users/register_district_admin'
 
   resources :districts
