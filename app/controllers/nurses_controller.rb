@@ -4,7 +4,33 @@ class NursesController < ApplicationController
   # GET /nurses
   # GET /nurses.json
   def index
-    @nurses = Nurse.all
+    #TODO -- when login is set up, show only events with matching district ID
+    @pages = session[:page_count]
+    @selection = session[:search_term]
+    if @pages.nil?
+      if @selection.nil? or @selection.blank?
+        @events = Event.reorder("time ASC").page(params[:page]).per_page(50)
+      else
+        @events = Event.where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("time ASC").page(params[:page]).per_page(50)
+      end
+    else
+      if @selection.nil? or @selection.blank?
+        @events = Event.reorder("time ASC").page(params[:page]).per_page(@pages)
+      else
+        @events = Event.where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+      end
+    end
+  end
+
+  def set_page_count
+    @pages = params[:page_count][:page_count]
+    session[:page_count] = @pages.to_i
+    redirect_to nurses_path
+  end
+
+  def search_events
+    session[:search_term] = params[:search_term][:search_term]
+    redirect_to nurses_path
   end
 
   # GET /nurses/1

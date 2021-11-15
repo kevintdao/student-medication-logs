@@ -20,6 +20,10 @@ Rails.application.routes.draw do
 
   post 'medications/search_meds'
 
+  post 'nurses/set_page_count'
+
+  post 'nurses/search_events'
+
   resources :forms
   resources :events
   resources :inventories
