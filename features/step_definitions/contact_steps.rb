@@ -1,4 +1,4 @@
-# Step definition for features involving contact us page
+# Step definition for features involving contact us page --needs fixed
 
 Given /^I am on the contact page$/ do
   visit 'home/contact'
@@ -10,7 +10,7 @@ When /^I click submit"$/ do
 end
 
 Then /^I should see the confirmation message$/ do
-  page.has_content?("Message successfully sent")
+  expect(flash[:notice]).to match(/Message successfully sent/)
 end
 
 Then /^I should not see the confirmation message$/ do

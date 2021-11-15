@@ -9,7 +9,7 @@ When /^I click the SML logo$/ do
 end
 
 Then /^I should see the landing page$/ do
-  page.has_content?("Welcome to Student Medication Log")
+  expect(page.has_content?("Welcome to Student Medication Log")).to be_truthy
 end
 
 When /^I click the (.*?) link$/ do |link|
@@ -17,15 +17,15 @@ When /^I click the (.*?) link$/ do |link|
 end
 
 Then /^I should see the About page$/ do
-  page.has_content?("Get texts when it's time for a medication")
+  expect(page.has_content?("Get texts when it's time for a medication")).to be_truthy
 end
 
 Then /^I should see the Medications page$/ do
-  page.has_content?("Medications")
+  expect(page.has_content?("Medications")).to be_truthy
 end
 
 Then /^I should see the Contact Us page$/ do
-  page.has_content?("Further questions about SML?")
+  expect(page.has_content?("Further questions about SML?")).to be_truthy
 end
 
 
