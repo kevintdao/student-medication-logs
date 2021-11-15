@@ -7,6 +7,7 @@ Rails.application.config.assets.precompile += %w( about.scss )
 Rails.application.config.assets.precompile += %w( contact.scss )
 Rails.application.config.assets.precompile += %w( medications.scss )
 Rails.application.config.assets.precompile += %w( users.scss )
+Rails.application.config.assets.precompile += %w( nurses.scss )
 
 # Add additional assets to the asset load path
 # Rails.application.config.assets.paths << Emoji.images_path
