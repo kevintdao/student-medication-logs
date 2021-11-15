@@ -21,14 +21,14 @@
         <!--Grid row-->
         <div class="row">
             <div class="md-form mb-0">
-              <%= f.text_field :name, :html => {:id => "name", :name => "name"}, class: "form-control" %>
+              <%= f.text_field :name, :html => {:id => "name", :name => "name"}, class: "form-control", :required => true %>
               <%= f.label :name, "Your Name" %>
             </div>
         </div>
 
         <div class="row">
             <div class="md-form mb-0">
-              <%= f.text_field :email, :html => {:id => "email", :name => "email"}, class: "form-control" %>
+              <%= f.email_field :email, :html => {:id => "email", :name => "email"}, class: "form-control", :required => true %>
               <%= f.label :email, "Your Email" %>
             </div>
         </div>
@@ -37,7 +37,7 @@
         <!--Grid row-->
         <div class="row">
             <div class="md-form mb-0">
-              <%= f.text_field :subject, :html => {:id => "subject", :name => "subject"}, class: "form-control" %>
+              <%= f.text_field :subject, :html => {:id => "subject", :name => "subject"}, class: "form-control", :required => true %>
               <%= f.label :subject, "Subject" %>
             </div>
         </div>
@@ -49,7 +49,7 @@
           <!--Grid column-->
 
             <div class="md-form">
-              <%= f.text_area :message, :html => {:id => "message", :name => "message"}, class: "form-control md-textarea" %>
+              <%= f.text_area :message, :html => {:id => "message", :name => "message"}, class: "form-control md-textarea", :required => true %>
               <%= f.label :message, "Message" %>
             </div>
 
