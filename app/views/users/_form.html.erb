@@ -11,27 +11,28 @@
     </div>
   <% end %>
 
-  <div class="form-group">
+  <div class="form-group mb-2">
     <%= f.label :first_name %><br>
     <%= f.text_field :first_name, class: "form-control" %>
   </div>
-  <div class="form-group">
+  <div class="form-group mb-2">
     <%= f.label :last_name %><br>
     <%= f.text_field :last_name, class: "form-control" %>
   </div>
-  <div class="form-group">
+  <div class="form-group mb-2">
     <%= f.label :email %><br>
     <%= f.text_field :email, class: "form-control" %>
   </div>
-  <div class="form-group">
+  <div class="form-group mb-2">
     <%= f.label :role %><br>
     <%= f.select :role, options_for_select(%w[Admin Nurse Parent Student], @user.role), {}, {class: 'form-control'}  %>
   </div>
-  <div class="form-group">
+  <div class="form-group mb-2">
     <%= f.label :district_id, 'District ID' %><br>
     <%= f.text_field :district_id, class: "form-control" %>
   </div>
-  <div class="actions">
+  <div class="actions mb-2">
     <%= f.submit 'Update User', class: "btn btn-primary" %>
+    <%= link_to 'Back', users_path, {class: 'btn btn-secondary'} %>
   </div>
 <% end %>
