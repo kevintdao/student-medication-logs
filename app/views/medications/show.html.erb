@@ -1,39 +1,32 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Brand name:</strong>
+  <strong>Name:</strong>
   <%= @medication.brand_name %>
 </p>
 
 <p>
-  <strong>Active ing:</strong>
+  <strong>Active Ingredient:</strong>
   <%= @medication.active_ing %>
 </p>
 
 <p>
-  <strong>Uses:</strong>
-  <%= @medication.uses %>
-</p>
-
-<p>
-  <strong>Method:</strong>
+  <strong>Form:</strong>
   <%= @medication.method %>
 </p>
 
 <p>
-  <strong>Reactions:</strong>
-  <%= @medication.reactions %>
+  <strong>Strength:</strong>
+  <%= @medication.strength %>
 </p>
 
 <p>
-  <strong>Side effects:</strong>
-  <%= @medication.side_effects %>
+  <strong>Notes:</strong>
+  <% unless @medication.notes.nil? %>
+    <%= @medication.side_effects %>
+  <% else %>
+    There are currently no notes for this medication.
+  <% end %>
 </p>
 
-<p>
-  <strong>Array:</strong>
-  <%= @medication.array %>
-</p>
-
-<%= link_to 'Edit', edit_medication_path(@medication) %> |
 <%= link_to 'Back', medications_path %>
