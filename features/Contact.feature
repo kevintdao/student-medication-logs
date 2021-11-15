@@ -5,44 +5,50 @@ Feature: Allow users to send a contact email to the development team
 
   Scenario: I enter valid information
     Given I am on the contact page
-    When I enter "Test Name" as "Your Name"
-    When I enter "test@mail.com" as "Your Email"
-    When I enter "Cucumber Test" as "Subject"
-    When I enter "This is a test from cucumber." as "Message"
+    When I enter "Test Name" for id name
+    When I enter "test@mail.com" for id email
+    When I enter "Cucumber Test" for id subject
+    When I enter "This is a test from cucumber." for id message
+    When I click submit
     Then I should see the confirmation message
 
   Scenario: I leave the name field blank
     Given I am on the contact page
-    When I enter "test@mail.com" as "Your Email"
-    When I enter "Cucumber Test" as "Subject"
-    When I enter "This is a test from cucumber." as "Message"
+    When I enter "test@mail.com" for id name
+    When I enter "Cucumber Test" for id subject
+    When I enter "This is a test from cucumber." for id message
+    When I click submit
     Then I should not see the confirmation message
 
   Scenario: I leave the email field blank
     Given I am on the contact page
-    When I enter "Test" as "Your Name"
-    When I enter "Cucumber Test" as "Subject"
-    When I enter "This is a test from cucumber." as "Message"
+    When I enter "Test" for id name
+    When I enter "Cucumber Test" for id subject
+    When I enter "This is a test from cucumber." for id message
+    When I click submit
     Then I should not see the confirmation message
 
   Scenario: I leave the subject field blank
     Given I am on the contact page
-    When I enter "test@mail.com" as "Your Email"
-    When I enter "Test" as "Your Name"
-    When I enter "This is a test from cucumber." as "Message"
+    When I enter "test@mail.com" for id email
+    When I enter "Test" for id name
+    When I enter "This is a test from cucumber." for id message
+    When I click submit
     Then I should not see the confirmation message
 
   Scenario: I leave the message field blank
     Given I am on the contact page
-    When I enter "test@mail.com" as "Your Email"
-    When I enter "Cucumber Test" as "Subject"
-    When I enter "Test" as "Your Name"
+    When I enter "test@mail.com" for id email
+    When I enter "Cucumber Test" for id subject
+    When I enter "Test" for id name
+    When I click submit
     Then I should not see the confirmation message
 
   Scenario: I enter an invalid email
     Given I am on the contact page
-    When I enter "Test" as "Your Name"
-    When I enter "notAnEmail" as "Your Email"
-    When I enter "Cucumber Test" as "Subject"
-    When I enter "This is a message" as "Message"
+    When I enter "Test" for id name
+    When I enter "notAnEmail" for id email
+    When I enter "Cucumber Test" for id subject
+    When I enter "This is a message" for id message
+    When I click submit
     Then I should not see the confirmation message
