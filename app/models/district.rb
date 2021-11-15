@@ -4,7 +4,7 @@ class District < ActiveRecord::Base
     district = District.new
     district.district_name = name
     district.address1 = address1
-    if address2 != ''
+    if (address2 != '') and (address2 != nil)
       district.address2 = address2
     end
     district.city = city
