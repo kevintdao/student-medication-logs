@@ -321,6 +321,7 @@ DEPENDENCIES
   rails (= 4.2.11.3)
   rails_12factor
   rspec (~> 3.5)
+  rspec-core
   rspec-expectations
   rspec-rails
   sass-rails (~> 5.0)
