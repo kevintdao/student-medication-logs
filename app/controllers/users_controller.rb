@@ -95,6 +95,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def set_password
+    @pass = params[:new_pass]
+    @user = User.find_by_password_set_token!(params[:format])
+    if @user.password_set_sent_at < 2.day.ago
+      flash[:notice] = 'Password set has expired'
+      redirect_to new_password_sets_path
+    else
+      @user.password = @pass[:password]
+      @user.save!
+      flash[:notice] = 'Password has been set!'
+      redirect_to users_login_path
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -106,4 +120,6 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password_digest, :role, :role_id, :district_id)
   end
+
+
 end

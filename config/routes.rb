@@ -23,6 +23,8 @@ Rails.application.routes.draw do
 
   post 'users/register_district_admin'
 
+  post 'users/set_password'
+
   resources :password_sets
   resources :districts
   resources :forms
