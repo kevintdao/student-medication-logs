@@ -23,3 +23,7 @@ end
 Then /^I should be on the login page$/ do
   expect(page.current_path).to eq('/users/login')
 end
+
+Then /^I should not be on the login page$/ do
+  expect(page.current_path).not_to eq('/users/login')
+end
