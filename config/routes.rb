@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+
   get 'users/login'
 
   get 'users/register'
@@ -22,6 +23,7 @@ Rails.application.routes.draw do
 
   post 'users/register_district_admin'
 
+  resources :password_sets
   resources :districts
   resources :forms
   resources :events

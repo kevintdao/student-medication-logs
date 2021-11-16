@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211111023742) do
+ActiveRecord::Schema.define(version: 20211116211922) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -58,11 +58,13 @@ ActiveRecord::Schema.define(version: 20211111023742) do
   create_table "medications", force: :cascade do |t|
     t.string   "brand_name"
     t.string   "active_ing"
+    t.string   "uses"
     t.string   "method"
-    t.string   "strength"
-    t.string   "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "reactions_id"
+    t.string   "side_effects"
+    t.string   "array"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "nurses", force: :cascade do |t|
@@ -93,8 +95,10 @@ ActiveRecord::Schema.define(version: 20211111023742) do
     t.string   "role"
     t.integer  "role_id"
     t.string   "district_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "password_set_token"
+    t.datetime "password_set_sent_at"
   end
 
 end
