@@ -5,10 +5,19 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     if params[:search_term].present?
-      name = params[:search_term][:search_term]
-      if name.present?
-        @users = User.where('lower(first_name) = ?', name.downcase)
-        return @users
+      target = params[:search_term][:target]
+      term = params[:search_term][:search_term]
+      if term.present?
+        case target
+        when 'Name'
+          @users = User.where('lower(first_name) = ?', term.downcase)
+          return @users
+        when 'Role'
+          @users = User.where('lower(role) = ?', term.downcase)
+          return @users
+        else
+          @user = User.all
+        end
       end
     end
     @users = User.all

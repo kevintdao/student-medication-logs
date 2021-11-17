@@ -5,7 +5,7 @@
     <div class="form-outline">
       <%= form_for :search_term, { url: users_path, method: 'get' } do |f|  %>
         <label>Search for:</label>
-        <div class="d-flex flex-rows">
+        <div class="d-flex flex-rows input-group">
           <%= f.select :target, options_for_select(%w[Name Role]), {}, {class: 'form-select'} %>
           <%= f.text_field :search_term, class: "form-control" %>
           <%= f.submit :Search, class: "btn btn-primary"%>
