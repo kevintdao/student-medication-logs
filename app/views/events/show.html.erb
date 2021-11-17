@@ -16,7 +16,9 @@
 
 <p>
   <strong>Student:</strong>
-  <%= @event.student_id %>
+  <%= @event.student_id %> --
+<!--  <%#= User.where(role: "student", role_id: @event.student_id).first.first_name %> <%#= User.where(role: "student", role_id: @event.student_id).first.last_name %> ---->
+  <%= link_to 'Student Information', User.where(role: "student", role_id: @event.student_id).first, class: "btn btn-primary btn-small" %>
 </p>
 
 <p>
