@@ -36,6 +36,8 @@ Rails.application.routes.draw do
 
   post 'events/change_notes'
 
+  post 'users/register_district_admin'
+
   resources :forms
   resources :events
   resources :inventories

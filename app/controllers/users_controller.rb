@@ -4,13 +4,19 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
+    if params[:search_term].present?
+      name = params[:search_term][:search_term]
+      if name.present?
+        @users = User.where('lower(first_name) = ?', name.downcase)
+        return @users
+      end
+    end
     @users = User.all
   end
 
   # GET /users/1
   # GET /users/1.json
-  def show
-  end
+  def show; end
 
   # GET /users/new
   def new
@@ -18,8 +24,7 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /users
   # POST /users.json
@@ -61,14 +66,44 @@ class UsersController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
+  def register; end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :password_digest, :role, :role_id, :district_id)
+  def register_district_admin
+    @register = params[:register]
+    @user = User.new(
+      first_name: @register[:first_name],
+      last_name: @register[:last_name],
+      email: @register[:email],
+      role: 'Admin',
+      password: @register[:password],
+      password_confirmation: @register[:password_confirmation]
+    )
+    if !@user.valid?
+      error_message = @user.errors.full_messages[0]
+      flash[:error] = error_message
+      redirect_to users_register_path
+    else
+      @user.save!
+      @admin = Admin.new
+      @admin.save!
+      @district = District.create_district(@register[:district_name], @register[:address1], @register[:address2], @register[:city], @register[:state], @register[:zipcode])
+      @user.role_id = @admin.id
+      @user.district_id = @district.id
+      @user.save!
+      flash[:message] = 'Successfully registered your account.'
+      redirect_to users_login_path
     end
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit(:first_name, :last_name, :email, :password_digest, :role, :role_id, :district_id)
+  end
 end
