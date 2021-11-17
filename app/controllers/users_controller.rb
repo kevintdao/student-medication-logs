@@ -10,7 +10,13 @@ class UsersController < ApplicationController
       if term.present?
         case target
         when 'Name'
-          @users = User.where('lower(first_name) = ?', term.downcase)
+          name = term.split
+          # check if only first name
+          if name.count == 1
+            @users = User.where('lower(first_name) = ?', name[0].downcase)
+          else
+            @users = User.where('lower(first_name) = ? and lower(last_name) = ?', name[0].downcase, name[1].downcase)
+          end
           return @users
         when 'Role'
           @users = User.where('lower(role) = ?', term.downcase)

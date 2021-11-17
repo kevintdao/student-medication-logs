@@ -7,7 +7,7 @@
         <label>Search for:</label>
         <div class="d-flex flex-rows input-group">
           <%= f.select :target, options_for_select(%w[Name Role]), {}, {class: 'form-select'} %>
-          <%= f.text_field :search_term, class: "form-control" %>
+          <%= f.text_field :search_term, class: "form-control w-25" %>
           <%= f.submit :Search, class: "btn btn-primary"%>
         </div>
       <% end %>
@@ -17,8 +17,7 @@
   <table class="table">
     <thead>
     <tr>
-      <th>First Name</th>
-      <th>Last Name</th>
+      <th>Name</th>
       <th>Email</th>
       <th>District ID</th>
       <th>Role</th>
@@ -29,8 +28,7 @@
     <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= user.first_name %></td>
-        <td><%= user.last_name %></td>
+        <td><%= user.first_name + ' ' + user.last_name %></td>
         <td><%= user.email %></td>
         <td><%= user.district_id %></td>
         <td><%= user.role %></td>
@@ -40,3 +38,4 @@
     </tbody>
   </table>
 </div>
+  
