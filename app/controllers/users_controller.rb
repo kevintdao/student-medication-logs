@@ -4,11 +4,11 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    if params[:search_term].present?
-      target = params[:search_term][:target]
-      term = params[:search_term][:search_term]
+    if params[:search].present?
+      type = params[:search][:type]
+      term = params[:search][:term]
       if term.present?
-        case target
+        case type
         when 'Name'
           name = term.split
           # check if only first name

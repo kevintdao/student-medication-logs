@@ -3,11 +3,11 @@
 
   <div class="input-group">
     <div class="form-outline">
-      <%= form_for :search_term, { url: users_path, method: 'get' } do |f|  %>
+      <%= form_for :search, { url: users_path, method: 'get' } do |f|  %>
         <label>Search for:</label>
         <div class="d-flex flex-rows input-group">
-          <%= f.select :target, options_for_select(%w[Name Role]), {}, {class: 'form-select'} %>
-          <%= f.text_field :search_term, class: "form-control w-25" %>
+          <%= f.select :type, options_for_select(%w[Name Role]), {}, {class: 'form-select'} %>
+          <%= f.text_field :term, class: "form-control w-25" %>
           <%= f.submit :Search, class: "btn btn-primary"%>
         </div>
       <% end %>
@@ -38,4 +38,3 @@
     </tbody>
   </table>
 </div>
-  
