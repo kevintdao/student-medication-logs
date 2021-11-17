@@ -21,7 +21,8 @@
 
 <p>
   <strong>Medication:</strong>
-  <%= Medication.where(id: @event.med_id).first.brand_name %>
+  <%= Medication.where(id: @event.med_id).first.brand_name %> --
+  <%= link_to 'More Information', Medication.where(id: @event.med_id).first, class: "btn btn-primary btn-small" %>
 </p>
 
 <p>
