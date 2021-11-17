@@ -95,6 +95,36 @@ class UsersController < ApplicationController
     end
   end
 
+  def create_and_email
+    # @user = @current_user
+    @new_user = params[:new_user]
+    pass = SecureRandom.hex # generate random hex value as password
+    user = User.new(
+      first_name: @new_user[:first_name],
+      last_name: @new_user[:last_name],
+      email: @new_user[:email],
+      password: pass,
+      password_confirmation: pass
+    )
+    user.role = @new_user[:user_type]
+    case user.role
+    when 'Admin'
+      role = Admin.new
+    when 'Student'
+      role = Student.new
+    when 'Nurse'
+      role = Nurse.new
+    when 'Parent'
+      role = Parent.new
+    end
+    role.save!
+    user.role_id = role.id
+    # user.district_id = @user.district_id
+    user.save!
+    user.send_password_set
+    redirect_to home_index_path
+  end
+
   def set_password
     @pass = params[:new_pass]
     @user = User.find_by_password_set_token!(params[:format])
@@ -103,6 +133,7 @@ class UsersController < ApplicationController
       redirect_to new_password_sets_path
     else
       @user.password = @pass[:password]
+      @user.password_confirmation = @pass[:password_confirmation]
       @user.save!
       flash[:notice] = 'Password has been set!'
       redirect_to users_login_path

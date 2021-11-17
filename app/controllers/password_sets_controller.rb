@@ -5,8 +5,8 @@ class PasswordSetsController < ApplicationController
   def create
     user = User.find_by_email(params[:email])
     user&.send_password_set
-    flash[:notice] = 'Email sent with password reset instructions.'
-    redirect_to users_login_path
+    flash[:notice] = 'Email sent with password set instructions.'
+    redirect_to home_index_path
   end
 
   def edit
