@@ -5,6 +5,6 @@ class ApplicationMailer < ActionMailer::Base
   def set_password(user)
     @user = user
     @greeting = 'Hi'
-    mail to: user.email, :subject => 'Set Password Instructions'
+    mail to: user.email, :subject => 'Set Password For SML'
   end
 end

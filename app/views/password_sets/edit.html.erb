@@ -1,13 +1,44 @@
-<h1>Set Password</h1>
+<!--<h1>Set Password</h1>-->
 
-<%= form_for :new_pass, :url => users_set_password_path(params[:id]) do |f| %>
-  <div class='field'>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
+<%#= form_for :new_pass, :url => users_set_password_path(params[:id]) do |f| %>
+<!--  <div class='field'>-->
+    <%#= f.label :password %>
+    <%#= f.password_field :password %>
+<!--  </div>-->
+<!--  <div class='field'>-->
+    <%#= f.label :password_confirmation %>
+    <%#= f.password_field :password_confirmation %>
+<!--  </div>-->
+<!--  <div class='actions'><%#= f.submit 'Set password' %></div>-->
+<%# end %>
+
+<section class="h-100 h-custom" style="background-image: url('https://centralaz.edu/wp-content/uploads/2019/04/Nurse-with-Blurry-Background.jpg');">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-8 col-xl-6">
+        <div class="card rounded-3">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Set an Account Password</h3>
+
+            <%= form_for :new_pass,  :url => users_set_password_path(params[:id]) do |f|%>
+
+              <div class="form-outline mb-4">
+                <%= f.label :password, "Password", class:"form-label" %>
+                <%= f.password_field :password, class:"form-control form-control-lg", required: true %>
+              </div>
+
+              <div class="form-outline mb-4">
+                <%= f.label :password_confirmation, "Password Confirmation", class:"form-label" %>
+                <%= f.password_field :password_confirmation, class:"form-control form-control-lg", required: true %>
+              </div>
+
+              <button type="submit" class="btn btn-success btn-lg mb-1">Set Password</button>
+
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class='field'>
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </div>
-  <div class='actions'><%= f.submit 'Set password' %></div>
-<% end %>
+</section>
