@@ -30,6 +30,12 @@ Rails.application.routes.draw do
 
   post 'events/search_past_events'
 
+  get 'events/complete'
+
+  get 'events/incomplete'
+
+  post 'events/change_notes'
+
   resources :forms
   resources :events
   resources :inventories

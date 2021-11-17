@@ -25,4 +25,15 @@
   <%= @event.notes %>
 </p>
 
+<%= form_for :notes, :url => events_change_notes_path do |f| %>
+  <%= f.label :notes, "Update Notes:" %>
+  <%= f.text_field :notes, value: @event.notes ,class: "form-control", :required => true, id:"notes" %>
+  <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
+<% end %>
+
 <%= link_to 'Edit', edit_event_path(@event) %>
+<% if @event.complete%>
+  <%= link_to "Mark Incomplete", events_incomplete_path(:id => @event.id) %>
+<% else %>
+  <%= link_to "Mark Complete", events_complete_path(:id => @event.id) %>
+<% end %>

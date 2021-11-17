@@ -63,6 +63,24 @@ class EventsController < ApplicationController
     redirect_to events_past_events_path
   end
 
+  def complete
+    @eventID = params[:id]
+    @event = Event.where(id: @eventID).update_all(complete: true)
+    flash[:notice] = "Event has been marked as complete"
+    redirect_to events_past_events_path
+  end
+
+  def incomplete
+    @eventID = params[:id]
+    @event = Event.where(id: @eventID).update_all(complete: false)
+    flash[:notice] = "Event has been marked as complete"
+    redirect_to events_path
+  end
+
+  def change_notes
+    redirect_to events_path
+  end
+
   # GET /events/1
   # GET /events/1.json
   def show
