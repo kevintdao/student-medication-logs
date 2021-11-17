@@ -1,6 +1,6 @@
 <head>
   <title>Selt2021Proj02 Events Page</title>
-  <%= stylesheet_link_tag    'medications', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag    'events', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag asset_path('favicon.ico') %>
@@ -41,9 +41,9 @@
     <tr>
       <td><%= event.student_id %></td>
       <td><%= event.time %></td>
-      <td><%= event.med_id %></td>
+      <td><%= Medication.where(id: event.med_id).first.brand_name %></td>
       <td><%= event.notes %></td>
-      <td><%= link_to 'More Information', event, id:event.student_id %></td>
+      <td class="btn-center"><%= link_to 'More Information', event, id:event.student_id, class: "btn btn-primary btn-small" %></td>
     </tr>
   <% end %>
   </tbody>
