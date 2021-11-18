@@ -10,4 +10,19 @@ class User < ActiveRecord::Base
   validates :password, presence: true
   validates :password_confirmation, presence: true
   validates :password, confirmation: { case_sensitive: true }
+
+  def self.search_users(type, term)
+    return User.all if term.blank?
+
+    if type == 'Name'
+      name = term.split
+      if name.count == 1
+        User.where('lower(first_name) = ?', name[0].downcase)
+      else
+        User.where('lower(first_name) = ? and lower(last_name) = ?', name[0].downcase, name[1].downcase)
+      end
+    else
+      User.where('lower(role) = ?', term.downcase)
+    end
+  end
 end

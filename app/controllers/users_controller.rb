@@ -7,26 +7,10 @@ class UsersController < ApplicationController
     if params[:search].present?
       type = params[:search][:type]
       term = params[:search][:term]
-      if term.present?
-        case type
-        when 'Name'
-          name = term.split
-          # check if only first name
-          if name.count == 1
-            @users = User.where('lower(first_name) = ?', name[0].downcase)
-          else
-            @users = User.where('lower(first_name) = ? and lower(last_name) = ?', name[0].downcase, name[1].downcase)
-          end
-          return @users
-        when 'Role'
-          @users = User.where('lower(role) = ?', term.downcase)
-          return @users
-        else
-          @user = User.all
-        end
-      end
+      @users = User.search_users(type, term)
+    else
+      @users = User.all
     end
-    @users = User.all
   end
 
   # GET /users/1
