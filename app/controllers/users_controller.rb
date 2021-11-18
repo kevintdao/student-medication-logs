@@ -107,36 +107,48 @@ class UsersController < ApplicationController
       password_confirmation: pass
     )
     user.role = @new_user[:user_type]
-    case user.role
-    when 'Admin'
-      role = Admin.new
-    when 'Student'
-      role = Student.new
-    when 'Nurse'
-      role = Nurse.new
-    when 'Parent'
-      role = Parent.new
+    if !user.valid?
+      error_message = user.errors.full_messages[0]
+      flash[:error] = error_message
+      redirect_to users_new_path
+    else
+      case user.role
+      when 'Admin'
+        role = Admin.new
+      when 'Student'
+        role = Student.new
+      when 'Nurse'
+        role = Nurse.new
+      when 'Parent'
+        role = Parent.new
+      end
+      role.save!
+      user.role_id = role.id
+      # user.district_id = @user.district_id
+      user.save!
+      user.send_password_set
+      redirect_to home_index_path
     end
-    role.save!
-    user.role_id = role.id
-    # user.district_id = @user.district_id
-    user.save!
-    user.send_password_set
-    redirect_to home_index_path
   end
 
   def set_password
     @pass = params[:new_pass]
     @user = User.find_by_password_set_token!(params[:format])
     if @user.password_set_sent_at < 2.day.ago
-      flash[:notice] = 'Password set has expired'
+      flash[:error] = 'Password set has expired'
       redirect_to new_password_sets_path
     else
       @user.password = @pass[:password]
       @user.password_confirmation = @pass[:password_confirmation]
-      @user.save!
-      flash[:notice] = 'Password has been set!'
-      redirect_to users_login_path
+      if !@user.valid?
+        error_message = @user.errors.full_messages[0]
+        flash[:error] = error_message
+        redirect_to edit_password_set_url(params[:format])
+      else
+        @user.save!
+        flash[:notice] = 'Password has been set!'
+        redirect_to users_login_path
+      end
     end
   end
 
