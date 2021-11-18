@@ -63,6 +63,7 @@ end
 
 group :test do
   gem 'cucumber-rails', require: false
+  gem 'email_spec'
   gem 'database_cleaner'
   gem 'rspec-expectations'
   gem 'simplecov', require: false
