@@ -20,6 +20,9 @@ Rails.application.routes.draw do
 
   post 'medications/search_meds'
 
+  post 'users/register_district_admin'
+
+  resources :districts
   resources :forms
   resources :events
   resources :inventories
