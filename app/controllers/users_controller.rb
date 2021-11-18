@@ -8,6 +8,10 @@ class UsersController < ApplicationController
       type = params[:search][:type]
       term = params[:search][:term]
       @users = User.search_users(type, term)
+      if @users.blank?
+        flash[:error] = 'No users found!'
+        redirect_to users_path
+      end
     else
       @users = User.all
     end
