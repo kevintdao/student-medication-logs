@@ -1,5 +1,3 @@
-require 'bcrypt'
-
 class User < ActiveRecord::Base
   has_secure_password
   before_save { |user| user.email = user.email.downcase }
@@ -13,6 +11,7 @@ class User < ActiveRecord::Base
   validates :password, confirmation: { case_sensitive: true }
 
   private
+
   def create_session_token
     self.session_token = SecureRandom.urlsafe_base64
   end
