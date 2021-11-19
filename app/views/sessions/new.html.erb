@@ -1,14 +1,26 @@
 <div class="container">
-  <h1>Login</h1>
+  <h1 class="d-flex justify-content-center mb-4 mt-2">Login</h1>
 
-  <%= form_for login_path, url: login_create_path, class: '' do %>
-    <%= label_tag :email, "Email" %>
-    <%= text_field :email, 'email', class: '', id: 'loginEmail' %>
+  <%= form_for login_path, url: login_create_path do %>
+    <div class="form-group row mb-2">
+      <%= label_tag :email, "Email", class: 'col-sm-3 col-form-label' %>
+      <div class="col-sm-8">
+        <%= text_field :email, 'email', class: 'form-control', id: 'loginEmail' %>
+      </div>
+    </div>
 
-    <%= label_tag :password, "Password" %>
-    <%= password_field :password, 'password', class: '', id: 'loginPassword' %>
+    <div class="form-group row mb-2">
+      <%= label_tag :password, "Password", class: 'col-sm-3 col-form-label' %>
+      <div class="col-sm-8">
+        <%= password_field :password, 'password', class: 'form-control', id: 'loginPassword' %>
+      </div>
+    </div>
 
-    <%= submit_tag "Login" %>
+    <div class="form-group row mb-2">
+      <label class="col-sm-3 col-form-label"></label>
+      <div class="col-sm-8">
+        <%= submit_tag "Login", class: 'btn btn-primary mb-2' %>
+      </div>
+    </div>
   <% end %>
-
 </div>

@@ -30,7 +30,7 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:session_token] = nil
-    flash[:notice] = 'Logged out'
+    flash[:notice] = 'Successfully logged out!'
     redirect_to login_path
   end
 end
