@@ -45,6 +45,11 @@ Rails.application.routes.draw do
   resources :events
   resources :inventories
   resources :forms
+
+  resources :sessions, only: [:new, :create, :destroy]
+
+  match '/login', to: 'sessions#create', via: :get
+  match '/logout', to: 'sessions#destroy', via: :delete
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
