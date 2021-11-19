@@ -1,10 +1,5 @@
 Rails.application.routes.draw do
-
-  get 'users/login'
-
   get 'users/register'
-
-  get 'user/register'
 
   get 'home/contact'
 
@@ -38,15 +33,6 @@ Rails.application.routes.draw do
 
   post 'users/register_district_admin'
 
-  resources :forms
-  resources :events
-  resources :inventories
-  resources :medications
-  resources :admins
-  resources :nurses
-  resources :students
-  resources :parents
-  resources :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   root "home#index"
@@ -60,6 +46,11 @@ Rails.application.routes.draw do
   resources :events
   resources :inventories
   resources :forms
+
+
+  match '/login', to: 'sessions#new', via: :get
+  match '/login_create', to: 'sessions#create', via: :post
+  match '/logout', to: 'sessions#destroy', via: :delete
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

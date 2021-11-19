@@ -34,6 +34,20 @@ end
 
 puts "There are now #{Event.count} rows in the events table"
 
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'events.csv'))
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+  m = Event.new
+  m.student_id = row['StudentID']
+  m.nurse_id = row['NurseID']
+  m.med_id = row['MedicationID']
+  m.start_time = row['StartTime']
+  m.end_time = row['EndTime']
+  m.notes = row['Notes']
+  m.completed = row['Completed']
+  m.save
+
 districts = [{}]
 
 users = [
@@ -52,5 +66,5 @@ users = [
 
 users.each do |user|
   User.create!(user)
-end
 
+end
