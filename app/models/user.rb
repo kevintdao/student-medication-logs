@@ -10,18 +10,18 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
   validates :password, confirmation: { case_sensitive: true }
 
-  def self.search_users(type, term)
+  def self.search_users(type, term, district_id)
     return User.all if term.blank?
 
     if type == 'Name'
       name = term.split
       if name.count == 1
-        User.where('lower(first_name) = ?', name[0].downcase)
+        User.where('lower(first_name) = ? and district_id = ?', name[0].downcase, district_id)
       else
-        User.where('lower(first_name) = ? and lower(last_name) = ?', name[0].downcase, name[1].downcase)
+        User.where('lower(first_name) = ? and lower(last_name) = ? and district_id = ?', name[0].downcase, name[1].downcase,district_id)
       end
     else
-      User.where('lower(role) = ?', term.downcase)
+      User.where('lower(role) = ? and district_id = ?', term.downcase, district_id)
     end
   end
 
