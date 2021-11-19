@@ -25,7 +25,18 @@ class SessionsController < ApplicationController
         flash[:notice] = "Successfully login! You are logged in as #{email}"
       end
     end
-    redirect_to users_path
+
+    role = User.find_by_email(email).role
+    case role
+    when 'Admin'
+      redirect_to admins_path
+    when 'Nurse'
+      redirect_to nurses_path
+    when 'Parent'
+      redirect_to parents_path
+    else
+      redirect_to students_path
+    end
   end
 
   def destroy
