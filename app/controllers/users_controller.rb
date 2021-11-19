@@ -5,8 +5,11 @@ class UsersController < ApplicationController
   # GET /users.json
   def index
     # redirect to login if not logged in
-    if @current_user.nil?
+    if @current_user.blank?
       redirect_to login_path and return
+    elsif @current_user.role != 'Admin'
+      flash[:error] = "You don't have access to that page"
+      redirect_to home_index_path and return
     end
 
     district_id = @current_user.district_id
