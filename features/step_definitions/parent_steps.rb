@@ -1,5 +1,5 @@
 Given /^I am on the parent dashboard$/ do
-  visit parents_path_path
+  visit parents_path
 end
 
 Then /^I should see the parent dashboard$/ do
