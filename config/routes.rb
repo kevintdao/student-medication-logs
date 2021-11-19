@@ -15,6 +15,22 @@ Rails.application.routes.draw do
 
   post 'medications/search_meds'
 
+  post 'events/set_page_count'
+
+  post 'events/search_events'
+
+  get 'events/past_events'
+
+  post 'events/set_past_page_count'
+
+  post 'events/search_past_events'
+
+  get 'events/complete'
+
+  get 'events/incomplete'
+
+  post 'events/change_notes'
+
   post 'users/register_district_admin'
 
   # The priority is based upon order of creation: first created -> highest priority.

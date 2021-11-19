@@ -1,5 +1,14 @@
+<html>
+<head>
+  <title>Selt2021Proj02 Event Information</title>
+  <%= stylesheet_link_tag    'events', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag asset_path('favicon.ico') %>
+</head>
+<body>
 <p id="notice"><%= notice %></p>
-
+<div class = 'container'>
 <p>
   <strong>Time:</strong>
   <%= @event.time %>
@@ -7,23 +16,45 @@
 
 <p>
   <strong>Student:</strong>
-  <%= @event.student_id %>
+  <%= @event.student_id %> --
+<!--  <%#= User.where(role: "student", role_id: @event.student_id).first.first_name %> <%#= User.where(role: "student", role_id: @event.student_id).first.last_name %> ---->
+  <%= link_to 'Student Information', User.where(role: "student", role_id: @event.student_id).first, class: "btn btn-primary btn-small" %>
 </p>
 
 <p>
-  <strong>Med:</strong>
-  <%= @event.med_id %>
+  <strong>Medication:</strong>
+  <%= Medication.where(id: @event.med_id).first.brand_name %> --
+  <%= link_to 'More Information', Medication.where(id: @event.med_id).first, class: "btn btn-primary btn-small" %>
 </p>
 
 <p>
   <strong>Complete:</strong>
-  <%= @event.complete %>
+  <% if @event.complete %>
+    Yes --
+  <% else %>
+    No --
+  <% end %>
+  <% if @event.complete%>
+    <%= link_to "Mark Incomplete", events_incomplete_path(:id => @event.id), class: "btn btn-primary btn-small" %>
+  <% else %>
+    <%= link_to "Mark Complete", events_complete_path(:id => @event.id), class: "btn btn-primary btn-small" %>
+  <% end %>
 </p>
 
-<p>
-  <strong>Notes:</strong>
-  <%= @event.notes %>
-</p>
+  <div class="field">
+<%= form_for :notes, :url => events_change_notes_path do |f| %>
+    <div class="field">
+      <strong><%= f.label :notes, "Notes:" %></strong>
+  <%= f.text_area :notes, value: @event.notes ,class: "form-control", :required => true, id:"notes" %>
+  <%= f.hidden_field :id, value: @event.id %>
+  <%= f.hidden_field :complete, value: @event.complete, class: "field" %>
+    </div>
+  <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
+<% end %>
+  </div>
 
-<%= link_to 'Edit', edit_event_path(@event) %> |
-<%= link_to 'Back', events_path %>
+
+<%#= link_to 'Edit', edit_event_path(@event) %>
+</div>
+</body>
+</html>
