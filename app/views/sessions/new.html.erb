@@ -1,0 +1,14 @@
+<div class="container">
+  <h1>Login</h1>
+
+  <%= form_for login_path, url: login_create_path, class: '' do %>
+    <%= label_tag :email, "Email" %>
+    <%= text_field :email, 'email', class: '', id: 'loginEmail' %>
+
+    <%= label_tag :password, "Password" %>
+    <%= password_field :password, 'password', class: '', id: 'loginPassword' %>
+
+    <%= submit_tag "Login" %>
+  <% end %>
+
+</div>

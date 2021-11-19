@@ -1,54 +1,34 @@
 class SessionsController < ApplicationController
-  require 'bcrypt'
   skip_before_filter :set_current_user
-  def new
 
+  def new
   end
 
   def create
-    if(params[:email][:email].blank?)
-      flash[:notice] = "Invalid email"
-      redirect_to users_login_path
-    elsif(params[:password][:password].blank?)
+    email = params[:email][:email]
+    password = params[:password][:password]
 
-      flash[:notice] = "Invalid password"
-      redirect_to users_login_path
+    if email.blank? || password.blank?
+      flash[:error] = 'Email and/or password field are blank'
+      redirect_to login_path and return
+    elsif User.where(email: email).empty?
+      flash[:error] = 'Invalid email/password combination'
+      redirect_to login_path and return
     else
-      decrypt_password = BCrypt::Password.create(params[:password][:password])
-      email = params[:email][:email]
-      if(User.where(:email => email).where(:password_digest => decrypt_password))
-        flash[:notice] = "login successful"
-        # session_token = SecureRandom.urlsafe_base64
-        # User.where(:email => email).where(:password_digest => decrypt_password).session_token = session_token
-        # User.save!
-        # session[:session_token] = session_token
-        session[:session_token] = User.where(:email => email).where(:password_digest => decrypt_password).session_token
-        redirect_to home_index_path
+      stored_password = BCrypt::Password.new(User.find_by(email: email).password_digest)
+      if stored_password != password
+        flash[:error] = 'Invalid email/password combination'
+        redirect_to login_path and return
       else
-        flash[:notice] = "There is no user with this email/password"
-        redirect_to users_login_path
+        session_token = User.find_by(email: email).session_token
+        session[:session_token] = session_token
+        flash[:notice] = "Successfully login! You are logged in as #{email}"
       end
     end
+    redirect_to users_path
   end
 
   def destroy
     reset_session
   end
 end
-#   def create
-#     user = User.find_by_email(params[:session][:email])
-#     if user && user.authenticate(params[:session][:password])
-#       session[:session_token] = user.session_token
-#       @current_user = user
-#       redirect_to home_index_path
-#     else
-#       flash.now[:warning] = "Invalid email/password combination"
-#       redirect_to users_login_path
-#     end
-#   end
-#   def destroy
-#     session.delete(:session_token)
-#     flash[:notice] = "logged out successfully"
-#     redirect_to home_index_path
-#   end
-# end
