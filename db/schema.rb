@@ -30,13 +30,13 @@ ActiveRecord::Schema.define(version: 20211111023742) do
   end
 
   create_table "events", force: :cascade do |t|
+    t.datetime "time"
     t.integer  "student_id"
-    t.integer  "nurse_id"
     t.integer  "med_id"
-    t.datetime "start_at", null: false
-    t.datetime "end_at", null: false
-    t.string   "notes"
     t.boolean  "complete"
+    t.string   "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "forms", force: :cascade do |t|
