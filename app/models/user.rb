@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   validates :password, confirmation: { case_sensitive: true }
 
   def self.search_users(type, term, district_id)
-    return User.all if term.blank?
+    return User.where(district_id: district_id) if term.blank?
 
     if type == 'Name'
       name = term.split
