@@ -23,7 +23,7 @@ require 'csv'
 puts "There are now #{Medication.count} rows in the medications table"
 
 events = [{time: DateTime.new(2021, 12, 15, 15, 0, 0), student_id: 1, med_id: 35, complete: false, notes: "This is a notes field for this event.", district: 1},
-{time: DateTime.new(2021, 12, 14, 12, 0, 0), student_id: 2, med_id: 32, complete: false},
+          {time: DateTime.new(2021, 12, 14, 12, 0, 0), student_id: 2, med_id: 32, complete: false},
           {time: DateTime.new(2021, 12, 1, 9, 45, 0), student_id: 3, med_id: 400, complete: false, notes: "Here is a note for this event", district: 2},
           {time: DateTime.new(2021, 12, 5, 14, 30, 0), student_id: 1, med_id: 345, complete: false, notes: "Notes go into this field", district: 1},
           {time: DateTime.new(2021, 12, 10, 8, 0, 0), student_id: 4, med_id: 554, complete: true, notes: "This is an example of a completed event"}, district: 1]
@@ -47,6 +47,7 @@ csv.each do |row|
   m.notes = row['Notes']
   m.completed = row['Completed']
   m.save
+end
 
 districts = [{}]
 
@@ -66,5 +67,4 @@ users = [
 
 users.each do |user|
   User.create!(user)
-
 end
