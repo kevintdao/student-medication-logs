@@ -7,7 +7,7 @@ describe User do
     users = User.search_users('Name', '', '1')
     expect(users[0].first_name).to eq('Admin')
     expect(users[0].last_name).to eq('Apple')
-    expect(users.count).to eq(4)
+    expect(users.count).to eq(2)
   end
   context 'search by name' do
     it 'should return users with the searched first name' do

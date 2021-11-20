@@ -17,7 +17,7 @@ describe UsersController do
     end
     it 'should redirect to the login page' do
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       allow(District).to receive(:create_district).and_return(fake_results)
       allow(fake_results).to receive(:id).and_return(fake_id)
       post :register_district_admin, @register_params
@@ -29,7 +29,7 @@ describe UsersController do
       pre_user_entries_length = User.all.length
       pre_admin_entries_length = Admin.all.length
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       allow(District).to receive(:create_district).and_return(fake_results)
       allow(fake_results).to receive(:id).and_return(fake_id)
       post :register_district_admin, @register_params
@@ -40,14 +40,14 @@ describe UsersController do
     end
     it 'should call the District model method to create a school district' do
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       expect(District).to receive(:create_district).with('New Lake Schools', '1234 1st Avenue', nil, 'Lakewood', 'IA', '52253').and_return(fake_results)
       expect(fake_results).to receive(:id).and_return(fake_id)
       post :register_district_admin, @register_params
     end
     it 'should validate that first name is present and not redirect to login page' do
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       allow(District).to receive(:create_district).with('New Lake Schools', '1234 1st Avenue', nil, 'Lakewood', 'IA', '52253').and_return(fake_results)
       allow(fake_results).to receive(:id).and_return(fake_id)
       no_first_name = @register_params.deep_dup
@@ -59,7 +59,7 @@ describe UsersController do
     end
     it 'should validate that last name is present and not redirect to login page' do
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       allow(District).to receive(:create_district).with('New Lake Schools', '1234 1st Avenue', nil, 'Lakewood', 'IA', '52253').and_return(fake_results)
       allow(fake_results).to receive(:id).and_return(fake_id)
       no_last_name = @register_params.deep_dup
@@ -71,7 +71,7 @@ describe UsersController do
     end
     it 'should validate that email is present and not redirect to login page' do
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       allow(District).to receive(:create_district).with('New Lake Schools', '1234 1st Avenue', nil, 'Lakewood', 'IA', '52253').and_return(fake_results)
       allow(fake_results).to receive(:id).and_return(fake_id)
       no_email = @register_params.deep_dup
@@ -83,7 +83,7 @@ describe UsersController do
     end
     it 'should validate that password matches password confirmation' do
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       allow(District).to receive(:create_district).with('New Lake Schools', '1234 1st Avenue', nil, 'Lakewood', 'IA', '52253').and_return(fake_results)
       allow(fake_results).to receive(:id).and_return(fake_id)
       new_password_confirmation = @register_params.deep_dup
@@ -95,7 +95,7 @@ describe UsersController do
     end
     it 'should only accept unique email addresses' do
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       allow(District).to receive(:create_district).with('New Lake Schools', '1234 1st Avenue', nil, 'Lakewood', 'IA', '52253').and_return(fake_results)
       allow(fake_results).to receive(:id).and_return(fake_id)
       post :register_district_admin, @register_params
@@ -111,7 +111,7 @@ describe UsersController do
     context 'search users' do
       it 'should call the model method that search users' do
         user = double('admin1')
-        expect(User).to receive(:search_users).with('Name', 'admin', '1').and_return(user)
+        expect(User).to receive(:search_users).with('Name', 'admin', 1).and_return(user)
         get :index, { search: { type: 'Name', term: 'admin' } }
       end
       it 'should return all users when search term is empty' do
@@ -119,7 +119,7 @@ describe UsersController do
         expect(response).to render_template('index')
       end
       it 'should flash error message if no users exists' do
-        allow(User).to receive(:search_users).with('Name', 'asdf', '1').and_return(nil)
+        allow(User).to receive(:search_users).with('Name', 'asdf', 1).and_return(nil)
         get :index, { search: { type: 'Name', term: 'asdf' } }
         expect(flash[:error]).to eq('No users found!')
         expect(response).to redirect_to(users_path)
