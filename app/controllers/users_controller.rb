@@ -139,7 +139,7 @@ class UsersController < ApplicationController
     @user = User.find_by_password_set_token!(params[:format])
     if @user.password_set_sent_at < 2.day.ago
       flash[:error] = 'Password set has expired'
-      redirect_to new_password_sets_path
+      redirect_to home_index_path
     else
       @user.password = @pass[:password]
       @user.password_confirmation = @pass[:password_confirmation]

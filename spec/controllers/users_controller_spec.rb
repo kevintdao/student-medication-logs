@@ -15,6 +15,13 @@ describe UsersController do
                                        :password => 'hellothere',
                                        :password_confirmation => 'hellothere'}}
     end
+    after :each do
+      delete_user = User.where(:email => 'b.smith@outlook.com')[0]
+      unless delete_user.nil?
+        Admin.delete(delete_user.role_id)
+        User.delete(delete_user.id)
+      end
+    end
     it 'should redirect to the login page' do
       fake_results = double('District')
       fake_id = double('Int')
@@ -112,7 +119,23 @@ describe UsersController do
                                  :last_name => 'Smith',
                                  :email => 'b.smith@outlook.com'}}
     end
-    it 'should save Student to the Users table and Student table in database' do
+    after :each do
+      delete_user = User.where(:email => 'b.smith@outlook.com')[0]
+      unless delete_user.nil?
+        case delete_user.role
+        when 'Admin'
+          Admin.delete(delete_user.role_id)
+        when 'Student'
+          Student.delete(delete_user.role_id)
+        when 'Parent'
+          Parent.delete(delete_user.role_id)
+        when 'Nurse'
+          Nurse.delete(delete_user.role_id)
+        end
+        User.delete(delete_user.id)
+      end
+    end
+    it 'should save Student the database' do
       pre_users_length = User.all.length
       pre_students_length = Student.all.length
       allow(User).to receive(:send_password_set)
@@ -192,7 +215,74 @@ describe UsersController do
       expect(flash[:error]).to eq('Email has already been taken')
     end
   end
-  # describe 'user sets new password' do
-  #
-  # end
+  describe 'user sets new password' do
+    before :all do
+      # @user = User.new(
+      #   first_name: 'Betsy',
+      #   last_name: 'Smith',
+      #   email: 'b.smith@outlook.com',
+      #   role: 'Student',
+      #   password: '123456',
+      #   password_confirmation: '123456',
+      #
+      # )
+      @user = User.where(:email => 'studenta@gmail.com')[0]
+      @user.password = '123456'
+      @user.password_confirmation = '123456'
+      @user.password_set_token = SecureRandom.urlsafe_base64
+      @user.password_set_sent_at = Time.zone.now
+      @user.save!
+      @new_password = {:new_pass => {:password => 'password1',
+                                     :password_confirmation => 'password1' },
+                       :format => @user.password_set_token }
+    end
+    after :each do
+      delete_user = User.where(:email => 'b.smith@outlook.com')[0]
+      unless delete_user.nil?
+        User.delete(delete_user.id)
+      end
+    end
+    it 'should save a new password to the database' do
+      old_password = User.where(:email => 'studenta@gmail.com')[0].password_digest
+      post :set_password, @new_password
+      new_password = User.where(:email => 'studenta@gmail.com')[0].password_digest
+      expect(new_password).not_to eq(old_password)
+    end
+    it 'should redirect to the login page' do
+      post :set_password, @new_password
+      expect(response).to redirect_to(login_path)
+    end
+    it 'should validate that a password is present' do
+      no_password = @new_password.deep_dup
+      no_password[:new_pass][:password] = ''
+      post :set_password, no_password
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq("Password can't be blank")
+      expect(response).not_to redirect_to(login_path)
+    end
+    it 'should validate that a password confirmation is present' do
+      no_password_confirm = @new_password.deep_dup
+      no_password_confirm[:new_pass][:password_confirmation] = ''
+      post :set_password, no_password_confirm
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq("Password confirmation doesn't match Password")
+      expect(response).not_to redirect_to(login_path)
+    end
+    it 'should validate that the password matches the password confirmation' do
+      different_password_confirm = @new_password.deep_dup
+      different_password_confirm[:new_pass][:password_confirmation] = 'wrongPassword1'
+      post :set_password, different_password_confirm
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq("Password confirmation doesn't match Password")
+      expect(response).not_to redirect_to(login_path)
+    end
+    it 'should validate that the set password token has expired after 2 days' do
+      @user.password_set_sent_at = 2.days.ago
+      @user.save!
+      post :set_password, @new_password
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq('Password set has expired')
+      expect(response).not_to redirect_to(login_path)
+    end
+  end
 end
