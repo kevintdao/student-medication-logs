@@ -20,7 +20,7 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    if !(@current_user.session_token.present? && @current_user.role == 'Admin')
+    if !(@current_user.present? && @current_user.role == 'Admin')
       flash[:error] = 'Please login as an Admin to continue.'
       redirect_to login_path
     end
