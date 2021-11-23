@@ -1,0 +1,40 @@
+#spec/fixtures/users.yml
+admin1:
+  id: 1
+  first_name: Admin
+  last_name: Apple
+  email: admin1@gmail.com
+  password_digest: 123456
+  role: Admin
+  role_id: 1
+  district_id: 1
+
+nurse1:
+  id: 2
+  first_name: Nurse
+  last_name: Bob
+  email: nurse1@gmail.com
+  password_digest: 123456
+  role: Nurse
+  role_id: 2
+  district_id: 1
+
+admin2:
+  id: 3
+  first_name: Admin
+  last_name: Annie
+  email: admin2@gmail.com
+  password_digest: 123456
+  role: Admin
+  role_id: 1
+  district_id: 2
+
+nurse2:
+  id: 4
+  first_name: Nurse
+  last_name: Caitlyn
+  email: nurse2@gmail.com
+  password_digest: 123456
+  role: Nurse
+  role_id: 2
+  district_id: 2

@@ -23,7 +23,7 @@ require 'csv'
 puts "There are now #{Medication.count} rows in the medications table"
 
 events = [{time: DateTime.new(2021, 12, 15, 15, 0, 0), student_id: 1, med_id: 35, complete: false, notes: "This is a notes field for this event.", district: 1},
-{time: DateTime.new(2021, 12, 14, 12, 0, 0), student_id: 2, med_id: 32, complete: false},
+          {time: DateTime.new(2021, 12, 14, 12, 0, 0), student_id: 2, med_id: 32, complete: false},
           {time: DateTime.new(2021, 12, 1, 9, 45, 0), student_id: 3, med_id: 400, complete: false, notes: "Here is a note for this event", district: 2},
           {time: DateTime.new(2021, 12, 5, 14, 30, 0), student_id: 1, med_id: 345, complete: false, notes: "Notes go into this field", district: 1},
           {time: DateTime.new(2021, 12, 10, 8, 0, 0), student_id: 4, med_id: 554, complete: true, notes: "This is an example of a completed event"}, district: 1]
@@ -33,3 +33,23 @@ events.each do |user|
 end
 
 puts "There are now #{Event.count} rows in the events table"
+
+districts = [{}]
+
+users = [
+  { email: 'admin1@gmail.com', first_name: 'Admin', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Admin', role_id: 1, district_id: 1 },
+  { email: 'nurse1@gmail.com', first_name: 'Nurse', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Nurse', role_id: 2, district_id: 1 },
+  { email: 'parent1a@gmail.com', first_name: 'Parent', last_name: '1A', password: '123456', password_confirmation: '123456', role: 'Parent', role_id: 3, district_id: 1 },
+  { email: 'parent1b@gmail.com', first_name: 'Parent', last_name: '1B', password: '123456', password_confirmation: '123456', role: 'Parent', role_id: 3, district_id: 1 },
+  { email: 'studenta@gmail.com', first_name: 'Student', last_name: 'A', password: '123456', password_confirmation: '123456', role: 'Student', role_id: 4, district_id: 1 },
+  { email: 'studentb@gmail.com', first_name: 'Student', last_name: 'B', password: '123456', password_confirmation: '123456', role: 'Student', role_id: 4, district_id: 1 },
+  { email: 'studentc@gmail.com', first_name: 'Student', last_name: 'C', password: '123456', password_confirmation: '123456', role: 'Student', role_id: 4, district_id: 1 },
+  { email: 'admin2@gmail.com', first_name: 'Admin', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Admin', role_id: 1, district_id: 2 },
+  { email: 'nurse2@gmail.com', first_name: 'Nurse', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Nurse', role_id: 2, district_id: 2 },
+  { email: 'parent2@gmail.com', first_name: 'Parent', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Parent', role_id: 3, district_id: 2 },
+  { email: 'student2@gmail.com', first_name: 'Student', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Student', role_id: 4, district_id: 2 }
+]
+
+users.each do |user|
+  User.create!(user)
+end
