@@ -109,7 +109,7 @@ class UsersController < ApplicationController
   end
 
   def create_and_email
-    # @user = @current_user
+    @user = @current_user
     @new_user = params[:new_user]
     pass = SecureRandom.hex # generate random hex value as password
     user = User.new(
@@ -137,7 +137,7 @@ class UsersController < ApplicationController
       end
       role.save!
       user.role_id = role.id
-      # user.district_id = @user.district_id
+      user.district_id = @user.district_id
       user.save!
       user.send_password_set
       redirect_to home_index_path
