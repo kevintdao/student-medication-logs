@@ -1,13 +1,5 @@
 Rails.application.routes.draw do
-
-
-  get 'users/login'
-
-  get 'users/new'
-
   get 'users/register'
-
-  get 'user/register'
 
   get 'home/contact'
 
@@ -53,6 +45,11 @@ Rails.application.routes.draw do
   resources :events
   resources :inventories
   resources :forms
+
+
+  match '/login', to: 'sessions#new', via: :get
+  match '/login_create', to: 'sessions#create', via: :post
+  match '/logout', to: 'sessions#destroy', via: :delete
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 

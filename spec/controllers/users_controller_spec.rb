@@ -23,7 +23,7 @@ describe UsersController do
       post :register_district_admin, @register_params
       expect(flash[:message]).to be_present
       expect(flash[:message]).to eq('Successfully registered your account.')
-      expect(response).to redirect_to(users_login_path)
+      expect(response).to redirect_to(login_path)
     end
     it 'should add a admin user to the database' do
       pre_user_entries_length = User.all.length
@@ -55,7 +55,7 @@ describe UsersController do
       post :register_district_admin, no_first_name
       expect(flash[:error]).to be_present
       expect(flash[:error]).to eq("First name can't be blank")
-      expect(response).not_to redirect_to(users_login_path)
+      expect(response).not_to redirect_to(login_path)
     end
     it 'should validate that last name is present and not redirect to login page' do
       fake_results = double('District')
@@ -67,7 +67,7 @@ describe UsersController do
       post :register_district_admin, no_last_name
       expect(flash[:error]).to be_present
       expect(flash[:error]).to eq("Last name can't be blank")
-      expect(response).not_to redirect_to(users_login_path)
+      expect(response).not_to redirect_to(login_path)
     end
     it 'should validate that email is present and not redirect to login page' do
       fake_results = double('District')
@@ -79,7 +79,7 @@ describe UsersController do
       post :register_district_admin, no_email
       expect(flash[:error]).to be_present
       expect(flash[:error]).to eq("Email can't be blank")
-      expect(response).not_to redirect_to(users_login_path)
+      expect(response).not_to redirect_to(login_path)
     end
     it 'should validate that password matches password confirmation' do
       fake_results = double('District')
@@ -91,7 +91,7 @@ describe UsersController do
       post :register_district_admin, new_password_confirmation
       expect(flash[:error]).to be_present
       expect(flash[:error]).to eq("Password confirmation doesn't match Password")
-      expect(response).not_to redirect_to(users_login_path)
+      expect(response).not_to redirect_to(login_path)
     end
     it 'should only accept unique email addresses' do
       fake_results = double('District')
@@ -102,7 +102,7 @@ describe UsersController do
       post :register_district_admin, @register_params
       expect(flash[:error]).to be_present
       expect(flash[:error]).to eq('Email has already been taken')
-      expect(response).not_to redirect_to(users_login_path)
+      expect(response).not_to redirect_to(login_path)
     end
   end
   describe 'admin creates user' do
