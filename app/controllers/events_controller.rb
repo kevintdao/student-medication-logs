@@ -6,10 +6,9 @@ class EventsController < ApplicationController
   def index
     #TODO -- when login is set up, show only events with matching district ID
     # TODO -- switch table to display student names and medication names
-    @pages = 25 #session[:page_count]
-    @selection = "Ibuprofen" #session[:search_term]
-    puts params
-    puts session.inspect
+    # session["init"] = true
+    @pages = session[:page_count]
+    @selection = session[:search_term]
 
     if @pages.nil?
       if @selection.nil? or @selection.blank?
@@ -45,24 +44,32 @@ class EventsController < ApplicationController
   end
 
   def set_page_count
-    @pages = params[:page_count][:page_count]
-    session[:page_count] = @pages.to_i
+    unless params[:page_count].nil?
+      @pages = params[:page_count][:page_count]
+      session[:page_count] = @pages.to_i
+    end
     redirect_to events_path
   end
 
   def search_events
-    session[:search_term] = params[:search_term][:search_term]
+    unless params[:search_term].nil?
+      session[:search_term] = params[:search_term][:search_term]
+    end
     redirect_to events_path
   end
 
   def set_past_page_count
-    @pages = params[:page_count][:page_count]
-    session[:page_count] = @pages.to_i
+    unless params[:page_count].nil?
+      @pages = params[:page_count][:page_count]
+      session[:page_count] = @pages.to_i
+    end
     redirect_to events_past_events_path
   end
 
   def search_past_events
-    session[:search_term] = params[:search_term][:search_term]
+    unless params[:search_term].nil?
+      session[:search_term] = params[:search_term][:search_term]
+    end
     redirect_to events_past_events_path
   end
 
