@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 20211117235310) do
     t.string   "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "district"
   end
 
   create_table "forms", force: :cascade do |t|

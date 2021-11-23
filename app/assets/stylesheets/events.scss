@@ -1,0 +1,41 @@
+.field {
+  padding-bottom: 15px;
+}
+
+.btn-small {
+  height: fit-content;
+  width: fit-content;
+  background-color: lightblue;
+  color: black;
+}
+
+.btn-center {
+  text-align: center;
+  display: table-cell;
+  vertical-align: middle;
+  justify-content: center;
+  align-items: center;
+}
+
+table {
+  table-layout:fixed;
+}
+
+td {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  white-space: nowrap;
+}
+
+.pagination {
+  justify-content: center;
+}
+
+.fr {
+  float: right;
+}
+
+.fl {
+  float: left;
+}

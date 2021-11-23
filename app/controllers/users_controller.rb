@@ -4,14 +4,24 @@ class UsersController < ApplicationController
   # GET /users
   # GET /users.json
   def index
-    if params[:search_term].present?
-      name = params[:search_term][:search_term]
-      if name.present?
-        @users = User.where('lower(first_name) = ?', name.downcase)
-        return @users
-      end
+    # redirect to login if not logged in
+    if @current_user.blank?
+      redirect_to login_path and return
     end
-    @users = User.all
+
+    district_id = @current_user.district_id
+
+    if params[:search].present?
+      type = params[:search][:type]
+      term = params[:search][:term]
+      @users = User.search_users(type, term, district_id)
+      if @users.blank?
+        flash[:error] = 'No users found!'
+        redirect_to users_path
+      end
+    else
+      @users = User.where(district_id: district_id)
+    end
   end
 
   # GET /users/1

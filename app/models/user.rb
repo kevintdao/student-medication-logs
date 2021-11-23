@@ -1,5 +1,3 @@
-require 'bcrypt'
-
 class User < ActiveRecord::Base
   has_secure_password
   before_save { |user| user.email = user.email.downcase }
@@ -19,6 +17,21 @@ class User < ActiveRecord::Base
     self.password_set_sent_at = Time.zone.now
     save!
     ApplicationMailer.set_password(self).deliver
+  end
+
+  def self.search_users(type, term, district_id)
+    return User.where(district_id: district_id) if term.blank?
+
+    if type == 'Name'
+      name = term.split
+      if name.count == 1
+        User.where('lower(first_name) = ? and district_id = ?', name[0].downcase, district_id)
+      else
+        User.where('lower(first_name) = ? and lower(last_name) = ? and district_id = ?', name[0].downcase, name[1].downcase,district_id)
+      end
+    else
+      User.where('lower(role) = ? and district_id = ?', term.downcase, district_id)
+    end
   end
 
   private

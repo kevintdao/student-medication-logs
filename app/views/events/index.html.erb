@@ -1,35 +1,55 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Listing Events</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Time</th>
-      <th>Student</th>
-      <th>Med</th>
-      <th>Complete</th>
-      <th>Notes</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @events.each do |event| %>
-      <tr>
-        <td><%= event.time %></td>
-        <td><%= event.student_id %></td>
-        <td><%= event.med_id %></td>
-        <td><%= event.complete %></td>
-        <td><%= event.notes %></td>
-        <td><%= link_to 'Show', event %></td>
-        <td><%= link_to 'Edit', edit_event_path(event) %></td>
-        <td><%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+<head>
+  <title>Selt2021Proj02 Events Page</title>
+  <%= stylesheet_link_tag    'events', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag asset_path('favicon.ico') %>
+</head>
+<div class="container">
+  <h1>Incomplete Events</h1>
+  <div class="input-group">
+    <div class="form-outline fl">
+      <%= form_for :search_term, :url => events_search_events_path do |f|  %>
+        <%= f.text_field :search_term, class: "form-control", :html => {:id => "form1", :name => "form1"}, id:"form1"%>
+        </div>
+        <%= f.submit :Search, class: "btn btn-primary", id: "submit"%>
+      <% end %>
+      </div>
+  <div class="fr">
+    <%= form_for :page_count, :url => events_set_page_count_path do |f|  %>
+      <div class="form-group"
+      <%= f.label :page_count, "Results per page: " %>
+      <%= f.select :page_count, options_for_select([10, 25, 35, 50, 75, 100, 250], @pages), {}, :onchange => 'this.form.submit()'%>
+      </div>
     <% end %>
+    </div>
+<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  <thead>
+  <tr>
+    <th class="th-sm">Student
+    </th>
+    <th class="th-sm">Time
+    </th>
+    <th class="th-sm">Medication
+    </th>
+    <th class="th-sm">Notes
+    </th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @events.each do |event| %>
+    <tr>
+      <td><%= event.student_id %></td>
+      <td><%= event.time %></td>
+      <td><%= Medication.where(id: event.med_id).first.brand_name %></td>
+      <td><%= event.notes %></td>
+      <td class="btn-center"><%= link_to 'More Information', event, id:event.student_id, class: "btn btn-primary btn-small" %></td>
+    </tr>
+  <% end %>
   </tbody>
 </table>
-
+<div class="pagination">
+  <%= will_paginate @events, renderer: WillPaginate::ActionView::BootstrapLinkRenderer%>
+</div>
+</div>
 <br>
-
-<%= link_to 'New Event', new_event_path %>
