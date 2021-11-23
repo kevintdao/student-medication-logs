@@ -138,7 +138,7 @@ describe UsersController do
     it 'should save Student the database' do
       pre_users_length = User.all.length
       pre_students_length = Student.all.length
-      allow(User).to receive(:send_password_set)
+      allow(@new_user).to receive(:send_password_set)
       new_student = @new_user.deep_dup
       new_student[:new_user][:user_type] = 'Student'
       post :create_and_email, new_student
@@ -150,7 +150,7 @@ describe UsersController do
     it 'should save Parent to the database' do
       pre_users_length = User.all.length
       pre_parents_length = Parent.all.length
-      allow(User).to receive(:send_password_set)
+      allow(@new_user).to receive(:send_password_set)
       new_parent = @new_user.deep_dup
       new_parent[:new_user][:user_type] = 'Parent'
       post :create_and_email, new_parent
@@ -162,7 +162,7 @@ describe UsersController do
     it 'should save Nurse to the database' do
       pre_users_length = User.all.length
       pre_nurse_length = Nurse.all.length
-      allow(User).to receive(:send_password_set)
+      allow(@new_user).to receive(:send_password_set)
       new_nurse = @new_user.deep_dup
       new_nurse[:new_user][:user_type] = 'Nurse'
       post :create_and_email, new_nurse
@@ -174,7 +174,7 @@ describe UsersController do
     it 'should save Admin to the database' do
       pre_users_length = User.all.length
       pre_admin_length = Admin.all.length
-      allow(User).to receive(:send_password_set)
+      allow(@new_user).to receive(:send_password_set)
       new_admin = @new_user.deep_dup
       new_admin[:new_user][:user_type] = 'Admin'
       post :create_and_email, new_admin
@@ -184,7 +184,7 @@ describe UsersController do
       expect(post_admin_length).to eq(pre_admin_length + 1)
     end
     it 'should validate that first name is present' do
-      allow(User).to receive(:send_password_set)
+      allow(@new_user).to receive(:send_password_set)
       no_first_name = @new_user.deep_dup
       no_first_name[:new_user][:first_name] = ' '
       post :create_and_email, no_first_name
@@ -192,7 +192,7 @@ describe UsersController do
       expect(flash[:error]).to eq("First name can't be blank")
     end
     it 'should validate that last name is present' do
-      allow(User).to receive(:send_password_set)
+      allow(@new_user).to receive(:send_password_set)
       no_last_name = @new_user.deep_dup
       no_last_name[:new_user][:last_name] = ' '
       post :create_and_email, no_last_name
@@ -200,7 +200,7 @@ describe UsersController do
       expect(flash[:error]).to eq("Last name can't be blank")
     end
     it 'should validate that email address is present' do
-      allow(User).to receive(:send_password_set)
+      allow(@new_user).to receive(:send_password_set)
       no_email = @new_user.deep_dup
       no_email[:new_user][:email] = ' '
       post :create_and_email, no_email
@@ -208,7 +208,7 @@ describe UsersController do
       expect(flash[:error]).to eq("Email can't be blank")
     end
     it 'should only accept unique email addresses' do
-      allow(User).to receive(:send_password_set)
+      allow(@new_user).to receive(:send_password_set)
       post :create_and_email, @new_user
       post :create_and_email, @new_user
       expect(flash[:error]).to be_present
