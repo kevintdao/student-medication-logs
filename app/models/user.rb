@@ -13,17 +13,18 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
   validates :password, confirmation: { case_sensitive: true }
 
-  private
-
-  def create_session_token
-    self.session_token = SecureRandom.urlsafe_base64
-  end
 
   def send_password_set
     generate_token(:password_set_token)
     self.password_set_sent_at = Time.zone.now
     save!
     ApplicationMailer.set_password(self).deliver
+  end
+
+  private
+
+  def create_session_token
+    self.session_token = SecureRandom.urlsafe_base64
   end
 
   def generate_token(column)

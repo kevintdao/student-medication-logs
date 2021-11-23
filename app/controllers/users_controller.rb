@@ -150,7 +150,7 @@ class UsersController < ApplicationController
       else
         @user.save!
         flash[:notice] = 'Password has been set!'
-        redirect_to users_login_path
+        redirect_to login_path
       end
     end
   end

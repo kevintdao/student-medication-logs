@@ -5,6 +5,7 @@ Feature:
 
 
   Scenario: Invite a new user to the School District
+    Given I am logged in as an admin
     Given I am on the create users page
     When I select "Nurse" from "User Type"
     And I enter "William" as "First Name"
@@ -15,6 +16,7 @@ Feature:
     And "test.user@email.com" should receive an email with subject "Set Password For SML"
 
   Scenario: New User receives email and sets up password
+    Given I am logged in as an admin
     Given I am on the create users page
     When I select "Nurse" from "User Type"
     And I enter "William" as "First Name"
@@ -22,17 +24,18 @@ Feature:
     And I enter "test.user@email.com" as "Email Address"
     And I click Invite User
     And "test.user@email.com" should receive an email with subject "Set Password For SML"
-    When I open the email
-    Then I should see "Set Password" in the email body
-    When I follow "Set Password" in the email
-    Then I should see "Set an Account Password"
-    When I enter "hi1234" as "Password"
-    And I enter "hi1234" as "Password Confirmation"
-    And I click Set Password
-    Then I should be on the login page
+    When they open the email
+    Then they should see "Set Password" in the email body
+    When they follow "Set Password" in the email
+    Then they should see "Set an Account Password"
+    When they enter "hi1234" as "Password"
+    And they enter "hi1234" as "Password Confirmation"
+    And they click Set Password
+    Then they should be on the login page
 
 
   Scenario: New User receives email and sets up password with wrong password confirmation
+    Given I am logged in as an admin
     Given I am on the create users page
     When I select "Nurse" from "User Type"
     And I enter "William" as "First Name"
@@ -40,16 +43,17 @@ Feature:
     And I enter "test.user@email.com" as "Email Address"
     And I click Invite User
     And "test.user@email.com" should receive an email with subject "Set Password For SML"
-    When I open the email
-    Then I should see "Set Password" in the email body
-    When I follow "Set Password" in the email
-    Then I should see "Set an Account Password"
-    When I enter "hi1234" as "Password"
-    And I enter "helloworld" as "Password Confirmation"
-    And I click Set Password
-    Then I should not be on the login page
+    When they open the email
+    Then they should see "Set Password" in the email body
+    When they follow "Set Password" in the email
+    Then they should see "Set an Account Password"
+    When they enter "hi1234" as "Password"
+    And they enter "helloworld" as "Password Confirmation"
+    And they click Set Password
+    Then they should not be on the login page
 
   Scenario: Admin leaves first name field empty when creating a user
+    Given I am logged in as an admin
     Given I am on the create users page
     When I select "Nurse" from "User Type"
     And I enter "Robert" as "Last Name"
@@ -58,6 +62,7 @@ Feature:
     And "test.user@email.com" should receive no email with subject "Set Password For SML"
 
   Scenario: Admin leaves last name field empty when creating a user
+    Given I am logged in as an admin
     Given I am on the create users page
     When I select "Nurse" from "User Type"
     And I enter "William" as "First Name"
@@ -66,6 +71,7 @@ Feature:
     And "test.user@email.com" should receive no email with subject "Set Password For SML"
 
   Scenario: Admin leaves email field empty when creating a user
+    Given I am logged in as an admin
     Given I am on the create users page
     When I select "Nurse" from "User Type"
     And I enter "William" as "First Name"

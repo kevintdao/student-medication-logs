@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'home/index'
 
+  get 'users/new'
+
   post 'home/send_contact_message'
 
   post 'medications/set_page_count'
