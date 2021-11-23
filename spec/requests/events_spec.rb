@@ -162,4 +162,21 @@ RSpec.describe "Events", type: :request do
       expect(response).to redirect_to(events_path)
     end
   end
+  describe "POST events/change_notes" do
+    it "should redirect to events_path by default" do
+      post events_change_notes_path
+      expect(response).to redirect_to(events_path)
+    end
+    it "should set instance variables correctly" do
+      post events_change_notes_path, notes: {notes: "This is a new note", id: -1, complete: false}
+      expect(assigns(:newNotes)).to eq("This is a new note")
+      expect(assigns(:id)).to eq("-1")
+      expect(assigns(:complete)).to eq("false")
+      expect(flash[:notice]).to eq("Notes have been updated successfully")
+    end
+    it "should redirect to events_past_events_path when the event is complete" do
+      post events_change_notes_path, notes: {notes: "This is a new note", id: -1, complete: true}
+      expect(response).to redirect_to(events_past_events_path)
+    end
+  end
 end

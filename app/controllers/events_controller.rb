@@ -96,12 +96,15 @@ class EventsController < ApplicationController
   end
 
   def change_notes
-    @newNotes = params[:notes][:notes]
-    @id = params[:notes][:id]
-    @complete = params[:notes][:complete]
-    @event = Event.where(id: @id).update_all(notes: @newNotes)
-    flash[:notice] = "Notes have been updated successfully"
-    puts @complete.class
+    if params[:notes].nil?
+      flash[:error] = "There was a problem editing this note"
+    else
+      @newNotes = params[:notes][:notes]
+      @id = params[:notes][:id]
+      @complete = params[:notes][:complete]
+      @event = Event.where(id: @id).update_all(notes: @newNotes)
+      flash[:notice] = "Notes have been updated successfully"
+    end
     if @complete == 'true'
       redirect_to events_past_events_path
     else
