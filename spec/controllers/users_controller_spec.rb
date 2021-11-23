@@ -217,15 +217,6 @@ describe UsersController do
   end
   describe 'user sets new password' do
     before :all do
-      # @user = User.new(
-      #   first_name: 'Betsy',
-      #   last_name: 'Smith',
-      #   email: 'b.smith@outlook.com',
-      #   role: 'Student',
-      #   password: '123456',
-      #   password_confirmation: '123456',
-      #
-      # )
       @user = User.where(:email => 'studenta@gmail.com')[0]
       @user.password = '123456'
       @user.password_confirmation = '123456'
