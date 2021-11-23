@@ -74,16 +74,24 @@ class EventsController < ApplicationController
   end
 
   def complete
-    @eventID = params[:id]
-    @event = Event.where(id: @eventID).update_all(complete: true)
-    flash[:notice] = "Event has been marked as complete"
+    if params[:id].nil?
+      flash[:error] = "There was a problem marking this event as complete"
+    else
+      @eventID = params[:id]
+      @event = Event.where(id: @eventID).update_all(complete: true)
+      flash[:notice] = "Event has been marked as complete"
+    end
     redirect_to events_past_events_path
   end
 
   def incomplete
-    @eventID = params[:id]
-    @event = Event.where(id: @eventID).update_all(complete: false)
-    flash[:notice] = "Event has been marked as complete"
+    if params[:id].nil?
+      flash[:error] = "There was a problem marking this event as incomplete"
+    else
+      @eventID = params[:id]
+      @event = Event.where(id: @eventID).update_all(complete: false)
+      flash[:notice] = "Event has been marked as incomplete"
+    end
     redirect_to events_path
   end
 

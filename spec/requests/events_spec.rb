@@ -128,4 +128,38 @@ RSpec.describe "Events", type: :request do
       expect(response).to redirect_to(events_past_events_path)
     end
   end
+  describe "GET events/complete" do
+    it "redirects to past_events_path" do
+      get events_complete_path
+      expect(response).to redirect_to(events_past_events_path)
+    end
+    it "creates an error message when the params are nil" do
+      get events_complete_path
+      expect(flash[:error]).to eq("There was a problem marking this event as complete")
+      expect(response).to redirect_to(events_past_events_path)
+    end
+    it "creates a success message when the params are not nil" do
+      get events_complete_path, id:1
+      expect(assigns(:eventID)).to eq("1")
+      expect(flash[:notice]).to eq("Event has been marked as complete")
+      expect(response).to redirect_to(events_past_events_path)
+    end
+  end
+  describe "GET events/incomplete" do
+    it "redirects to events_path" do
+      get events_incomplete_path
+      expect(response).to redirect_to(events_path)
+    end
+    it "creates an error message when the params are nil" do
+      get events_incomplete_path
+      expect(flash[:error]).to eq("There was a problem marking this event as incomplete")
+      expect(response).to redirect_to(events_path)
+    end
+    it "creates a success message when the params are not nil" do
+      get events_incomplete_path, id:1
+      expect(assigns(:eventID)).to eq("1")
+      expect(flash[:notice]).to eq("Event has been marked as incomplete")
+      expect(response).to redirect_to(events_path)
+    end
+  end
 end
