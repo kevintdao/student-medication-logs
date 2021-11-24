@@ -34,7 +34,12 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit; end
+  def edit
+    if @current_user.nil? || @user != @current_user
+      flash[:error] = 'Must be logged in with correct account.'
+      redirect_to login_path
+    end
+  end
 
   # POST /users
   # POST /users.json
@@ -52,19 +57,34 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
-    i = 1 + 1
-    # respond_to do |format|
-    #   if @user.update(user_params)
-    #     format.html { redirect_to @user, notice: 'User was successfully updated.' }
-    #     format.json { render :show, status: :ok, location: @user }
-    #   else
-    #     format.html { render :edit }
-    #     format.json { render json: @user.errors, status: :unprocessable_entity }
-    #   end
-    # end
+    if !@current_user.nil? && @user.id == @current_user.id
+      edit_user = params[:edit_user]
+      @user.update(first_name: edit_user[:first_name],
+                   last_name: edit_user[:last_name],
+                   email: edit_user[:email],
+                   phone: edit_user[:phone],
+                   email_notification: edit_user[:email_notification],
+                   text_notification: edit_user[:text_notification])
+      if !@user.valid?
+        error_message = @user.errors.full_messages[0]
+        flash[:error] = error_message
+        redirect_to edit_user_path(@user.id)
+      else
+        @user.update!(first_name: edit_user[:first_name],
+                      last_name: edit_user[:last_name],
+                      email: edit_user[:email],
+                      phone: edit_user[:phone],
+                      email_notification: edit_user[:email_notification],
+                      text_notification: edit_user[:text_notification])
+        session[:session_token] = @user.session_token
+        flash[:notice] = 'Changes saved to your account.'
+        redirect_to edit_user_path(@user.id)
+      end
+    else
+      flash[:error] = 'Please login to continue.'
+      redirect_to login_path
+    end
   end
 
   # DELETE /users/1
