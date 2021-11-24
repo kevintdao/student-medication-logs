@@ -1,5 +1,47 @@
-<div class="container">
-  <h1>Editing User</h1>
+<div class="container rounded bg-white mt-5 mb-5">
+  <div class="row">
+    <div class="col-md-3 border-right">
+      <p class="font-weight-bold h1"><%= @current_user.first_name %></p>
+      <br>
+      <p class="font-weight-bold h1"><%= @current_user.last_name %></p>
+      <br>
+      <p class="text-black-50 h4"><%= @current_user.email %></p>
+    </div>
+    <div class="col-md-5 border-right">
+      <div class="p-3 py-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="text-right">Profile Settings</h4>
+        </div>
+        <%= form_for :edit_user, :url => users_update_path(id: @current_user.id), method: :post, :html => {:id => 'new-user-form', :name => 'new-user-form'} do |f|%>
+          <div class="row mt-2">
+            <div class="col-md-6">
+              <%= f.label :first_name, "First Name", class:"form-label" %>
+              <%= f.text_field :first_name, class:"form-control", required: true, value: @current_user.first_name %>
+            </div>
 
-  <%= render 'form' %>
+            <div class="col-md-6">
+              <%= f.label :last_name, "Last Name", class:"form-label" %>
+              <%= f.text_field :last_name, class:"form-control", required: true, value: @current_user.last_name %>
+            </div>
+          </div>
+
+          <div class="col-md-12">
+            <%= f.label :email, "Email Address", class:"form-label" %>
+            <%= f.text_field :email, class:"form-control", required: true, value: @current_user.email %>
+          </div>
+
+          <%# if @current_user.role == 'Student' %>
+
+          <%# end %>
+
+          <div class="mt-5 text-center">
+            <button type="submit" class="btn btn-success btn-lg mb-1">Save Changes</button>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
 </div>

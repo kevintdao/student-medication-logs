@@ -59,11 +59,13 @@ ActiveRecord::Schema.define(version: 20211117235310) do
   create_table "medications", force: :cascade do |t|
     t.string   "brand_name"
     t.string   "active_ing"
+    t.string   "uses"
     t.string   "method"
-    t.string   "strength"
-    t.string   "notes"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "reactions_id"
+    t.string   "side_effects"
+    t.string   "array"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
   end
 
   create_table "nurses", force: :cascade do |t|
@@ -93,9 +95,11 @@ ActiveRecord::Schema.define(version: 20211117235310) do
     t.string   "password_digest"
     t.string   "role"
     t.integer  "role_id"
-    t.integer  "district_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "district_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "password_set_token"
+    t.datetime "password_set_sent_at"
     t.string   "session_token"
   end
 
