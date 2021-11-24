@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211117235310) do
+ActiveRecord::Schema.define(version: 20211124160816) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -96,11 +96,14 @@ ActiveRecord::Schema.define(version: 20211117235310) do
     t.string   "role"
     t.integer  "role_id"
     t.string   "district_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "password_set_token"
     t.datetime "password_set_sent_at"
     t.string   "session_token"
+    t.string   "phone"
+    t.boolean  "text_notification",    default: false
+    t.boolean  "email_notification",   default: false
   end
 
   add_index "users", ["session_token"], name: "index_users_on_session_token"
