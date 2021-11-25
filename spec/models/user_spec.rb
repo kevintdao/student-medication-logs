@@ -2,12 +2,11 @@ require 'spec_helper'
 require 'rails_helper'
 
 describe User do
-  fixtures :users
   it 'should return all users when the search term is empty' do
     users = User.search_users('Name', '', '1')
     expect(users[0].first_name).to eq('Admin')
-    expect(users[0].last_name).to eq('Apple')
-    expect(users.count).to eq(2)
+    expect(users[0].last_name).to eq('1')
+    expect(users.count).to eq(7)
   end
   context 'search by name' do
     it 'should return users with the searched first name' do
@@ -15,9 +14,9 @@ describe User do
       expect(users.count).to eq(1)
     end
     it 'should return users with the searched first and last name' do
-      users = User.search_users('Name', 'Admin Apple', '1')
+      users = User.search_users('Name', 'Admin 1', '1')
       expect(users[0].first_name).to eq('Admin')
-      expect(users[0].last_name).to eq('Apple')
+      expect(users[0].last_name).to eq('1')
       expect(users.count).to eq(1)
     end
     it 'should return nil when no users with searched name' do
