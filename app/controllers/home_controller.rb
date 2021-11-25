@@ -29,7 +29,6 @@ class HomeController < ApplicationController
       flash[:notice] = "Message successfully sent"
       redirect_to home_contact_path
     else
-      puts @email
       flash[:warning] = "You must enter a valid email"
       redirect_to home_contact_path
     end
