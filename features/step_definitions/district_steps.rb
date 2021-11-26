@@ -21,9 +21,9 @@ Then /^The database should contain a school district with the name "(.*?)" and a
 end
 
 Then /^I should be on the login page$/ do
-  expect(page.current_path).to eq('/users/login')
+  expect(page.current_path).to eq('/login')
 end
 
 Then /^I should not be on the login page$/ do
-  expect(page.current_path).not_to eq('/users/login')
+  expect(page.current_path).not_to eq('/login')
 end
