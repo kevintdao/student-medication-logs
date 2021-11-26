@@ -1,5 +1,5 @@
 Given /^I am on the Users page$/ do
-  visit 'users'
+  visit users_path
 end
 
 Given /^I am logged in as an admin$/ do
@@ -53,4 +53,22 @@ end
 
 Then /^I should see a page with content "(.*?)"$/ do |content|
   expect(page.has_content?(content)).to be_truthy
+end
+
+When /^I click "([^"]*)"$/ do |arg1|
+  click_on arg1
+end
+
+Then /^I should see the "([^"]*)" page$/ do |arg1|
+  expect(page).to have_content(arg1)
+end
+
+When /^I login with email = "([^"]*)", password = "([^"]*)"$/ do |email, password|
+  fill_in('loginEmail', with: email)
+  fill_in('loginPassword', with: password)
+  click_button('Login')
+end
+
+Then /^I should see "([^"]*)" notice$/ do |arg1|
+  expect(page).to have_content(arg1)
 end
