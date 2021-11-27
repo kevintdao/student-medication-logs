@@ -1,8 +1,10 @@
 <div class="container mt-2 mb-2">
-  <p>
-    <strong>ID:</strong>
-    <%= @medication.id %>
-  </p>
+  <div class="d-flex">
+    <strong>ID:&nbsp</strong>
+    <p id='id'>
+      <%= @medication.id %>
+    </p>
+  </div>
 
   <p>
     <strong>Name:</strong>
@@ -34,6 +36,6 @@
   </p>
 
   <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
-  <button id="copy-btn" class="btn btn-secondary">Copy ID to clipboard</button>
+  <button onclick="copyToClipboard()" id="copy-btn" class="btn btn-secondary">Copy ID to clipboard</button>
 
 </div>
