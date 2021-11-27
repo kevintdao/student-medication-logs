@@ -20,9 +20,9 @@
 
 function copyToClipboard(){
     let id = document.getElementById('id')
-    let $temp = $("<input>")
-    $('body').append($temp)
-    $temp.val($(id).text()).select()
-    document.execCommand("copy")
-    $temp.remove()
+    let temp = $("<input>")
+    $('body').append(temp)
+    temp.val($(id).text()).select()
+    document.execCommand('copy')
+    temp.remove()
 }
