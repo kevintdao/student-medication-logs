@@ -111,7 +111,7 @@ describe UsersController do
     context 'search users' do
       it 'should call the model method that search users' do
         user = double('admin1')
-        expect(User).to receive(:search_users).with('Name', 'admin', 1).and_return(user)
+        expect(User).to receive(:search_users).with('Name', 'admin', 1, 'Admin').and_return(user)
         get :index, { search: { type: 'Name', term: 'admin' } }
       end
       it 'should return all users when search term is empty' do
@@ -119,7 +119,7 @@ describe UsersController do
         expect(response).to render_template('index')
       end
       it 'should flash error message if no users exists' do
-        allow(User).to receive(:search_users).with('Name', 'asdf', 1).and_return(nil)
+        allow(User).to receive(:search_users).with('Name', 'asdf', 1, 'Admin').and_return(nil)
         get :index, { search: { type: 'Name', term: 'asdf' } }
         expect(flash[:error]).to eq('No users found!')
         expect(response).to redirect_to(users_path)
