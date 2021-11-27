@@ -20,8 +20,11 @@
     <%= f.number_field :student_id, class: "form-control" %>
   </div>
   <div class="form-group mb-2">
-    <%= f.label :med_id %><br>
-    <%= f.number_field :med_id, class: "form-control" %>
+    <%= f.label :med_id, "Medication ID" %><br>
+    <div class="input-group">
+      <%= f.number_field :med_id, class: "form-control" %>
+      <a id="paste-btn" class="btn btn-secondary input-group-append">Paste ID from Clipboard</a>
+    </div>
   </div>
   <div class="form-group mb-2">
     <%= f.label :complete %><br>
@@ -29,10 +32,10 @@
   </div>
   <div class="form-group mb-2">
     <%= f.label :notes %><br>
-    <%= f.text_field :notes, class: "form-control" %>
+    <%= f.text_area :notes, class: "form-control" %>
   </div>
   <div class="actions mb-2">
     <%= f.submit 'Submit', class: "btn btn-primary" %>
-    <%= link_to 'Back', events_path, {class: 'btn btn-secondary'} %>
+    <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
   </div>
 <% end %>
