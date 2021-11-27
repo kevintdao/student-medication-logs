@@ -1,4 +1,5 @@
 class NursesController < ApplicationController
+  before_action :is_nurse, only: [:index, :show, :edit, :update, :destroy]
   before_action :set_nurse, only: [:show, :edit, :update, :destroy]
 
   # GET /nurses
@@ -74,4 +75,22 @@ class NursesController < ApplicationController
     def nurse_params
       params.fetch(:nurse, {})
     end
+    def is_nurse
+      puts "Activated"
+      if @current_user.nil?
+        # There is no logged in user
+        puts("Session is null")
+        flash[:warning] = "You must be logged in as a nurse to access this page."
+        redirect_to home_index_path
+      else
+        # The user is logged in
+        unless @current_user.role == 'Nurse'
+          # The user is not a nurse
+          puts "Not a nurse"
+          flash[:warning] = "You must be a registered nurse to access this page."
+          redirect_to home_index_path
+        end
+      end
+    end
 end
+
