@@ -11,27 +11,28 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group mb-2">
     <%= f.label :time %><br>
-    <%= f.datetime_select :time %>
+    <%= f.datetime_select :time, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group mb-2">
     <%= f.label :student_id %><br>
-    <%= f.number_field :student_id %>
+    <%= f.number_field :student_id, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group mb-2">
     <%= f.label :med_id %><br>
-    <%= f.number_field :med_id %>
+    <%= f.number_field :med_id, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group mb-2">
     <%= f.label :complete %><br>
     <%= f.check_box :complete %>
   </div>
-  <div class="field">
+  <div class="form-group mb-2">
     <%= f.label :notes %><br>
-    <%= f.text_field :notes %>
+    <%= f.text_field :notes, class: "form-control" %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="actions mb-2">
+    <%= f.submit 'Submit', class: "btn btn-primary" %>
+    <%= link_to 'Back', events_path, {class: 'btn btn-secondary'} %>
   </div>
 <% end %>
