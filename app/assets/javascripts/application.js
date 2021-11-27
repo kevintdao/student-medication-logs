@@ -26,3 +26,13 @@ function copyToClipboard(){
     document.execCommand('copy')
     temp.remove()
 }
+
+function checkMedication(element){
+    if(element.value === "") {
+        console.log(document.getElementById('submit'))
+        document.getElementById('submit').disabled = true
+    }
+    else {
+        document.getElementById('submit').disabled = false
+    }
+}
