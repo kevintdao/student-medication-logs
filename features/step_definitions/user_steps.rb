@@ -2,6 +2,10 @@ Given /^I am on the Users page$/ do
   visit users_path
 end
 
+Given /^I am on the login page$/ do
+  visit login_path
+end
+
 Given /^I am logged in as an admin$/ do
   visit login_path
   fill_in('loginEmail', with: 'admin1@gmail.com')
@@ -71,4 +75,12 @@ end
 
 Then /^I should see "([^"]*)" notice$/ do |arg1|
   expect(page).to have_content(arg1)
+end
+
+Then /^I should see "([^"]*)" button$/ do |arg1|
+  expect(page).to have_content(arg1)
+end
+
+Then /^I should not see "([^"]*)" button$/ do |arg1|
+  expect(page).not_to have_content(arg1)
 end
