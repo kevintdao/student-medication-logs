@@ -10,18 +10,19 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true
   validates :password, confirmation: { case_sensitive: true }
 
-  def self.search_users(type, term, district_id)
-    return User.where(district_id: district_id) if term.blank?
+  def self.search_users(type, term, district_id, role)
+    return User.where(district_id: district_id) if term.blank? && role == 'Admin'
+    return User.where(district_id: district_id, role: %w[Student Parent]) if term.blank? && role == 'Nurse'
 
-    if type == 'Name'
-      name = term.split
-      if name.count == 1
-        User.where('lower(first_name) = ? and district_id = ?', name[0].downcase, district_id)
+    case role
+    when 'Admin'
+      if type == 'Name'
+        User.search_name(term.split, district_id, role)
       else
-        User.where('lower(first_name) = ? and lower(last_name) = ? and district_id = ?', name[0].downcase, name[1].downcase,district_id)
+        User.where('lower(role) = ? and district_id = ?', term.downcase, district_id)
       end
     else
-      User.where('lower(role) = ? and district_id = ?', term.downcase, district_id)
+      User.search_name(term.split, district_id, role)
     end
   end
 
@@ -29,5 +30,21 @@ class User < ActiveRecord::Base
 
   def create_session_token
     self.session_token = SecureRandom.urlsafe_base64
+  end
+
+  def self.search_name(name, district_id, role)
+    if role == 'Admin'
+      if name.count == 1
+        User.where('lower(first_name) = ? and district_id = ?', name[0].downcase, district_id)
+      else
+        User.where('lower(first_name) = ? and lower(last_name) = ? and district_id = ?', name[0].downcase, name[1].downcase,district_id)
+      end
+    else
+      if name.count == 1
+        User.where('lower(first_name) = ? and district_id = ? and lower(role) IN (?)', name[0].downcase, district_id, %w[student parent])
+      else
+        User.where('lower(first_name) = ? and lower(last_name) = ? and district_id = ? and lower(role) IN (?)', name[0].downcase, name[1].downcase,district_id, %w[student parent])
+      end
+    end
   end
 end

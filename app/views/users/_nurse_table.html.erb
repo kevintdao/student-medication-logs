@@ -1,7 +1,7 @@
 <div class="input-group">
   <%= form_for :search, { url: users_path, method: 'get' } do |f|  %>
     <div class="input-group">
-      <%= f.select :type, options_for_select(%w[Name Medication]), {}, {class: 'form-select'} %>
+      <%= f.select :type, options_for_select(%w[Name]), {}, {class: 'form-select'} %>
       <%= f.text_field :term, class: "form-control w-25" %>
       <%= f.submit :Search, class: "btn btn-primary"%>
     </div>

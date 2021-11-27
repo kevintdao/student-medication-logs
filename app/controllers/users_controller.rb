@@ -10,17 +10,19 @@ class UsersController < ApplicationController
     end
 
     district_id = @current_user.district_id
+    role = @current_user.role
 
     if params[:search].present?
       type = params[:search][:type]
       term = params[:search][:term]
-      @users = User.search_users(type, term, district_id)
+      @users = User.search_users(type, term, district_id, role)
       if @users.blank?
         flash[:error] = 'No users found!'
         redirect_to users_path
       end
     else
-      @users = User.where(district_id: district_id)
+      @users = User.where(district_id: district_id) if role == 'Admin'
+      @users = User.where(district_id: district_id, role: %w[Student Parent]) if role == 'Nurse'
     end
   end
 
