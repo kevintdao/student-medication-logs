@@ -5,10 +5,7 @@ class NursesController < ApplicationController
   # GET /nurses
   # GET /nurses.json
   def index
-    #TODO -- make dashboard personal from nurse to nurse
-    @nurses = Nurse.all
-    # Preliminary template before log in
-    #@nurse = Nurse.where("id = session[:user][:id]")
+    @nurse = @current_user
   end
 
   # GET /nurses/1
