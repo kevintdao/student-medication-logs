@@ -1,10 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe "Nurses", type: :request do
-  describe "GET /index" do
+RSpec.describe "PasswordSets", type: :request do
+  describe "GET /new" do
     it "returns http success" do
-      get "/nurses"
+      get "/password_sets/new"
       expect(response).to have_http_status(:success)
     end
   end
+
 end

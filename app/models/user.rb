@@ -11,6 +11,15 @@ class User < ActiveRecord::Base
   validates :password_confirmation, presence: true, on: :save
   validates :password, confirmation: { case_sensitive: true }, on: :save
   validates :phone, allow_blank: true, allow_nil: true, format: { with: VALID_PHONE_REGEX }
+  validates :role, presence: true
+
+
+  def send_password_set
+    generate_token(:password_set_token)
+    self.password_set_sent_at = Time.zone.now
+    save!
+    ApplicationMailer.set_password(self).deliver
+  end
 
   def self.search_users(type, term, district_id)
     return User.where(district_id: district_id) if term.blank?
@@ -31,5 +40,11 @@ class User < ActiveRecord::Base
 
   def create_session_token
     self.session_token = SecureRandom.urlsafe_base64
+  end
+
+  def generate_token(column)
+    begin
+      self[column] = SecureRandom.urlsafe_base64
+    end while User.exists?(column => self[column])
   end
 end

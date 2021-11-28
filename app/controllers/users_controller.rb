@@ -30,7 +30,10 @@ class UsersController < ApplicationController
 
   # GET /users/new
   def new
-    @user = User.new
+    if !(@current_user.present? && @current_user.role == 'Admin')
+      flash[:error] = 'Please login as an Admin to continue.'
+      redirect_to login_path
+    end
   end
 
   # GET /users/1/edit
@@ -131,6 +134,63 @@ class UsersController < ApplicationController
     end
   end
 
+  def create_and_email
+    @user = @current_user
+    @new_user = params[:new_user]
+    pass = SecureRandom.hex # generate random hex value as password
+    user = User.new(
+      first_name: @new_user[:first_name],
+      last_name: @new_user[:last_name],
+      email: @new_user[:email],
+      password: pass,
+      password_confirmation: pass
+    )
+    user.role = @new_user[:user_type]
+    if !user.valid?
+      error_message = user.errors.full_messages[0]
+      flash[:error] = error_message
+      redirect_to users_new_path
+    else
+      case user.role
+      when 'Admin'
+        role = Admin.new
+      when 'Student'
+        role = Student.new
+      when 'Nurse'
+        role = Nurse.new
+      when 'Parent'
+        role = Parent.new
+      end
+      role.save!
+      user.role_id = role.id
+      user.district_id = @user.district_id
+      user.save!
+      user.send_password_set
+      redirect_to home_index_path
+    end
+  end
+
+  def set_password
+    @pass = params[:new_pass]
+    @user = User.find_by_password_set_token!(params[:format])
+    if @user.password_set_sent_at < 2.day.ago
+      flash[:error] = 'Password set has expired'
+      redirect_to home_index_path
+    else
+      @user.password = @pass[:password]
+      @user.password_confirmation = @pass[:password_confirmation]
+      if !@user.valid?
+        error_message = @user.errors.full_messages[0]
+        flash[:error] = error_message
+        redirect_to edit_password_set_url(params[:format])
+      else
+        @user.save!
+        flash[:notice] = 'Password has been set!'
+        redirect_to login_path
+      end
+    end
+  end
+
   private
 
   # Use callbacks to share common setup or constraints between actions.
@@ -142,4 +202,6 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:first_name, :last_name, :email, :password_digest, :role, :role_id, :district_id)
   end
+
+
 end

@@ -37,6 +37,7 @@
   </tr>
   </thead>
   <tbody>
+  <% unless @events.nil? %>
   <% @events.each do |event| %>
     <tr>
       <td><%= event.student_id %></td>
@@ -51,5 +52,6 @@
 <div class="pagination">
   <%= will_paginate @events, renderer: WillPaginate::ActionView::BootstrapLinkRenderer%>
 </div>
+  <% end %>
 </div>
 <br>

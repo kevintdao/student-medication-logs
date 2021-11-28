@@ -22,13 +22,17 @@ class MedicationsController < ApplicationController
   end
   
   def set_page_count
-    @pages = params[:page_count][:page_count]
-    session[:page_count] = @pages.to_i
+    unless params[:page_count].nil?
+      @pages = params[:page_count][:page_count]
+      session[:page_count] = @pages.to_i
+    end
     redirect_to medications_path
   end
 
   def search_meds
-    session[:search_term] = params[:search_term][:search_term]
+    unless params[:search_term].nil?
+      session[:search_term] = params[:search_term][:search_term]
+    end
     redirect_to medications_path
   end
 

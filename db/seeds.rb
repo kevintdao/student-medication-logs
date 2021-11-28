@@ -8,19 +8,19 @@
 
 require 'csv'
 
-#  csv_text = File.read(Rails.root.join('lib', 'seeds', 'drugs.csv'))
-#  csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-#
-#  csv.each do |row|
-#    m = Medication.new
-#    m.brand_name = row['DrugName']
-#    m.active_ing = row['ActiveIngredient']
-#    m.method = row['Form']
-#    m.strength = row['Strength']
-#    m.save
-#  end
-#
-# puts "There are now #{Medication.count} rows in the medications table"
+ csv_text = File.read(Rails.root.join('lib', 'seeds', 'drugs.csv'))
+ csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+ csv.each do |row|
+   m = Medication.new
+   m.brand_name = row['DrugName']
+   m.active_ing = row['ActiveIngredient']
+   m.method = row['Form']
+   m.strength = row['Strength']
+   m.save
+ end
+
+puts "There are now #{Medication.count} rows in the medications table"
 
 events = [{time: DateTime.new(2021, 12, 15, 15, 0, 0), student_id: 1, med_id: 35, complete: false, notes: "This is a notes field for this event.", district: 1},
           {time: DateTime.new(2021, 12, 14, 12, 0, 0), student_id: 2, med_id: 32, complete: false},
@@ -70,17 +70,3 @@ users.each do |user|
   end
   User.create!(user)
 end
-
-# admins = [{}]
-#
-# admins.each do |admin|
-#   Admin.create!(admin)
-# end
-#
-# nurses = [{}]
-#
-# nurses.each do |nurse|
-#   Nurse.create!(nurse)
-# end
-#
-# students
