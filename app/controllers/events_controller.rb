@@ -5,7 +5,6 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    #TODO -- when login is set up, show only events with matching district ID
     # TODO -- switch table to display student names and medication names
     # session["init"] = true
     @pages = session[:page_count]
