@@ -1,12 +1,10 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :is_nurse, only: [:index, :past_events, :search_events, :search_past_events, :set_page_count, :set_past_page_count, :complete, :incomplete, :change_notes]
-
+  before_action :belongs_to_district, only: [:show]
   # GET /events
   # GET /events.json
   def index
-    # TODO -- switch table to display student names and medication names
-    # session["init"] = true
     @pages = session[:page_count]
     @selection = session[:search_term]
 
@@ -187,6 +185,21 @@ class EventsController < ApplicationController
         unless @current_user.role == 'Nurse'
           # The user is not a nurse
           flash[:warning] = "You must be a registered nurse to access this page."
+          redirect_to home_index_path
+        end
+      end
+    end
+
+    def belongs_to_district
+      if @current_user.nil?
+        # There is no logged in user
+        flash[:warning] = "You must be logged in as a nurse to access this page."
+        redirect_to home_index_path
+      else
+        # The user is logged in
+        unless @current_user.district_id.to_i == @event.district
+          # The user is not in the district
+          flash[:warning] = "You must belong to the district to access this page"
           redirect_to home_index_path
         end
       end
