@@ -13,15 +13,15 @@ class EventsController < ApplicationController
 
     if @pages.nil?
       if @selection.nil? or @selection.blank?
-        @events = Event.where(complete: false).reorder("time ASC").page(params[:page]).per_page(50)
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).reorder("time ASC").page(params[:page]).per_page(50)
       else
-        @events = Event.where(complete: false).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(50)
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(50)
       end
     else
       if @selection.nil? or @selection.blank?
-        @events = Event.where(complete: false).reorder("time ASC").page(params[:page]).per_page(@pages)
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).reorder("time ASC").page(params[:page]).per_page(@pages)
       else
-        @events = Event.where(complete: false).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
       end
     end
   end
