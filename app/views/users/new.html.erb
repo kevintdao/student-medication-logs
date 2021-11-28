@@ -1,5 +1,48 @@
-<h1>New User</h1>
+<section class="h-100 h-custom" style="background-image: url('https://centralaz.edu/wp-content/uploads/2019/04/Nurse-with-Blurry-Background.jpg');">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-lg-8 col-xl-6">
+        <div class="card rounded-3">
+          <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8c2Nob29sc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80" class="w-100" style="border-top-left-radius: .3rem; border-top-right-radius: .3rem;" alt="Sample photo">
+          <div class="card-body p-4 p-md-5">
+            <h3 class="mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Invite User to District</h3>
 
-<%= render 'form' %>
+            <%= form_for :new_user,  :url => users_create_and_email_path, :html => {:id => 'new-user-form', :name => 'new-user-form'} do |f|%>
 
-<%= link_to 'Back', users_path %>
+              <div class="form-outline mb-4">
+                <%= f.label :user_type, "User Type", class:"form-label" %>
+                <%= f.select :user_type, %w[Admin Nurse Parent Student], {}, {required: 'true', autofocus: 'true', class: 'form-control'}%>
+              </div>
+
+
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <%= f.label :first_name, "First Name", class:"form-label" %>
+                    <%= f.text_field :first_name, class:"form-control form-control-lg", required: true %>
+                  </div>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                  <div class="form-outline">
+                    <%= f.label :last_name, "Last Name", class:"form-label" %>
+                    <%= f.text_field :last_name, class:"form-control form-control-lg", required: true %>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-outline mb-4">
+                <%= f.label :email, "Email Address", class:"form-label" %>
+                <%= f.text_field :email, class:"form-control form-control-lg", required: true %>
+              </div>
+
+              <button type="submit" class="btn btn-success btn-lg mb-1">Invite User</button>
+
+            <% end %>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
