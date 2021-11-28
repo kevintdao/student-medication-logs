@@ -6,19 +6,21 @@ class EventsController < ApplicationController
   def index
     #TODO -- when login is set up, show only events with matching district ID
     # TODO -- switch table to display student names and medication names
+    # session["init"] = true
     @pages = session[:page_count]
     @selection = session[:search_term]
+
     if @pages.nil?
       if @selection.nil? or @selection.blank?
         @events = Event.where(complete: false).reorder("time ASC").page(params[:page]).per_page(50)
       else
-        @events = Event.where(complete: false).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("time ASC").page(params[:page]).per_page(50)
+        @events = Event.where(complete: false).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(50)
       end
     else
       if @selection.nil? or @selection.blank?
         @events = Event.where(complete: false).reorder("time ASC").page(params[:page]).per_page(@pages)
       else
-        @events = Event.where(complete: false).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+        @events = Event.where(complete: false).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
       end
     end
   end
@@ -30,60 +32,79 @@ class EventsController < ApplicationController
       if @selection.nil? or @selection.blank?
         @events = Event.where(complete: true).reorder("time ASC").page(params[:page]).per_page(50)
       else
-        @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("time ASC").page(params[:page]).per_page(50)
+        @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(50)
       end
     else
       if @selection.nil? or @selection.blank?
         @events = Event.where(complete: true).reorder("time ASC").page(params[:page]).per_page(@pages)
       else
-        @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+        @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
       end
     end
   end
 
   def set_page_count
-    @pages = params[:page_count][:page_count]
-    session[:page_count] = @pages.to_i
+    unless params[:page_count].nil?
+      @pages = params[:page_count][:page_count]
+      session[:page_count] = @pages.to_i
+    end
     redirect_to events_path
   end
 
   def search_events
-    session[:search_term] = params[:search_term][:search_term]
+    unless params[:search_term].nil?
+      session[:search_term] = params[:search_term][:search_term]
+    end
     redirect_to events_path
   end
 
   def set_past_page_count
-    @pages = params[:page_count][:page_count]
-    session[:page_count] = @pages.to_i
+    unless params[:page_count].nil?
+      @pages = params[:page_count][:page_count]
+      session[:page_count] = @pages.to_i
+    end
     redirect_to events_past_events_path
   end
 
   def search_past_events
-    session[:search_term] = params[:search_term][:search_term]
+    unless params[:search_term].nil?
+      session[:search_term] = params[:search_term][:search_term]
+    end
     redirect_to events_past_events_path
   end
 
   def complete
-    @eventID = params[:id]
-    @event = Event.where(id: @eventID).update_all(complete: true)
-    flash[:notice] = "Event has been marked as complete"
+    if params[:id].nil?
+      flash[:error] = "There was a problem marking this event as complete"
+    else
+      @eventID = params[:id]
+      @event = Event.where(id: @eventID).update_all(complete: true)
+      flash[:notice] = "Event has been marked as complete"
+    end
     redirect_to events_past_events_path
   end
 
   def incomplete
-    @eventID = params[:id]
-    @event = Event.where(id: @eventID).update_all(complete: false)
-    flash[:notice] = "Event has been marked as complete"
+    if params[:id].nil?
+      flash[:error] = "There was a problem marking this event as incomplete"
+    else
+      @eventID = params[:id]
+      @event = Event.where(id: @eventID).update_all(complete: false)
+      flash[:notice] = "Event has been marked as incomplete"
+    end
     redirect_to events_path
   end
 
   def change_notes
-    @newNotes = params[:notes][:notes]
-    @id = params[:notes][:id]
-    @complete = params[:notes][:complete]
-    @event = Event.where(id: @id).update_all(notes: @newNotes)
-    flash[:notice] = "Notes have been updated successfully"
-    puts @complete.class
+    if params[:notes].nil?
+      flash[:error] = "There was a problem editing this note"
+    else
+      @newNotes = params[:notes][:notes]
+      @id = params[:notes][:id]
+      @complete = params[:notes][:complete]
+      @event = Event.where(id: @id).update_all(notes: @newNotes)
+      flash[:notice] = "Notes have been updated successfully"
+    end
     if @complete == 'true'
       redirect_to events_past_events_path
     else
