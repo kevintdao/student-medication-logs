@@ -24,7 +24,7 @@ describe UsersController do
     end
     it 'should redirect to the login page' do
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       allow(District).to receive(:create_district).and_return(fake_results)
       allow(fake_results).to receive(:id).and_return(fake_id)
       post :register_district_admin, @register_params
@@ -36,7 +36,7 @@ describe UsersController do
       pre_user_entries_length = User.all.length
       pre_admin_entries_length = Admin.all.length
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       allow(District).to receive(:create_district).and_return(fake_results)
       allow(fake_results).to receive(:id).and_return(fake_id)
       post :register_district_admin, @register_params
@@ -47,7 +47,7 @@ describe UsersController do
     end
     it 'should call the District model method to create a school district' do
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       expect(District).to receive(:create_district).with('New Lake Schools', '1234 1st Avenue', nil, 'Lakewood', 'IA', '52253').and_return(fake_results)
       expect(fake_results).to receive(:id).and_return(fake_id)
       post :register_district_admin, @register_params
@@ -102,7 +102,7 @@ describe UsersController do
     end
     it 'should only accept unique email addresses' do
       fake_results = double('District')
-      fake_id = double('Int')
+      fake_id = 1
       allow(District).to receive(:create_district).with('New Lake Schools', '1234 1st Avenue', nil, 'Lakewood', 'IA', '52253').and_return(fake_results)
       allow(fake_results).to receive(:id).and_return(fake_id)
       post :register_district_admin, @register_params
@@ -136,6 +136,7 @@ describe UsersController do
       end
     end
     it 'should save Student the database' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
       pre_users_length = User.all.length
       pre_students_length = Student.all.length
       allow(@new_user).to receive(:send_password_set)
@@ -148,6 +149,7 @@ describe UsersController do
       expect(post_students_length).to eq(pre_students_length + 1)
     end
     it 'should save Parent to the database' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
       pre_users_length = User.all.length
       pre_parents_length = Parent.all.length
       allow(@new_user).to receive(:send_password_set)
@@ -160,6 +162,7 @@ describe UsersController do
       expect(post_parents_length).to eq(pre_parents_length + 1)
     end
     it 'should save Nurse to the database' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
       pre_users_length = User.all.length
       pre_nurse_length = Nurse.all.length
       allow(@new_user).to receive(:send_password_set)
@@ -172,6 +175,7 @@ describe UsersController do
       expect(post_nurse_length).to eq(pre_nurse_length + 1)
     end
     it 'should save Admin to the database' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
       pre_users_length = User.all.length
       pre_admin_length = Admin.all.length
       allow(@new_user).to receive(:send_password_set)
@@ -200,6 +204,7 @@ describe UsersController do
       expect(flash[:error]).to eq("Last name can't be blank")
     end
     it 'should validate that email address is present' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
       allow(@new_user).to receive(:send_password_set)
       no_email = @new_user.deep_dup
       no_email[:new_user][:email] = ' '
@@ -208,6 +213,7 @@ describe UsersController do
       expect(flash[:error]).to eq("Email can't be blank")
     end
     it 'should only accept unique email addresses' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
       allow(@new_user).to receive(:send_password_set)
       post :create_and_email, @new_user
       post :create_and_email, @new_user
