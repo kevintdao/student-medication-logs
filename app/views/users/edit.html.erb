@@ -97,6 +97,11 @@
                                                          @district.state), {}, {class: 'form-control'} %>
 
               </div>
+
+              <div class="form-outline mb-4">
+                <%= f.label :zipcode, "Zip Code", class:"form-label" %>
+                <%= f.text_field :zipcode, class:"form-control", value: @district.zipcode %>
+              </div>
             </div>
           <% end %>
 

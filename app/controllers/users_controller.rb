@@ -62,6 +62,7 @@ class UsersController < ApplicationController
   def update
     if !@current_user.nil? && @user.id == @current_user.id
       edit_user = params[:edit_user]
+      @district = District.find(@user.district_id)
       @user.update(first_name: edit_user[:first_name],
                    last_name: edit_user[:last_name],
                    email: edit_user[:email],
@@ -79,6 +80,8 @@ class UsersController < ApplicationController
                       phone: edit_user[:phone],
                       email_notification: edit_user[:email_notification],
                       text_notification: edit_user[:text_notification])
+        District.update_district(@district, edit_user[:district_name], edit_user[:address1],
+                                  edit_user[:address2], edit_user[:city], edit_user[:state], edit_user[:zipcode])
         session[:session_token] = @user.session_token
         flash[:notice] = 'Changes saved to your account.'
         redirect_to edit_user_path(@user.id)
