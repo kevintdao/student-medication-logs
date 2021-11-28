@@ -1,5 +1,6 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
+  before_action :is_nurse, only: [:index, :past_events, :search_events, :search_past_events, :set_page_count, :set_past_page_count, :complete, :incomplete, :change_notes]
 
   # GET /events
   # GET /events.json
@@ -175,5 +176,20 @@ class EventsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
       params.require(:event).permit(:time, :student_id, :med_id, :complete, :notes)
+    end
+
+    def is_nurse
+      if @current_user.nil?
+        # There is no logged in user
+        flash[:warning] = "You must be logged in as a nurse to access this page."
+        redirect_to home_index_path
+      else
+        # The user is logged in
+        unless @current_user.role == 'Nurse'
+          # The user is not a nurse
+          flash[:warning] = "You must be a registered nurse to access this page."
+          redirect_to home_index_path
+        end
+      end
     end
 end
