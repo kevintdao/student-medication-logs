@@ -34,7 +34,14 @@ end
 
 puts "There are now #{Event.count} rows in the events table"
 
-districts = [{}]
+districts = [
+  {district_name: 'Iowa City Community Schools', address1: '1234 1st Avenue', city: 'Iowa City', state: 'IA', zipcode: '52246'},
+  {district_name: 'Coralville Community Schools', address1: '1234 1st Avenue', city: 'Coralville', state: 'IA', zipcode: '52240'}
+]
+
+districts.each do |district|
+  District.create!(district)
+end
 
 users = [
   { email: 'admin1@gmail.com', first_name: 'Admin', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Admin', district_id: 1, text_notification: false, email_notification: false },
