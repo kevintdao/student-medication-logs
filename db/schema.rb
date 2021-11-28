@@ -93,9 +93,11 @@ ActiveRecord::Schema.define(version: 20211117235310) do
     t.string   "password_digest"
     t.string   "role"
     t.integer  "role_id"
-    t.integer  "district_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.integer   "district_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "password_set_token"
+    t.datetime "password_set_sent_at"
     t.string   "session_token"
   end
 
