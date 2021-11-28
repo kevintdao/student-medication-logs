@@ -119,6 +119,8 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
+    redirect_to login_path and return if @current_user.blank?
+
     @event = Event.new
     district_id = @current_user.district_id
     @students = User.where(district_id: district_id, role: 'Student')
