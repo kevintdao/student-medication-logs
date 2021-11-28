@@ -39,7 +39,7 @@ class UsersController < ApplicationController
       flash[:error] = 'Must be logged in with correct account.'
       redirect_to login_path
     elsif @current_user.role == 'Admin'
-      @district = District.find(@current_user.role_id)
+      @district = District.find(@current_user.district_id)
     end
   end
 
