@@ -1,4 +1,9 @@
 class User < ActiveRecord::Base
+  has_many :students
+  has_many :parents
+  has_many :nurses
+  has_many :admins
+
   has_secure_password
   before_save { |user| user.email = user.email.downcase }
   before_save :create_session_token
