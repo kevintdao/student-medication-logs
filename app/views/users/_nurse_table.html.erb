@@ -12,7 +12,6 @@
   <thead>
   <tr>
     <th>Name</th>
-    <th>Email</th>
     <th>Role</th>
     <th>Profile</th>
   </tr>
@@ -22,9 +21,12 @@
   <% @users.each do |user| %>
     <tr>
       <td><%= user.first_name + ' ' + user.last_name %></td>
-      <td><%= user.email %></td>
       <td><%= user.role %></td>
-      <td><%= link_to 'View', user %></td>
+      <% if user.role == 'Student' %>
+        <td><%= link_to 'View', user %></td>
+      <% else %>
+        <td>N/A</td>
+      <% end %>
     </tr>
   <% end %>
   </tbody>

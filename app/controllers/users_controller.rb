@@ -28,7 +28,9 @@ class UsersController < ApplicationController
 
   # GET /users/1
   # GET /users/1.json
-  def show; end
+  def show
+    @events = Event.where(student_id: params[:id])
+  end
 
   # GET /users/new
   def new

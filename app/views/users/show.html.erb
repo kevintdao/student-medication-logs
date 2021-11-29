@@ -1,31 +1,30 @@
 <div class="container">
-  <h1>Profile for <%= @user.first_name + " " + @user.last_name %></h1>
+    <h1>Profile for <%= @user.first_name + " " + @user.last_name %></h1>
 
-  <p>
-    <strong>First name:</strong>
-    <%= @user.first_name %>
-  </p>
-
-  <p>
-    <strong>Last name:</strong>
-    <%= @user.last_name %>
-  </p>
-
-  <p>
-    <strong>Email:</strong>
-    <%= @user.email %>
-  </p>
-
-  <p>
-    <strong>Role:</strong>
-    <%= @user.role %>
-  </p>
-
-  <p>
-    <strong>District ID:</strong>
-    <%= @user.district_id %>
-  </p>
-
+    <% if @current_user.role == 'Admin' %>
+    <p>
+      <strong>First name:</strong>
+      <%= @user.first_name %>
+    </p>
+    <p>
+      <strong>Last name:</strong>
+      <%= @user.last_name %>
+    </p>
+    <p>
+      <strong>Email:</strong>
+      <%= @user.email %>
+    </p>
+    <p>
+      <strong>Role:</strong>
+      <%= @user.role %>
+    </p>
+    <p>
+      <strong>District ID:</strong>
+      <%= @user.district_id %>
+    </p>
+  <% else %>
+    <%= render 'medications_table' %>
+  <% end %>
   <div class="mb-2">
     <% if @current_user.role == 'Admin' %>
       <%= link_to 'Edit', edit_user_path(@user), {class: 'btn btn-primary'} %>
