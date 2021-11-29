@@ -1,0 +1,11 @@
+<h1>Set Password</h1>
+
+<%= form_tag password_sets_path, :method => :post do %>
+  <div class='field'>
+    <%= label_tag :email %>
+    <%= text_field_tag :email, params[:email] %>
+  </div>
+  <div class='actions'>
+    <%= submit_tag "Set Password" %>
+  </div>
+<% end %>
