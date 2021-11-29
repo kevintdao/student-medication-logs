@@ -278,7 +278,6 @@ describe UsersController do
   end
 
   describe 'display users' do
-    fixtures :users
     context 'search users' do
       it 'should call the model method that search users' do
         user = double('admin1')
@@ -295,6 +294,17 @@ describe UsersController do
         expect(flash[:error]).to eq('No users found!')
         expect(response).to redirect_to(users_path)
       end
+    end
+  end
+  describe 'get the event for student' do
+    it 'should redirect to login page if not logged in' do
+      get :show, id: 5
+      expect(response).to redirect_to(login_path)
+    end
+    it 'should get the events for given student id' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+      get :show, id: 5
+      expect(response).to render_template('show')
     end
   end
 end

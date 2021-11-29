@@ -29,6 +29,9 @@ class UsersController < ApplicationController
   # GET /users/1
   # GET /users/1.json
   def show
+    if @current_user.blank?
+      redirect_to login_path and return
+    end
     @events = Event.where(student_id: params[:id])
   end
 
