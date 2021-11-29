@@ -13,6 +13,7 @@
   <tr>
     <th>Name</th>
     <th>Role</th>
+    <th>Medications</th>
     <th>Profile</th>
   </tr>
   </thead>
@@ -22,11 +23,19 @@
     <tr>
       <td><%= user.first_name + ' ' + user.last_name %></td>
       <td><%= user.role %></td>
-      <% if user.role == 'Student' %>
-        <td><%= link_to 'View', user %></td>
+      <td>
+        <% if user.role == 'Student' %>
+          <% @events = Event.where(student_id: user.id) %>
+          <% @medications = [] %>
+          <% @events.each do |event| %>
+            <% @medications << Medication.where(id: event.med_id).first.brand_name %>
+          <% end %>
+          <%= @medications.join(', ') %>
       <% else %>
-        <td>N/A</td>
-      <% end %>
+          <%= 'N/A' %>
+        <% end %>
+      </td>
+      <td><%= user.role == 'Student' ? (link_to 'View', user) : 'N/A' %></td>
     </tr>
   <% end %>
   </tbody>
