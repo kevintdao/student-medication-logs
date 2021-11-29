@@ -33,6 +33,8 @@ Rails.application.routes.draw do
 
   post 'users/register_district_admin'
 
+  get 'users/dashboard'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   root "home#index"
