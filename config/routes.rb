@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   get 'home/index'
 
+  get 'users/new'
+
   post 'home/send_contact_message'
 
   post 'medications/set_page_count'
@@ -47,6 +49,22 @@ Rails.application.routes.draw do
 
   post 'inventories/change_amount'
 
+  post 'users/set_password'
+
+  post 'users/create_and_email'
+
+  resources :password_sets
+  resources :districts
+  resources :forms
+  resources :events
+  resources :inventories
+  resources :medications
+  resources :admins
+  resources :nurses
+  resources :students
+  resources :parents
+  resources :users
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   root "home#index"
