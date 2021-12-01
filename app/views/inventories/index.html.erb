@@ -42,11 +42,15 @@
   </thead>
   <tbody>
   <% @inventory.each do |item| %>
-    <% @student = Student.where(id: item.studentID).first %>
+    <% @student = User.where(id: item.studentID).first %>
     <tr>
       <td><%= item.medName %></td>
       <td><%= item.amount %></td>
-      <td><%= @student.first_name + @student.last_name %></td>
+      <% if @student.nil? %>
+        <td>Student Name not Found</td>
+        <% else %>
+        <td><%= @student.first_name + @student.last_name %></td>
+        <% end %>
       <td><%= item.studentID %></td>
       <td><%= item.notes %></td>
       <td><%= link_to 'More Information', item, id:item.med_id %></td>
