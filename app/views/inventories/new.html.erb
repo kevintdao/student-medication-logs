@@ -1,5 +1,55 @@
-<h1>New Inventory</h1>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Selt2021Proj02 New Inventory Item</title>
+  <%= stylesheet_link_tag    'contact', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag asset_path('favicon.ico') %>
+</head>
+<body>
+<!--Section: Contact v.2-->
+<div class="container">
+  <section class="mb-4">
 
-<%= render 'form' %>
+    <!--Section heading-->
+    <h2 class="h1-responsive font-weight-bold text-center my-4">New Inventory Item</h2>
+    <!--Section description-->
+    <p class="text-center w-responsive mx-auto mb-5">Fill out the fields below to add an item to the inventory. Required fields are marked with an *.</p>
+    <!--Grid column-->
+    <%= form_for :item, :url => inventories_new_item_path do |f|  %>
+      <div class="row">
+        <div class="md-form mb-0">
+          <%= f.label :name, "*Medication Name:" %>
+          <%= f.text_field :MedName, :html => {:id => "name", :name => "name"}, class: "form-control", :required => true, id: "name"%>
+        </div>
+      </div>
 
-<%= link_to 'Back', inventories_path %>
+      <div class="row">
+        <div class="md-form mb-0">
+          <%= f.label :studentName, "Name of Student Medication Belongs To:" %>
+          <%= f.text_field :studentName, :html => {:id => "studentName", :name => "studentName"}, class: "form-control", id: "studentName" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="md-form mb-0">
+          <%= f.label :amount, "*Amount of Units in Inventory:" %>
+          <%= f.text_field :amount, :html => {:id => "amount", :name => "amount"}, class: "form-control", :required => true, id:"amount" %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="md-form">
+          <%= f.label :message, "Additional Notes:" %>
+          <%= f.text_area :notes, :html => {:id => "notes", :name => "notes"}, class: "form-control md-textarea", id:"notes" %>
+        </div>
+      </div>
+      <div class="text-center text-md-left">
+        <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
+      </div>
+    <% end %>
+
+  </section>
+</div>
+</body>
+</html>
+

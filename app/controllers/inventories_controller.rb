@@ -43,6 +43,10 @@ class InventoriesController < ApplicationController
 
   # GET /inventories/new
   def new
+  end
+
+  #POST /inventories/new_item
+  def new_item
     puts "Success"
     redirect_to inventories_path
   end
