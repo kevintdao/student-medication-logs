@@ -1,6 +1,7 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
-  before_action :is_nurse, only: [:index, :show, :edit, :update, :destroy, :new, :new_item]
+  before_action :is_nurse, only: [:index, :show, :edit, :update, :destroy, :new, :new_item, :change_notes, :change_amount]
+  after_action :clear_search, except: [:search_inv, :index]
   # GET /inventories
   # GET /inventories.json
   def index
@@ -36,6 +37,10 @@ class InventoriesController < ApplicationController
     redirect_to inventories_path
   end
 
+  def clear_search
+    session[:search_term] = nil
+  end
+
   # GET /inventories/1
   # GET /inventories/1.json
   def show
@@ -52,6 +57,7 @@ class InventoriesController < ApplicationController
     @studentName = @item[:studentName]
     @amount = @item[:amount]
     @notes = @item[:notes]
+    @medID = nil
 
     # Perform checks for required fields
     if @medName.blank? or @amount.blank?
@@ -64,13 +70,17 @@ class InventoriesController < ApplicationController
         if @studentName == "No Student"
           @studentName = nil
         end
+        @medication = Medication.where(brand_name: @medName.upcase).first
+        unless @medication.nil?
+          @medID = @medication.id
+        end
         unless @studentName.blank?
           @studentName = @studentName.split
           @fname = @studentName[0]
           @lname = @studentName[1]
-          Inventory.create!(medName: @medName, studentID: User.where(first_name: @fname, last_name: @lname).first.id, notes: @notes, amount: @amount, districtID: @current_user.district_id)
+          Inventory.create!(medName: @medName, med_id: @medID, studentID: User.where(first_name: @fname, last_name: @lname).first.id, notes: @notes, amount: @amount, districtID: @current_user.district_id)
         else
-          Inventory.create!(medName: @medName, studentID: nil, notes: @notes, amount: @amount, districtID: @current_user.district_id)
+          Inventory.create!(medName: @medName, med_id: @medID, studentID: nil, notes: @notes, amount: @amount, districtID: @current_user.district_id)
         end
         flash[:notice] = "Inventory item created successfully"
         redirect_to inventories_path
@@ -97,6 +107,36 @@ class InventoriesController < ApplicationController
     end
     redirect_to inventories_path
   end
+
+  def change_amount
+    if params[:amount].blank?
+      flash[:error] = "There was a problem updating this amount"
+      redirect_to inventories_path
+    else
+      @amount = params[:amount][:amount]
+      @id = params[:amount][:id]
+      if @amount.blank?
+        flash[:warning] = "You cannot leave the amount field blank"
+        redirect_to :back
+      else
+        begin
+          @amount = @amount.to_i
+          if @amount < 0
+            flash[:warning] = "You must enter a number greater than or equal to 0 in the amount field"
+            redirect_to :back
+          else
+            @item = Inventory.where(id: @id).update_all(amount: @amount)
+            flash[:notice] = "Amount has been successfully updated"
+            redirect_to :back
+          end
+        rescue
+          flash[:warning] = "You must enter a valid whole number into the amount field"
+          redirect_to :back
+        end
+      end
+    end
+  end
+
 
   # POST /inventories
   # POST /inventories.json

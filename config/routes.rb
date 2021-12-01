@@ -45,6 +45,8 @@ Rails.application.routes.draw do
 
   post 'inventories/change_notes'
 
+  post 'inventories/change_amount'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   root "home#index"
