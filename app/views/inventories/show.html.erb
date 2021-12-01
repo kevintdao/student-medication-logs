@@ -51,12 +51,11 @@
         <%= f.text_area :notes, value: @inventory.notes ,class: "form-control", id:"notes" %>
         <%= f.hidden_field :id, value: @inventory.id %>
       </div>
-      <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
-    <% end %>
+      <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %> <%= link_to 'Delete Item', @inventory, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-primary" %>
+
+  <% end %>
   </div>
 
-
-<%#= link_to 'Edit', edit_event_path(@event) %>
 </div>
 </body>
 </html>
