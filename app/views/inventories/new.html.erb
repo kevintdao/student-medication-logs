@@ -20,8 +20,8 @@
     <%= form_for :item, :url => inventories_new_item_path do |f|  %>
       <div class="row">
         <div class="md-form mb-0">
-          <%= f.label :name, "*Medication Name:" %>
-          <%= f.text_field :MedName, :html => {:id => "name", :name => "name"}, class: "form-control", :required => true, id: "name"%>
+          <%= f.label :medName, "*Medication Name:" %>
+          <%= f.text_field :medName, :html => {:id => "name", :name => "name"}, class: "form-control", :required => true, id: "name"%>
         </div>
       </div>
 
@@ -39,7 +39,7 @@
       </div>
       <div class="row">
         <div class="md-form">
-          <%= f.label :message, "Additional Notes:" %>
+          <%= f.label :notes, "Additional Notes:" %>
           <%= f.text_area :notes, :html => {:id => "notes", :name => "notes"}, class: "form-control md-textarea", id:"notes" %>
         </div>
       </div>

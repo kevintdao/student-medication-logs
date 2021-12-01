@@ -1,6 +1,6 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
-  before_action :is_nurse, only: [:index, :show, :edit, :update, :destroy]
+  before_action :is_nurse, only: [:index, :show, :edit, :update, :destroy, :new, :new_item]
   # GET /inventories
   # GET /inventories.json
   def index
@@ -47,8 +47,35 @@ class InventoriesController < ApplicationController
 
   #POST /inventories/new_item
   def new_item
-    puts "Success"
-    redirect_to inventories_path
+    @item = params[:item]
+    @medName = @item[:medName]
+    @studentName = @item[:studentName]
+    @amount = @item[:amount]
+    @notes = @item[:notes]
+
+    # Perform checks for required fields
+    if @medName.blank? or @amount.blank?
+      flash[:warning] = "You must complete all required fields"
+      redirect_to inventories_new_path
+    else
+      # All required fields are filled, check for proper formatting of amount
+      begin
+        @amount = @amount.to_i
+        unless @studentName.blank?
+          @studentName = @studentName.split
+          @fname = @studentName[0]
+          @lname = @studentName[1]
+          Inventory.create!(medName: @medName, studentID: User.where(first_name: @fname, last_name: @lname).first.id, notes: @notes, amount: @amount, districtID: @current_user.district_id)
+        else
+          Inventory.create!(medName: @medName, studentID: nil, notes: @notes, amount: @amount, districtID: @current_user.district_id)
+        end
+        flash[:notice] = "Inventory item created successfully"
+        redirect_to inventories_path
+      rescue
+        flash[:warning] = "You must enter a valid whole number in the amount field and student name must be of the format FirstName LastName"
+        redirect_to inventories_new_path
+      end
+    end
   end
 
   # GET /inventories/1/edit

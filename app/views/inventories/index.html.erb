@@ -50,9 +50,9 @@
       <td><%= item.medName %></td>
       <td><%= item.amount %></td>
       <% if @student.nil? %>
-        <td>Student Name not Found</td>
+        <td>No Assigned Student</td>
         <% else %>
-        <td><%= @student.first_name + @student.last_name %></td>
+        <td><%= @student.first_name + ' ' + @student.last_name %></td>
         <% end %>
       <td><%= item.studentID %></td>
       <td><%= item.notes %></td>
