@@ -85,6 +85,19 @@ class InventoriesController < ApplicationController
   def edit
   end
 
+  # POST /inventories/change_notes
+  def change_notes
+    if params[:notes].nil?
+      flash[:error] = "There was a problem editing this note"
+    else
+      @newNotes = params[:notes][:notes]
+      @id = params[:notes][:id]
+      @item = Inventory.where(id: @id).update_all(notes: @newNotes)
+      flash[:notice] = "Notes have been updated successfully"
+    end
+    redirect_to inventories_path
+  end
+
   # POST /inventories
   # POST /inventories.json
   def create
