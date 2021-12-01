@@ -307,4 +307,50 @@ describe UsersController do
       expect(response).to render_template('show')
     end
   end
+
+  describe 'only allow valid user to view profile' do
+    context 'admin' do
+      it 'should redirect to users page if user is not in district' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
+        get :show, id: 11
+        expect(response).to redirect_to(users_path)
+      end
+    end
+    context 'nurse' do
+      it 'should redirect to users page if user is not in district' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+        get :show, id: 11
+        expect(response).to redirect_to(users_path)
+      end
+      it 'should redirect to users page if user role is not valid for current user' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+        get :show, id: 1
+        expect(response).to redirect_to(users_path)
+      end
+    end
+    context 'parent' do
+      it 'should redirect to dashboard if user is not in district' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com')[0])
+        get :show, id: 11
+        expect(response).to redirect_to(parents_path)
+      end
+      it 'should redirect to dashboard if user role is not valid for current user' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com')[0])
+        get :show, id: 1
+        expect(response).to redirect_to(parents_path)
+      end
+    end
+    context 'student' do
+      it 'should redirect to dashboard if user is not in district' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'studenta@gmail.com')[0])
+        get :show, id: 11
+        expect(response).to redirect_to(students_path)
+      end
+      it 'should redirect to dashboard if user role is not valid for current user' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'studenta@gmail.com')[0])
+        get :show, id: 1
+        expect(response).to redirect_to(students_path)
+      end
+    end
+  end
 end
