@@ -15,6 +15,10 @@ Rails.application.routes.draw do
 
   post 'medications/search_meds'
 
+  post 'inventories/set_page_count'
+
+  post 'inventories/search_inv'
+
   post 'events/set_page_count'
 
   post 'events/search_events'
