@@ -43,7 +43,8 @@ class InventoriesController < ApplicationController
 
   # GET /inventories/new
   def new
-    @inventory = Inventory.new
+    puts "Success"
+    redirect_to inventories_path
   end
 
   # GET /inventories/1/edit
