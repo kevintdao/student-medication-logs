@@ -1,6 +1,6 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
-
+  before_action :is_nurse, only: [:index, :show, :edit, :update, :destroy]
   # GET /inventories
   # GET /inventories.json
   def index
@@ -70,5 +70,19 @@ class InventoriesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def inventory_params
       params.require(:inventory).permit(:med_id, :amount)
+    end
+    def is_nurse
+      if @current_user.nil?
+        # There is no logged in user
+        flash[:warning] = "You must be logged in as a nurse to access this page."
+        redirect_to home_index_path
+      else
+        # The user is logged in
+        unless @current_user.role == 'Nurse'
+          # The user is not a nurse
+          flash[:warning] = "You must be a registered nurse to access this page."
+          redirect_to home_index_path
+        end
+      end
     end
 end
