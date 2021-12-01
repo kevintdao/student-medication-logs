@@ -29,9 +29,8 @@
         <div class="md-form mb-0">
           <% @students = User.where(role: "Student", district_id: @current_user.district_id).map{|s| s.first_name + " " + s.last_name } %>
           <% @students.unshift("No Student") %>
-          <%= f.label :studentName, "Name of Student Medication Belongs To:" %>
-          <%= f.text_field :studentName, :html => {:id => "studentName", :name => "studentName"}, class: "form-control", id: "studentName" %>
-          <%= f.select :studentNameTest, @students, class: "form-control", id: "studentName"%>
+          <%= f.label :studentName, "Name of Student Medication Belongs To:" %><br>
+          <%= f.select :studentName, @students, class: "form-control", id: "studentName"%>
         </div>
       </div>
       <div class="row">

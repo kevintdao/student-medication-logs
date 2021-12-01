@@ -61,6 +61,9 @@ class InventoriesController < ApplicationController
       # All required fields are filled, check for proper formatting of amount
       begin
         @amount = @amount.to_i
+        if @studentName == "No Student"
+          @studentName = nil
+        end
         unless @studentName.blank?
           @studentName = @studentName.split
           @fname = @studentName[0]
