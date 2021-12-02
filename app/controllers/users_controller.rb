@@ -83,8 +83,10 @@ class UsersController < ApplicationController
                       phone: edit_user[:phone],
                       email_notification: edit_user[:email_notification],
                       text_notification: edit_user[:text_notification])
-        District.update_district(@district, edit_user[:district_name], edit_user[:address1],
-                                  edit_user[:address2], edit_user[:city], edit_user[:state], edit_user[:zipcode])
+        if @user.role == 'Admin'
+          District.update_district(@district, edit_user[:district_name], edit_user[:address1],
+                                   edit_user[:address2], edit_user[:city], edit_user[:state], edit_user[:zipcode])
+        end
         session[:session_token] = @user.session_token
         flash[:notice] = 'Changes saved to your account.'
         redirect_to edit_user_path(@user.id)
