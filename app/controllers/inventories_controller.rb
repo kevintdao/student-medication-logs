@@ -1,6 +1,6 @@
 class InventoriesController < ApplicationController
   before_action :set_inventory, only: [:show, :edit, :update, :destroy]
-  before_action :is_nurse, only: [:index, :show, :edit, :update, :destroy, :new, :new_item, :change_notes, :change_amount]
+  before_action :is_nurse, only: [:index, :show, :edit, :update, :destroy, :new, :new_item, :change_notes, :change_amount, :set_page_count, :search_inv]
   after_action :clear_search, except: [:search_inv, :index]
   # GET /inventories
   # GET /inventories.json
@@ -32,7 +32,8 @@ class InventoriesController < ApplicationController
 
   def search_inv
     unless params[:search_term].nil?
-      session[:search_term] = params[:search_term][:search_term]
+      @search = params[:search_term][:search_term]
+      session[:search_term] = @search
     end
     redirect_to inventories_path
   end
@@ -120,7 +121,7 @@ class InventoriesController < ApplicationController
         redirect_to :back
       else
         begin
-          @amount = @amount.to_i
+          @amount = Integer(@amount)
           if @amount < 0
             flash[:warning] = "You must enter a number greater than or equal to 0 in the amount field"
             redirect_to :back

@@ -97,12 +97,12 @@ ActiveRecord::Schema.define(version: 20211201192814) do
     t.string   "password_digest"
     t.string   "role"
     t.integer  "role_id"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
-    t.integer   "district_id"
+    t.string   "district_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
+    t.string   "session_token"
     t.string   "password_set_token"
     t.datetime "password_set_sent_at"
-    t.string   "session_token"
   end
 
   add_index "users", ["session_token"], name: "index_users_on_session_token"
