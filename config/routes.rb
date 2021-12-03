@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :requests
   get 'users/register'
 
   get 'home/contact'
