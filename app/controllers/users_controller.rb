@@ -10,23 +10,75 @@ class UsersController < ApplicationController
     end
 
     district_id = @current_user.district_id
+    role = @current_user.role
 
     if params[:search].present?
       type = params[:search][:type]
       term = params[:search][:term]
-      @users = User.search_users(type, term, district_id)
+      @users = User.search_users(type, term, district_id, role)
       if @users.blank?
         flash[:error] = 'No users found!'
         redirect_to users_path
       end
     else
-      @users = User.where(district_id: district_id)
+      @users = User.where(district_id: district_id) if role == 'Admin'
+      @users = User.where(district_id: district_id, role: %w[Student Parent]) if role == 'Nurse'
+    end
+  end
+
+  def dashboard
+    unless @current_user.nil?
+      role = @current_user.role
+      case role
+      when 'Nurse'
+        redirect_to nurses_path
+      when 'Admin'
+        redirect_to admins_path
+      when 'Parent'
+        redirect_to parents_path
+      when 'Student'
+        redirect_to students_path
+      else
+        flash[:warning] = "You do not have a dashboard in this system. Please contact your district admin."
+        redirect_to home_index_path
+      end
+    else
+      flash[:error] = "You must be logged in to access this page"
+      redirect_to home_index_path
     end
   end
 
   # GET /users/1
   # GET /users/1.json
-  def show; end
+  def show
+    redirect_to login_path and return if @current_user.blank?
+
+    role = @current_user.role
+    district_id = @current_user.district_id
+    user_id = params[:id]
+
+    user = User.find_by(district_id: district_id, id: user_id)
+    case role
+    when 'Admin'
+      if user.blank?
+        flash[:error] = "You don't have access to this user"
+        redirect_to users_path
+      end
+    when 'Nurse'
+      if user.blank? || %w[Parent Admin Nurse].include?(user.role)
+        flash[:error] = "You don't have access to this user"
+        redirect_to users_path
+      end
+    when 'Parent'
+      flash[:error] = "You don't have access to this"
+      redirect_to parents_path
+    when 'Student'
+      flash[:error] = "You don't have access to this"
+      redirect_to students_path
+    end
+
+    @events = Event.where(student_id: params[:id])
+  end
 
   # GET /users/new
   def new

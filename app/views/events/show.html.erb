@@ -50,6 +50,7 @@
   <%= f.hidden_field :complete, value: @event.complete, class: "field" %>
     </div>
   <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
+  <%= link_to 'Back', events_path, {class: 'btn btn-secondary'} %>
 <% end %>
   </div>
 

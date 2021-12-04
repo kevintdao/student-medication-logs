@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211124160816) do
+ActiveRecord::Schema.define(version: 20211201192814) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -54,6 +54,10 @@ ActiveRecord::Schema.define(version: 20211124160816) do
     t.integer  "amount"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "studentID"
+    t.integer  "districtID"
+    t.string   "notes"
+    t.string   "medName"
   end
 
   create_table "medications", force: :cascade do |t|
