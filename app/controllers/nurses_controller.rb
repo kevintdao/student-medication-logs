@@ -1,6 +1,7 @@
 class NursesController < ApplicationController
   before_action :is_nurse, only: [:index, :show, :edit, :update, :destroy]
   before_action :set_nurse, only: [:show, :edit, :update, :destroy]
+  after_action :clear_search
 
   # GET /nurses
   # GET /nurses.json
@@ -20,6 +21,10 @@ class NursesController < ApplicationController
 
   # GET /nurses/1/edit
   def edit
+  end
+
+  def clear_search
+    session[:search_term] = nil
   end
 
   # POST /nurses

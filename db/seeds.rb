@@ -35,6 +35,17 @@ end
 
 puts "There are now #{Event.count} rows in the events table"
 
+inventory = [{med_id: 34, amount: 50, studentID: 6, districtID: 1, notes: "These are notes for this medication", medName: Medication.where(id: 34).first.brand_name},
+             {med_id: 415, amount: 10, studentID: 5, districtID: 1, notes: nil, medName: Medication.where(id: 415).first.brand_name},
+             {med_id: 1064, amount: 1, studentID: 5, districtID: 1, notes: "Some more notes can go here", medName: Medication.where(id: 1064).first.brand_name},
+             {med_id: 6087, amount: 100, studentID: 7, districtID: 2, notes: "This is a medication for district 2", medName: Medication.where(id: 6087).first.brand_name}]
+
+inventory.each do |item|
+  Inventory.create!(item)
+end
+
+puts "There are now #{Inventory.count} rows in the inventories table"
+
 districts = [{}]
 
 users = [
