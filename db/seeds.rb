@@ -34,6 +34,15 @@ end
 
 puts "There are now #{Event.count} rows in the events table"
 
+districts = [
+  {district_name: 'Iowa City Community Schools', address1: '1234 1st Avenue', city: 'Iowa City', state: 'IA', zipcode: '52246'},
+  {district_name: 'Coralville Community Schools', address1: '1234 1st Avenue', city: 'Coralville', state: 'IA', zipcode: '52240'}
+]
+
+districts.each do |district|
+  District.create!(district)
+end
+
 inventory = [{med_id: 34, amount: 50, studentID: 6, districtID: 1, notes: "These are notes for this medication", medName: Medication.where(id: 34).first.brand_name},
              {med_id: 415, amount: 10, studentID: 5, districtID: 1, notes: nil, medName: Medication.where(id: 415).first.brand_name},
              {med_id: 1064, amount: 1, studentID: 5, districtID: 1, notes: "Some more notes can go here", medName: Medication.where(id: 1064).first.brand_name},
@@ -45,22 +54,30 @@ end
 
 puts "There are now #{Inventory.count} rows in the inventories table"
 
-districts = [{}]
-
 users = [
-  { email: 'admin1@gmail.com', first_name: 'Admin', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Admin', role_id: 1, district_id: 1 },
-  { email: 'nurse1@gmail.com', first_name: 'Nurse', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Nurse', role_id: 2, district_id: 1 },
-  { email: 'parent1a@gmail.com', first_name: 'Parent', last_name: '1A', password: '123456', password_confirmation: '123456', role: 'Parent', role_id: 3, district_id: 1 },
-  { email: 'parent1b@gmail.com', first_name: 'Parent', last_name: '1B', password: '123456', password_confirmation: '123456', role: 'Parent', role_id: 3, district_id: 1 },
-  { email: 'studenta@gmail.com', first_name: 'Student', last_name: 'A', password: '123456', password_confirmation: '123456', role: 'Student', role_id: 4, district_id: 1 },
-  { email: 'studentb@gmail.com', first_name: 'Student', last_name: 'B', password: '123456', password_confirmation: '123456', role: 'Student', role_id: 4, district_id: 1 },
-  { email: 'studentc@gmail.com', first_name: 'Student', last_name: 'C', password: '123456', password_confirmation: '123456', role: 'Student', role_id: 4, district_id: 1 },
-  { email: 'admin2@gmail.com', first_name: 'Admin', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Admin', role_id: 1, district_id: 2 },
-  { email: 'nurse2@gmail.com', first_name: 'Nurse', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Nurse', role_id: 2, district_id: 2 },
-  { email: 'parent2@gmail.com', first_name: 'Parent', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Parent', role_id: 3, district_id: 2 },
-  { email: 'student2@gmail.com', first_name: 'Student', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Student', role_id: 4, district_id: 2 }
+  { email: 'admin1@gmail.com', first_name: 'Admin', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Admin', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'nurse1@gmail.com', first_name: 'Nurse', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Nurse', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'parent1a@gmail.com', first_name: 'Parent', last_name: '1A', password: '123456', password_confirmation: '123456', role: 'Parent', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'parent1b@gmail.com', first_name: 'Parent', last_name: '1B', password: '123456', password_confirmation: '123456', role: 'Parent', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'studenta@gmail.com', first_name: 'Student', last_name: 'A', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'studentb@gmail.com', first_name: 'Student', last_name: 'B', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'studentc@gmail.com', first_name: 'Student', last_name: 'C', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'admin2@gmail.com', first_name: 'Admin', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Admin', district_id: 2, text_notification: false, email_notification: false },
+  { email: 'nurse2@gmail.com', first_name: 'Nurse', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Nurse', district_id: 2, text_notification: false, email_notification: false },
+  { email: 'parent2@gmail.com', first_name: 'Parent', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Parent', district_id: 2, text_notification: false, email_notification: false },
+  { email: 'student2@gmail.com', first_name: 'Student', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 2, text_notification: false, email_notification: false }
 ]
 
 users.each do |user|
+  case user[:role]
+  when 'Admin'
+    user[:role_id] = Admin.create!.id
+  when 'Nurse'
+    user[:role_id] = Nurse.create!.id
+  when 'Parent'
+    user[:role_id] = Parent.create!.id
+  when 'Student'
+    user[:role_id] = Student.create!.id
+  end
   User.create!(user)
 end

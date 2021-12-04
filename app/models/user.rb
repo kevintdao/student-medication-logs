@@ -8,13 +8,15 @@ class User < ActiveRecord::Base
   before_save { |user| user.email = user.email.downcase }
   before_save :create_session_token
   VALID_EMAIL_REGEX = /\A([\w+\-]\.?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+  VALID_PHONE_REGEX = /\A(?:\+?\d{1,3}\s*-?)?\(?(?:\d{3})?\)?[- ]?\d{3}[- ]?\d{4}\z/i
   validates :first_name, presence: true
   validates :last_name, presence: true
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
+  validates :password, presence: true, on: :save
+  validates :password_confirmation, presence: true, on: :save
+  validates :password, confirmation: { case_sensitive: true }, on: :save
+  validates :phone, allow_blank: true, allow_nil: true, format: { with: VALID_PHONE_REGEX }
   validates :role, presence: true
-  validates :password, presence: true
-  validates :password_confirmation, presence: true
-  validates :password, confirmation: { case_sensitive: true }
 
   def self.search_users(type, term, district_id, role)
     return User.where(district_id: district_id) if term.blank? && role == 'Admin'

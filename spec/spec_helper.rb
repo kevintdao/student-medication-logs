@@ -87,4 +87,35 @@ RSpec.configure do |config|
   Kernel.srand config.seed
 =end
 
+  module SpecTestHelper
+    def login(user)
+      request.session[:session_token] = user.session_token
+    end
+
+    def current_user
+      User.find_by_session_token(request.session[:session_token])
+    end
+
+    def edit_user_params(user)
+      district = District.find(user.district_id)
+      {:edit_user => {:first_name => user.first_name,
+                      :last_name => user.last_name,
+                      :email => user.email,
+                      :phone => user.phone,
+                      :email_notification => user.email_notification,
+                      :text_notification => user.text_notification,
+                      :district_name => district.district_name,
+                      :address1 => district.address1,
+                      :address2 => district.address2,
+                      :city => district.city,
+                      :state => district.state,
+                      :zipcode => district.zipcode },
+       :id => user.id }
+    end
+  end
+
+  # spec/spec_helper.rb
+  RSpec.configure do |config|
+    config.include SpecTestHelper, :type => :controller
+  end
 end
