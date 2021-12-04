@@ -301,12 +301,8 @@ describe UsersController do
         expect(response).to render_template('index')
       end
       it 'should flash error message if no users exists' do
-<<<<<<< HEAD
-        allow(User).to receive(:search_users).with('Name', 'asdf', 1, 'Admin').and_return(nil)
-=======
         controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
         allow(User).to receive(:search_users).with('Name', 'asdf', 1).and_return(nil)
->>>>>>> main
         get :index, { search: { type: 'Name', term: 'asdf' } }
         expect(flash[:error]).to eq('No users found!')
         expect(response).to redirect_to(users_path)
