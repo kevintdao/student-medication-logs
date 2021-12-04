@@ -5,7 +5,6 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
-
 </head>
 <body>
 <div class="container rounded bg-white mt-5 mb-5">
@@ -80,25 +79,14 @@
               </div>
             </div>
 
-
-            <div class="form-group mb-4">
+            <div class="form-outline mb-4">
               <%= f.label :start_date, "Medication Start Date", class:"form-label" %>
-              <div class="input-group date" id="datepicker1" data-target-input="nearest">
-                <%= f.text_field :start_date, class:"form-control datetimepicker-input" %>
-                <span class="input-group-addon" data-target="#datepicker1" data-toggle="datetimepicker">
-                        <span class="fa fa-calendar"></span>
-                    </span>
-              </div>
+              <%=f.date_field :start_date, class:"form-control" %>
             </div>
 
-            <div class="form-group mb-4">
+            <div class="form-outline mb-4">
               <%= f.label :end_date, "Medication End Date", class:"form-label" %>
-              <div class="input-group date" id="datepicker2" data-target-input="nearest">
-                <%= f.text_field :end_date, class:"form-control datetimepicker-input" %>
-                <span class="input-group-addon" data-target="#datepicker2" data-toggle="datetimepicker">
-                        <span class="fa fa-calendar"></span>
-                    </span>
-              </div>
+              <%=f.date_field :end_date, class:"form-control" %>
             </div>
 
               <div class="form-outline mb-6">
@@ -122,9 +110,6 @@
                 </div>
               </div>
             </div>
-
-
-
             <div class="mt-5 text-center">
               <%=link_to "Cancel", students_path, class:"btn btn-danger profile-button"%>
               <button class="btn btn-primary profile-button" type="button">Submit Request</button>
@@ -185,6 +170,8 @@
           dropdown: true,
           scrollbar: true
       });
+
+
 
 
 </script>
