@@ -1,9 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe "Medications", type: :request do
-  before :all do
-    @controller.instance_variable_set(:@current_user, User.where())
-  end
   describe "GET /index" do
     it "returns http success" do
       get "/home/medications"
