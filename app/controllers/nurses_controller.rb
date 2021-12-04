@@ -1,13 +1,11 @@
 class NursesController < ApplicationController
+  before_action :is_nurse, only: [:index, :show, :edit, :update, :destroy]
   before_action :set_nurse, only: [:show, :edit, :update, :destroy]
 
   # GET /nurses
   # GET /nurses.json
   def index
-    #TODO -- make dashboard personal from nurse to nurse
-    @nurses = Nurse.all
-    # Preliminary template before log in
-    #@nurse = Nurse.where("id = session[:user][:id]")
+    @nurse = @current_user
   end
 
   # GET /nurses/1
@@ -74,4 +72,19 @@ class NursesController < ApplicationController
     def nurse_params
       params.fetch(:nurse, {})
     end
+    def is_nurse
+      if @current_user.nil?
+        # There is no logged in user
+        flash[:warning] = "You must be logged in as a nurse to access this page."
+        redirect_to home_index_path
+      else
+        # The user is logged in
+        unless @current_user.role == 'Nurse'
+          # The user is not a nurse
+          flash[:warning] = "You must be a registered nurse to access this page."
+          redirect_to home_index_path
+        end
+      end
+    end
 end
+

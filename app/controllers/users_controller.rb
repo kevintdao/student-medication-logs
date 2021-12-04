@@ -26,6 +26,28 @@ class UsersController < ApplicationController
     end
   end
 
+  def dashboard
+    unless @current_user.nil?
+      role = @current_user.role
+      case role
+      when 'Nurse'
+        redirect_to nurses_path
+      when 'Admin'
+        redirect_to admins_path
+      when 'Parent'
+        redirect_to parents_path
+      when 'Student'
+        redirect_to students_path
+      else
+        flash[:warning] = "You do not have a dashboard in this system. Please contact your district admin."
+        redirect_to home_index_path
+      end
+    else
+      flash[:error] = "You must be logged in to access this page"
+      redirect_to home_index_path
+    end
+  end
+
   # GET /users/1
   # GET /users/1.json
   def show
