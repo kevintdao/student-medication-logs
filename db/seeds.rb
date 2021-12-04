@@ -11,6 +11,7 @@ require 'csv'
  csv_text = File.read(Rails.root.join('lib', 'seeds', 'drugs.csv'))
  csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
+
  csv.each do |row|
    m = Medication.new
    m.brand_name = row['DrugName']
