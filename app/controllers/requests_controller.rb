@@ -14,6 +14,10 @@ class RequestsController < ApplicationController
 
   # GET /requests/new
   def new
+    if @current_user.nil?
+      flash[:error] = 'Must be logged in.'
+      redirect_to login_path
+    end
     @request = Request.new
   end
 
@@ -35,6 +39,32 @@ class RequestsController < ApplicationController
         format.json { render json: @request.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def create_request
+    @request = params[:request]
+    @new_request = Request.new(
+      student_id: @current_user.id,
+      requestor_id: @current_user.id,
+      daily_doses: @request[:daily_doses],
+      start_date: @request[:start_date],
+      end_date: @request[:end_date],
+      parent_approved: false,
+      nurse_approved: false,
+      notes: @request[:notes],
+      district_id: @current_user.district_id,
+      med_name: @request[:med_name]
+    )
+    @new_request.time1 = @request[:time1]
+    @new_request.time2 = @request[:time2] if @new_request.daily_doses == '2'
+    @new_request.time3 = @request[:time3] if @new_request.daily_doses == '3'
+    @new_request.time4 = @request[:time4] if @new_request.daily_doses == '4'
+    @medication = Medication.where(brand_name: @new_request.med_name.upcase).first
+    unless @medication.nil?
+      @new_request.med_id = @medication.id
+    end
+    @new_request.save!
+    redirect_to students_path
   end
 
   # PATCH/PUT /requests/1

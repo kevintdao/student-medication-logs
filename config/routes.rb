@@ -40,6 +40,8 @@ Rails.application.routes.draw do
 
   post 'users/create_and_email'
 
+  post 'requests/create_request'
+
   resources :password_sets
   resources :districts
   resources :forms
