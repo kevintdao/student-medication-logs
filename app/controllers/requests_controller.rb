@@ -22,6 +22,9 @@ class RequestsController < ApplicationController
       flash[:error] = 'Must be logged in.'
       redirect_to login_path
     end
+    if @current_user.role == 'Parent'
+      @students = User.where(role: 'Student')
+    end
     @request = Request.new
   end
 
@@ -48,21 +51,27 @@ class RequestsController < ApplicationController
   def create_request
     @request = params[:request]
     @new_request = Request.new(
-      student_id: @current_user.id,
       requestor_id: @current_user.id,
       daily_doses: @request[:daily_doses],
       start_date: @request[:start_date],
       end_date: @request[:end_date],
-      parent_approved: false,
       nurse_approved: false,
       notes: @request[:notes],
       district_id: @current_user.district_id,
       med_name: @request[:med_name]
     )
+    case @current_user.role
+    when 'Parent'
+      @new_request.student_id = @request[:student_id]
+      @new_request.parent_approved = true
+    when 'Student'
+      @new_request.student_id = @current_user.id
+      @new_request.parent_approved = false
+    end
     @new_request.time1 = @request[:time1]
-    @new_request.time2 = @request[:time2] if @new_request.daily_doses == '2'
-    @new_request.time3 = @request[:time3] if @new_request.daily_doses == '3'
-    @new_request.time4 = @request[:time4] if @new_request.daily_doses == '4'
+    @new_request.time2 = @request[:time2] if @new_request.daily_doses.to_i >= 2
+    @new_request.time3 = @request[:time3] if @new_request.daily_doses.to_i >= 3
+    @new_request.time4 = @request[:time4] if @new_request.daily_doses.to_i >= 4
     @medication = Medication.where(brand_name: @new_request.med_name.upcase).first
     unless @medication.nil?
       @new_request.med_id = @medication.id
@@ -73,7 +82,12 @@ class RequestsController < ApplicationController
       redirect_to new_request_path
     else
       @new_request.save!
-      redirect_to students_path
+      case @current_user.role
+      when 'Parent'
+        redirect_to parents_path
+      when 'Student'
+        redirect_to students_path
+      end
     end
   end
 
