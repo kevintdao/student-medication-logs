@@ -13,4 +13,14 @@ class District < ActiveRecord::Base
     district.save!
     district
   end
+
+  def self.update_district (district, name, address1, address2, city, state, zipcode)
+    district.update!(
+      district_name: name,
+      address1: address1,
+      address2: address2,
+      city: city,
+      state: state,
+      zipcode: zipcode)
+  end
 end

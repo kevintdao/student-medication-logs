@@ -1,30 +1,41 @@
-<p id="notice"><%= notice %></p>
+<div class="container mt-2 mb-2">
+  <div class="d-flex">
+    <strong>ID:&nbsp</strong>
+    <p id='id'>
+      <%= @medication.id %>
+    </p>
+  </div>
 
-<p>
-  <strong>Name:</strong>
-  <%= @medication.brand_name %>
-</p>
+  <p>
+    <strong>Name:</strong>
+    <%= @medication.brand_name %>
+  </p>
 
-<p>
-  <strong>Active Ingredient:</strong>
-  <%= @medication.active_ing %>
-</p>
+  <p>
+    <strong>Active Ingredient:</strong>
+    <%= @medication.active_ing %>
+  </p>
 
-<p>
-  <strong>Form:</strong>
-  <%= @medication.method %>
-</p>
+  <p>
+    <strong>Form:</strong>
+    <%= @medication.method %>
+  </p>
 
-<p>
-  <strong>Strength:</strong>
-  <%= @medication.strength %>
-</p>
+  <p>
+    <strong>Strength:</strong>
+    <%= @medication.strength %>
+  </p>
 
-<p>
-  <strong>Notes:</strong>
-  <% unless @medication.notes.nil? %>
-    <%= @medication.side_effects %>
-  <% else %>
-    There are currently no notes for this medication.
-  <% end %>
-</p>
+  <p>
+    <strong>Notes:</strong>
+    <% unless @medication.notes.nil? %>
+      <%= @medication.side_effects %>
+    <% else %>
+      There are currently no notes for this medication.
+    <% end %>
+  </p>
+
+  <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
+  <button onclick="copyToClipboard()" id="copy-btn" class="btn btn-secondary">Copy ID to clipboard</button>
+
+</div>

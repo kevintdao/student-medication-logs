@@ -18,3 +18,21 @@
 //= require popper
 //= require bootstrap-sprockets
 
+function copyToClipboard(){
+    let id = document.getElementById('id')
+    let temp = $("<input>")
+    $('body').append(temp)
+    temp.val($(id).text()).select()
+    document.execCommand('copy')
+    temp.remove()
+}
+
+function checkMedication(element){
+    if(element.value === "") {
+        console.log(document.getElementById('submit'))
+        document.getElementById('submit').disabled = true
+    }
+    else {
+        document.getElementById('submit').disabled = false
+    }
+}

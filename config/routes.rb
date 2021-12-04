@@ -10,13 +10,15 @@ Rails.application.routes.draw do
 
   get 'home/index'
 
-  get 'users/new'
-
   post 'home/send_contact_message'
 
   post 'medications/set_page_count'
 
   post 'medications/search_meds'
+
+  post 'inventories/set_page_count'
+
+  post 'inventories/search_inv'
 
   post 'events/set_page_count'
 
@@ -36,6 +38,18 @@ Rails.application.routes.draw do
 
   post 'users/register_district_admin'
 
+  post 'users/update'
+
+  get 'users/dashboard'
+
+  get 'inventories/new'
+
+  post 'inventories/new_item'
+
+  post 'inventories/change_notes'
+
+  post 'inventories/change_amount'
+
   post 'users/set_password'
 
   post 'users/create_and_email'
@@ -53,20 +67,10 @@ Rails.application.routes.draw do
   resources :students
   resources :parents
   resources :users
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   root "home#index"
-  resources :users
-  resources :students
-  resources :parents
-  resources :admins
-  resources :nurses
-  resources :districts
-  resources :medications
-  resources :events
-  resources :inventories
-  resources :forms
-
 
   match '/login', to: 'sessions#new', via: :get
   match '/login_create', to: 'sessions#create', via: :post

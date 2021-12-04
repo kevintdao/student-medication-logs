@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Selt2021Proj02</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -35,7 +36,12 @@
           Logged in as:
           <strong><%= @current_user.email %></strong>
         </p>
-      <%= link_to "Logout", logout_path, class: "btn btn-primary", role: "button", method: :delete%>
+        <%= link_to edit_user_path(@current_user.id), method: :get do %>
+          <i class="bi bi-gear-fill" style='font-size:26px; margin-right: 10px;'></i>
+        <% end %>
+
+        <%= link_to "Dashboard", users_dashboard_path, class: "btn btn-outline-primary", role: "button"%>
+        <%= link_to "Logout", logout_path, class: "btn btn-primary", role: "button", method: :delete%>
     <% else %>
       <%= link_to "Register", users_register_path, class: "btn btn-outline-primary", role: "button"%>
       <%= link_to "Login", login_path, class: "btn btn-primary", role: "button"%>
