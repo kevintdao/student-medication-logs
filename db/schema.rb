@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211117235310) do
+ActiveRecord::Schema.define(version: 20211203162347) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -77,6 +77,25 @@ ActiveRecord::Schema.define(version: 20211117235310) do
     t.datetime "updated_at",  null: false
   end
 
+  create_table "requests", force: :cascade do |t|
+    t.datetime "time1"
+    t.datetime "time2"
+    t.datetime "time3"
+    t.datetime "time4"
+    t.string   "daily_doses"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer  "student_id"
+    t.integer  "requestor_id"
+    t.integer  "med_id"
+    t.integer  "district_id"
+    t.string   "notes"
+    t.boolean  "parent_approved"
+    t.boolean  "nurse_approved"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
   create_table "students", force: :cascade do |t|
     t.integer  "medications_id"
     t.integer  "events_id"
@@ -93,12 +112,15 @@ ActiveRecord::Schema.define(version: 20211117235310) do
     t.string   "password_digest"
     t.string   "role"
     t.integer  "role_id"
-    t.integer   "district_id"
-    t.datetime "created_at",           null: false
-    t.datetime "updated_at",           null: false
+    t.integer  "district_id"
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.string   "password_set_token"
     t.datetime "password_set_sent_at"
     t.string   "session_token"
+    t.string   "phone"
+    t.boolean  "text_notification",    default: false
+    t.boolean  "email_notification",   default: false
   end
 
   add_index "users", ["session_token"], name: "index_users_on_session_token"
