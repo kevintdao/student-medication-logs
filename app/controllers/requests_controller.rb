@@ -63,8 +63,14 @@ class RequestsController < ApplicationController
     unless @medication.nil?
       @new_request.med_id = @medication.id
     end
-    @new_request.save!
-    redirect_to students_path
+    if !@new_request.valid?
+      error_message = @new_request.errors.full_messages[0]
+      flash[:error] = error_message
+      redirect_to new_request_path
+    else
+      @new_request.save!
+      redirect_to students_path
+    end
   end
 
   # PATCH/PUT /requests/1
