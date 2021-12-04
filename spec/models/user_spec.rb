@@ -35,11 +35,7 @@ describe User do
       expect(users.count).to eq(1)
     end
     it 'should return users with the searched first and last name' do
-<<<<<<< HEAD
       users = User.search_users('Name', 'Admin Apple', '1', 'Admin')
-=======
-      users = User.search_users('Name', 'Admin 1', '1')
->>>>>>> main
       expect(users[0].first_name).to eq('Admin')
       expect(users[0].last_name).to eq('1')
       expect(users.count).to eq(1)

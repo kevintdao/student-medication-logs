@@ -89,7 +89,14 @@ class UsersController < ApplicationController
   end
 
   # GET /users/1/edit
-  def edit; end
+  def edit
+    if @current_user.nil? || @user != @current_user
+      flash[:error] = 'Must be logged in with correct account.'
+      redirect_to login_path
+    elsif @current_user.role == 'Admin'
+      @district = District.find(@current_user.district_id)
+    end
+  end
 
   # POST /users
   # POST /users.json
@@ -107,17 +114,38 @@ class UsersController < ApplicationController
     end
   end
 
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-      if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
+    if !@current_user.nil? && @user.id == @current_user.id
+      edit_user = params[:edit_user]
+      @district = District.find(@user.district_id)
+      @user.update(first_name: edit_user[:first_name],
+                   last_name: edit_user[:last_name],
+                   email: edit_user[:email],
+                   phone: edit_user[:phone],
+                   email_notification: edit_user[:email_notification],
+                   text_notification: edit_user[:text_notification])
+      if !@user.valid?
+        error_message = @user.errors.full_messages[0]
+        flash[:error] = error_message
+        redirect_to edit_user_path(@user.id)
       else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+        @user.update!(first_name: edit_user[:first_name],
+                      last_name: edit_user[:last_name],
+                      email: edit_user[:email],
+                      phone: edit_user[:phone],
+                      email_notification: edit_user[:email_notification],
+                      text_notification: edit_user[:text_notification])
+        if @user.role == 'Admin'
+          District.update_district(@district, edit_user[:district_name], edit_user[:address1],
+                                   edit_user[:address2], edit_user[:city], edit_user[:state], edit_user[:zipcode])
+        end
+        session[:session_token] = @user.session_token
+        flash[:notice] = 'Changes saved to your account.'
+        redirect_to edit_user_path(@user.id)
       end
+    else
+      flash[:error] = 'Please login to continue.'
+      redirect_to login_path
     end
   end
 
