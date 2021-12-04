@@ -117,7 +117,12 @@ class EventsController < ApplicationController
 
   # GET /events/new
   def new
+    redirect_to login_path and return if @current_user.blank?
+
     @event = Event.new
+    district_id = @current_user.district_id
+    @students = User.where(district_id: district_id, role: 'Student')
+                    .collect { |user| ["#{user.first_name} #{user.last_name}", user.id] }
   end
 
   # GET /events/1/edit
@@ -127,41 +132,18 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    @event = Event.new(event_params)
-
-    respond_to do |format|
-      if @event.save
-        format.html { redirect_to @event, notice: 'Event was successfully created.' }
-        format.json { render :show, status: :created, location: @event }
-      else
-        format.html { render :new }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
-      end
+    if event_params['med_id'].blank?
+      flash[:error] = "Medication ID can't be empty"
+      redirect_to new_event_path and return
     end
-  end
-
-  # PATCH/PUT /events/1
-  # PATCH/PUT /events/1.json
-  def update
-    respond_to do |format|
-      if @event.update(event_params)
-        format.html { redirect_to @event, notice: 'Event was successfully updated.' }
-        format.json { render :show, status: :ok, location: @event }
-      else
-        format.html { render :edit }
-        format.json { render json: @event.errors, status: :unprocessable_entity }
-      end
-    end
+    @event = Event.create!(event_params)
+    flash[:notice] = 'Event was successfully created.'
+    redirect_to events_path
   end
 
   # DELETE /events/1
   # DELETE /events/1.json
   def destroy
-    @event.destroy
-    respond_to do |format|
-      format.html { redirect_to events_url, notice: 'Event was successfully destroyed.' }
-      format.json { head :no_content }
-    end
   end
 
   private
@@ -172,7 +154,7 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:time, :student_id, :med_id, :complete, :notes)
+      params.require(:event).permit(:time, :student_id, :med_id, :complete, :notes, :district)
     end
 
     def is_nurse
