@@ -97,7 +97,7 @@ ActiveRecord::Schema.define(version: 20211201192814) do
     t.string   "password_digest"
     t.string   "role"
     t.integer  "role_id"
-    t.string   "district_id"
+    t.integer   "district_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "session_token"
