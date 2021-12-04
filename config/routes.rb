@@ -35,6 +35,8 @@ Rails.application.routes.draw do
 
   post 'users/register_district_admin'
 
+  get 'users/dashboard'
+
   post 'users/set_password'
 
   post 'users/create_and_email'
@@ -50,6 +52,7 @@ Rails.application.routes.draw do
   resources :students
   resources :parents
   resources :users
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   root "home#index"
