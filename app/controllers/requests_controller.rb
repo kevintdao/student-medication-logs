@@ -4,7 +4,11 @@ class RequestsController < ApplicationController
   # GET /requests
   # GET /requests.json
   def index
-    @requests = Request.all
+    if @current_user.nil?
+      flash[:error] = 'Please login with correct account.'
+      redirect_to login_path
+    end
+    @requests = Request.where('student_id = ? AND (parent_approved = ? OR nurse_approved = ?)', @current_user.id, false, false)
   end
 
   # GET /requests/1
