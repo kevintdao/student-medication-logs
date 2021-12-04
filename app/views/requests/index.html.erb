@@ -1,53 +1,58 @@
-<p id="notice"><%= notice %></p>
+<head>
+  <script src="https://kit.fontawesome.com/9c8e310799.js" crossorigin="anonymous"></script>
+</head>
+<body>
+  <p id="notice"><%= notice %></p>
 
-<h1>Listing Requests</h1>
+  <h1>Pending Requests</h1>
 
-<table>
-  <thead>
+  <table class="table table-striped">
+    <thead>
     <tr>
-      <th>Time1</th>
-      <th>Time2</th>
-      <th>Time3</th>
-      <th>Time4</th>
-      <th>Daily doses</th>
+      <th>Medication</th>
+      <th>Time 1</th>
+      <th>Time 2</th>
+      <th>Time 3</th>
+      <th>Time 4</th>
+      <th>Daily Doses</th>
       <th>Start date</th>
       <th>End date</th>
-      <th>Student</th>
-      <th>Requestor</th>
-      <th>Med</th>
-      <th>District</th>
-      <th>Notes</th>
       <th>Parent approved</th>
       <th>Nurse approved</th>
-      <th colspan="3"></th>
     </tr>
-  </thead>
+    </thead>
 
-  <tbody>
+    <tbody>
     <% @requests.each do |request| %>
       <tr>
-        <td><%= request.time1 %></td>
-        <td><%= request.time2 %></td>
-        <td><%= request.time3 %></td>
-        <td><%= request.time4 %></td>
+        <td><%= request.med_name %></td>
+        <td><%= time_tag(request.time1, format: '%H:%M') unless request.time1.nil? %></td>
+        <td><%= time_tag(request.time2, format: '%H:%M') unless request.time2.nil? %></td>
+        <td><%= time_tag(request.time3, format: '%H:%M') unless request.time3.nil? %></td>
+        <td><%= time_tag(request.time4, format: '%H:%M') unless request.time4.nil? %></td>
         <td><%= request.daily_doses %></td>
-        <td><%= request.start_date %></td>
-        <td><%= request.end_date %></td>
-        <td><%= request.student_id %></td>
-        <td><%= request.requestor_id %></td>
-        <td><%= request.med_id %></td>
-        <td><%= request.district_id %></td>
-        <td><%= request.notes %></td>
-        <td><%= request.parent_approved %></td>
-        <td><%= request.nurse_approved %></td>
-        <td><%= link_to 'Show', request %></td>
-        <td><%= link_to 'Edit', edit_request_path(request) %></td>
-        <td><%= link_to 'Destroy', request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= time_tag(request.start_date, format: '%B %d, %Y') unless request.start_date.nil? %></td>
+        <td><%= time_tag(request.end_date, format: '%B %d, %Y') unless request.start_date.nil? %></td>
+        <td>
+          <% if request.parent_approved %>
+            <span style="font-size: 25px; color: green;"><i class="fas fa-check-circle"></i></span>
+          <% else %>
+            <span style="font-size: 25px; color: red;"><i class="fas fa-times-circle"></i></span>
+          <% end %>
+        </td>
+        <td><% if request.nurse_approved %>
+            <span style="font-size: 25px; color: green;"><i class="fas fa-check-circle"></i></span>
+          <% else %>
+            <span style="font-size: 25px; color: red;"><i class="fas fa-times-circle"></i></span>
+          <% end %></td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 
-<br>
+  <br>
 
-<%= link_to 'New Request', new_request_path %>
+  <%= link_to 'New Request', new_request_path %>
+</body>
+
+
