@@ -198,7 +198,7 @@ describe EventsController do
     it "redirects to events_path" do
       controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
       get :complete
-      expect(response).to redirect_to(events_path)
+      expect(response).to redirect_to(events_past_events_path)
     end
     it "creates an error message when the params are nil" do
       controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
@@ -225,13 +225,13 @@ describe EventsController do
       post :change_notes, notes: {notes: "This is a new note", id: -1, complete: false}
       expect(assigns(:newNotes)).to eq("This is a new note")
       expect(assigns(:id)).to eq("-1")
-      expect(assigns(:complete)).to eq("false")
+      expect(assigns(:complete)).to eq(false)
       expect(flash[:notice]).to eq("Notes have been updated successfully")
     end
     it "should redirect to events_past_events_path when the event is complete" do
       controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
       post :change_notes, notes: {notes: "This is a new note", id: -1, complete: true}
-      expect(response).to redirect_to(events_past_events_path)
+      expect(response).to redirect_to(events_path)
     end
   end
 end
