@@ -17,6 +17,10 @@ Rails.application.routes.draw do
 
   post 'medications/search_meds'
 
+  post 'inventories/set_page_count'
+
+  post 'inventories/search_inv'
+
   post 'events/set_page_count'
 
   post 'events/search_events'
@@ -36,6 +40,14 @@ Rails.application.routes.draw do
   post 'users/register_district_admin'
 
   get 'users/dashboard'
+
+  get 'inventories/new'
+
+  post 'inventories/new_item'
+
+  post 'inventories/change_notes'
+
+  post 'inventories/change_amount'
 
   post 'users/set_password'
 

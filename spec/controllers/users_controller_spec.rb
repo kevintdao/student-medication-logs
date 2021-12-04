@@ -292,7 +292,7 @@ describe UsersController do
       it 'should call the model method that search users' do
         controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
         user = double('admin1')
-        expect(User).to receive(:search_users).with('Name', 'admin', 1).and_return(user)
+        expect(User).to receive(:search_users).with('Name', 'admin', 1, 'Admin').and_return(user)
         get :index, { search: { type: 'Name', term: 'admin' } }
       end
       it 'should return all users when search term is empty' do
@@ -301,11 +301,72 @@ describe UsersController do
         expect(response).to render_template('index')
       end
       it 'should flash error message if no users exists' do
+<<<<<<< HEAD
+        allow(User).to receive(:search_users).with('Name', 'asdf', 1, 'Admin').and_return(nil)
+=======
         controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
         allow(User).to receive(:search_users).with('Name', 'asdf', 1).and_return(nil)
+>>>>>>> main
         get :index, { search: { type: 'Name', term: 'asdf' } }
         expect(flash[:error]).to eq('No users found!')
         expect(response).to redirect_to(users_path)
+      end
+    end
+  end
+  describe 'get the event for student' do
+    it 'should redirect to login page if not logged in' do
+      get :show, id: 5
+      expect(response).to redirect_to(login_path)
+    end
+    it 'should get the events for given student id' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+      get :show, id: 5
+      expect(response).to render_template('show')
+    end
+  end
+
+  describe 'only allow valid user to view profile' do
+    context 'admin' do
+      it 'should redirect to users page if user is not in district' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
+        get :show, id: 11
+        expect(response).to redirect_to(users_path)
+      end
+    end
+    context 'nurse' do
+      it 'should redirect to users page if user is not in district' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+        get :show, id: 11
+        expect(response).to redirect_to(users_path)
+      end
+      it 'should redirect to users page if user role is not valid for current user' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+        get :show, id: 1
+        expect(response).to redirect_to(users_path)
+      end
+    end
+    context 'parent' do
+      it 'should redirect to dashboard if user is not in district' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com')[0])
+        get :show, id: 11
+        expect(response).to redirect_to(parents_path)
+      end
+      it 'should redirect to dashboard if user role is not valid for current user' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com')[0])
+        get :show, id: 1
+        expect(response).to redirect_to(parents_path)
+      end
+    end
+    context 'student' do
+      it 'should redirect to dashboard if user is not in district' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'studenta@gmail.com')[0])
+        get :show, id: 11
+        expect(response).to redirect_to(students_path)
+      end
+      it 'should redirect to dashboard if user role is not valid for current user' do
+        controller.instance_variable_set(:@current_user, User.where(email: 'studenta@gmail.com')[0])
+        get :show, id: 1
+        expect(response).to redirect_to(students_path)
       end
     end
   end

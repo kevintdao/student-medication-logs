@@ -11,27 +11,29 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group mb-2">
     <%= f.label :time %><br>
-    <%= f.datetime_select :time %>
+    <%= f.datetime_select :time, class: "form-control" %>
   </div>
-  <div class="field">
+  <div class="form-group mb-2">
     <%= f.label :student_id %><br>
-    <%= f.number_field :student_id %>
+    <%= f.select :student_id, @students, {}, {class: "form-select"} %>
   </div>
-  <div class="field">
-    <%= f.label :med_id %><br>
-    <%= f.number_field :med_id %>
+  <div class="form-group mb-2">
+    <%= f.label :med_id, "Medication ID" %><br>
+    <%= f.number_field :med_id, class: "form-control", onkeyup: "checkMedication(this)" %>
   </div>
-  <div class="field">
+  <div class="form-group mb-2">
     <%= f.label :complete %><br>
     <%= f.check_box :complete %>
   </div>
-  <div class="field">
+  <div class="form-group mb-2">
     <%= f.label :notes %><br>
-    <%= f.text_field :notes %>
+    <%= f.text_area :notes, class: "form-control" %>
   </div>
-  <div class="actions">
-    <%= f.submit %>
+  <%= f.hidden_field :district, value: @current_user.district_id %>
+  <div class="actions mb-2">
+    <%= f.submit 'Create Event', class: "btn btn-primary", id: 'submit', disabled: 'true' %>
+    <a href="javascript:history.back()" class="btn btn-secondary">Back</a>
   </div>
 <% end %>
