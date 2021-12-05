@@ -44,3 +44,9 @@ Then /^I should not be on "(.*?)" dashboard$/ do |user|
     expect(page.current_path).not_to eq('/nurses')
   end
 end
+
+When /^I select "(.*?)" from "(.*?)" dropdown$/ do |value, field|
+  if field == 'Your Student'
+    page.find_by_id("student_id", visible: false).set(value)
+  end
+end
