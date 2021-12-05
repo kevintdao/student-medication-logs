@@ -203,7 +203,7 @@ class UsersController < ApplicationController
     if !user.valid?
       error_message = user.errors.full_messages[0]
       flash[:error] = error_message
-      redirect_to users_new_path
+      redirect_to new_user_path
     else
       case user.role
       when 'Admin'

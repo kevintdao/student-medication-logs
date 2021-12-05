@@ -39,7 +39,6 @@
         <%= link_to edit_user_path(@current_user.id), method: :get do %>
           <i class="bi bi-gear-fill" style='font-size:26px; margin-right: 10px;'></i>
         <% end %>
-
         <%= link_to "Dashboard", users_dashboard_path, class: "btn btn-outline-primary", role: "button"%>
         <%= link_to "Logout", logout_path, class: "btn btn-primary", role: "button", method: :delete%>
     <% else %>
