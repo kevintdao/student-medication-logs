@@ -47,6 +47,6 @@ end
 
 When /^I select "(.*?)" from "(.*?)" dropdown$/ do |value, field|
   if field == 'Your Student'
-    page.find_by_id("student_id", visible: false).set(value)
+    select(value, from: 'student_id')
   end
 end
