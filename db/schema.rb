@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211205221559) do
+ActiveRecord::Schema.define(version: 20211205231131) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -85,6 +85,9 @@ ActiveRecord::Schema.define(version: 20211205221559) do
     t.integer "parent_id",  null: false
     t.integer "student_id", null: false
   end
+
+  add_index "parents_students", ["parent_id", "student_id"], name: "index_parents_students_on_parent_id_and_student_id"
+  add_index "parents_students", ["student_id", "parent_id"], name: "index_parents_students_on_student_id_and_parent_id"
 
   create_table "requests", force: :cascade do |t|
     t.datetime "time1"

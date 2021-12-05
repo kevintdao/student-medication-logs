@@ -8,6 +8,14 @@
 </head>
 <body>
   <div class="container">
+    <% if @pending_requests.length > 0 %>
+      <table class="table text-center mt-4">
+        <tr class="table-warning">
+          <td class="h5">You have pending requests.</td>
+          <td><%= link_to "View Requests for Approval", requests_path, class: "btn btn-warning profile-button" %></td>
+        </tr>
+      </table>
+    <% end %>
     <!-- Example row of columns -->
     <div class="album py-5">
       <div class="container homeContainer">

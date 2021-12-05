@@ -4,7 +4,15 @@ class ParentsController < ApplicationController
   # GET /parents
   # GET /parents.json
   def index
-    @parents = Parent.all
+    @parent = Parent.find(@current_user.role_id)
+    @pending_requests = Array.new
+    unless @parent.nil?
+      @parent.students.each do |student|
+        user = User.where(role_id: student.id, role: 'Student')[0]
+        @pending_requests << Request.where(student_id: user.id)
+      end
+    end
+    m = 1
   end
 
   # GET /parents/1
