@@ -52,7 +52,7 @@ Then /^I should see the student dashboard$/ do
 end
 
 When /^I click the link called "(.*?)"$/ do |link|
-  click_link link
+  first(:link, link).click
 end
 
 Then /^I should see a page with content "(.*?)"$/ do |content|
