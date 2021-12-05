@@ -3,13 +3,6 @@ Given /^I am on the create users page$/ do
   visit 'users/new'
 end
 
-Given /^I am logged in as an admin$/ do
-  visit '/login'
-  find_field('loginEmail').set('admin1@gmail.com')
-  find_field('loginPassword').set('123456')
-  click_button('Login')
-end
-
 When /^I click Invite User$/ do
   click_button('Invite User')
 end
