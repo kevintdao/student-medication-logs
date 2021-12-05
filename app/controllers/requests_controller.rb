@@ -82,6 +82,7 @@ class RequestsController < ApplicationController
       redirect_to new_request_path
     else
       @new_request.save!
+      flash[:notice] = 'Request submitted for approval.'
       case @current_user.role
       when 'Parent'
         redirect_to parents_path

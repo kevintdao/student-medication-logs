@@ -22,7 +22,7 @@
           <div class="row mt-3">
             <% if @current_user.role == 'Parent' %>
               <div class="form-outline mb-4">
-                <%= f.label :daily_doses, "Your Student", class:"form-label" %>
+                <%= f.label :student_id, "Your Student", class:"form-label" %>
                 <%= f.select :student_id, options_for_select(@students.collect {|s| [ s['first_name'] + ' ' +s['last_name'], s['id'] ] }),
                              {}, {class:"form-control", required: true, id:'student_id'}  %>
               </div>
