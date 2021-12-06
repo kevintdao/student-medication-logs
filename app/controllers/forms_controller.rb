@@ -93,41 +93,6 @@ class FormsController < ApplicationController
     end
   end
 
-
-  # GET /forms/1/edit
-  def edit
-  end
-
-  # POST /forms
-  # POST /forms.json
-  def create
-    @form = Form.new(form_params)
-
-    respond_to do |format|
-      if @form.save
-        format.html { redirect_to @form, notice: 'Form was successfully created.' }
-        format.json { render :show, status: :created, location: @form }
-      else
-        format.html { render :new }
-        format.json { render json: @form.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /forms/1
-  # PATCH/PUT /forms/1.json
-  def update
-    respond_to do |format|
-      if @form.update(form_params)
-        format.html { redirect_to @form, notice: 'Form was successfully updated.' }
-        format.json { render :show, status: :ok, location: @form }
-      else
-        format.html { render :edit }
-        format.json { render json: @form.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
   # DELETE /forms/1
   # DELETE /forms/1.json
   def destroy
