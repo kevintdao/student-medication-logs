@@ -25,8 +25,23 @@ class FormsController < ApplicationController
     else
       @studentName = @form[:studentName]
       @body = @form[:body]
+      if @studentName.blank?
+        flash[:warning] = "You must select a student for this form"
+        redirect_to :back and return
+      end
+      if @body.blank?
+        flash[:warning] = "You cannot submit a blank form"
+        redirect_to :back and return
+      end
+      @studentName = @studentName.split
+      @fname = @studentName[0]
+      @lname = @studentName[1]
+      Form.create!(nurse_approved: true, body: @body, studentID: User.where(first_name: @fname, last_name: @lname).first.id, parent_approved: false, districtID: @current_user.district_id)
+      flash[:notice] = "Form has been successfully created pending guardian approval"
+      redirect_to nurses_path
     end
   end
+
 
   # GET /forms/1/edit
   def edit
