@@ -62,9 +62,9 @@ Given /^"(.*?)" is a child of "(.*?)"$/ do |child, parent|
   expect(the_child.parents.find { |p| p == the_parent }).not_to be_nil
 end
 
-Given /^A request by "(.*?)" has been made that is not verified by Parent or Nurse$/ do |student|
+Given /^A request by "(.*?)" has been made$/ do |student|
   the_student = User.where(first_name: student.split.first, last_name: student.split.last).first
-  expect(Request.all.find { |r| r.student_id == the_student.id && r.parent_approved == false }).not_to be_nil
+  expect(Request.all.find { |r| r.student_id == the_student.id }).not_to be_nil
 end
 
 When /^I click the View Requests for Approval button$/ do
@@ -78,7 +78,6 @@ end
 Then /^I should see the request for "(.*?)" to take "(.*?)" with "(.*?)" daily doses$/ do |student, medication, doses|
   matches = 0
   page.all('tr').each do |tr|
-    # puts tr.text.to_s
     row = tr.text
     if row.include?(student) && row.include?(doses) && row.include?(medication) then matches += 1 end
   end
@@ -101,5 +100,11 @@ Then /^The request for "(.*?)" with "(.*?)" daily doses should be "(.*?)" approv
   when 'parent not nurse'
     expect(request.parent_approved).to be_truthy
     expect(request.nurse_approved).to be_falsey
+  when 'nurse parent'
+    expect(request.parent_approved).to be_truthy
+    expect(request.nurse_approved).to be_truthy
+  when 'nurse not parent'
+    expect(request.parent_approved).to be_falsey
+    expect(request.nurse_approved).to be_truthy
   end
 end

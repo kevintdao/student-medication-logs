@@ -5,7 +5,7 @@ Feature:
 
   Background:
     Given "Student A" is a child of "Parent 1A"
-    Given A request by "Student A" has been made that is not verified by Parent or Nurse
+    Given A request by "Student A" has been made
 
   Scenario: Nurse has already approved Request
     Given I am logged in as an "parent"
