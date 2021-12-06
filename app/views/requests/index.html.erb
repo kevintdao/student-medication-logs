@@ -9,6 +9,9 @@
   <table class="table table-striped">
     <thead>
     <tr>
+      <% if @current_user.role == 'Parent' %>
+        <th>Student</th>
+      <% end %>
       <th>Medication</th>
       <th>Time 1</th>
       <th>Time 2</th>
@@ -25,6 +28,9 @@
     <tbody>
     <% @requests.each do |request| %>
       <tr>
+        <% if @current_user.role == 'Parent' %>
+          <td><b><%= @user.first_name + ' ' + @user.last_name %></b></td>
+        <% end %>
         <td><%= request.med_name %></td>
         <td><%= time_tag(request.time1, format: '%H:%M') unless request.time1.nil? %></td>
         <td><%= time_tag(request.time2, format: '%H:%M') unless request.time2.nil? %></td>
@@ -37,7 +43,14 @@
           <% if request.parent_approved %>
             <span style="font-size: 25px; color: green;"><i class="fas fa-check-circle"></i></span>
           <% else %>
-            <span style="font-size: 25px; color: red;"><i class="fas fa-times-circle"></i></span>
+            <% if @current_user.role == 'Parent' %>
+              <%= form_for :request_approve, :url => requests_approve_path, :html => {:id => 'approve-request-form', :name => 'approve-request-form'} do |f| %>
+                <%= f.hidden_field :id, :value => request.id %>
+                <%=f.submit "Approve Request", class:"btn btn-primary profile-button"  %>
+              <% end %>
+            <% else %>
+              <span style="font-size: 25px; color: red;"><i class="fas fa-times-circle"></i></span>
+            <% end %>
           <% end %>
         </td>
         <td><% if request.nurse_approved %>

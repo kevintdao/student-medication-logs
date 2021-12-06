@@ -56,6 +56,8 @@ Rails.application.routes.draw do
 
   post 'requests/create_request'
 
+  post 'requests/approve'
+
   resources :password_sets
   resources :districts
   resources :forms

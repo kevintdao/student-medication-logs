@@ -15,8 +15,8 @@ class RequestsController < ApplicationController
         @parent = Parent.find(@current_user.role_id)
         @requests = Array.new
         @parent.students.each do |student|
-          user = User.where(role_id: student.id, role: 'Student')[0]
-          Request.where(student_id: user.id, parent_approved: false).to_a.each do |request|
+          @user = User.where(role_id: student.id, role: 'Student')[0]
+          Request.where(student_id: @user.id, parent_approved: false).to_a.each do |request|
             @requests << request
           end
         end
@@ -59,6 +59,23 @@ class RequestsController < ApplicationController
         format.html { render :new }
         format.json { render json: @request.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def approve
+    if @current_user.nil?
+      flash[:error] = 'Please login.'
+      redirect_to login_path
+    else
+      @request = Request.find(params[:request_approve][:id])
+      case @current_user.role
+      when 'Parent'
+        @request.update!(parent_approved: true)
+      when 'Nurse'
+        @request.update!(nurse_approved: true)
+      end
+      flash[:notice] = 'Successfully approved.'
+      redirect_to requests_path
     end
   end
 
