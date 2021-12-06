@@ -121,6 +121,12 @@ class EventsController < ApplicationController
 
     @event = Event.new
     district_id = @current_user.district_id
+
+    student_id = params[:student_id]
+    @medications = Inventory.where('districtId = ? AND (studentId = ? OR studentId = ?)', district_id, student_id, nil)
+                            .collect { |med| ["#{med.medName} (Amount: #{med.amount})", med.id] }
+    render :partial => 'medications' and return if request.xhr?
+
     @students = User.where(district_id: district_id, role: 'Student')
                     .collect { |user| ["#{user.first_name} #{user.last_name}", user.id] }
   end

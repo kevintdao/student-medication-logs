@@ -36,3 +36,17 @@ function checkMedication(element){
         document.getElementById('submit').disabled = false
     }
 }
+
+function getMedications(studentId){
+    console.log(studentId)
+    $.ajax({
+        type: 'GET',
+        url: '/events/new',
+        data: {
+            student_id: studentId
+        },
+        success: function (data) {
+            $('#event_med_id').replaceWith(data)
+        }
+    })
+}
