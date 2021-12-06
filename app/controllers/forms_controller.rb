@@ -14,7 +14,6 @@ class FormsController < ApplicationController
 
   # GET /forms/new
   def new
-    @form = Form.new
   end
 
   # GET /forms/1/edit
