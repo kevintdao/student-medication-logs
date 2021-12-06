@@ -20,6 +20,8 @@ class RequestsController < ApplicationController
             @requests << request
           end
         end
+      when 'Nurse'
+        @requests = Request.where(district_id: @current_user.district_id, nurse_approved: false)
       end
     end
 
