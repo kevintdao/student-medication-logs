@@ -2,9 +2,10 @@
   <script src="https://kit.fontawesome.com/9c8e310799.js" crossorigin="anonymous"></script>
 </head>
 <body>
+<div class="container">
   <h1>Pending Requests</h1>
 
-  <table class="table table-striped">
+  <table class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
     <thead>
     <tr>
       <% if @current_user.role == 'Parent' || @current_user.role == 'Nurse' %>
@@ -73,6 +74,7 @@
   <% unless @current_user.role == 'Nurse' %>
     <%= link_to 'New Request', new_request_path, class:"btn btn-primary profile-button" %>
   <% end %>
+</div>
 </body>
 
 
