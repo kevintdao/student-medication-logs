@@ -27,9 +27,8 @@ function copyToClipboard(){
     temp.remove()
 }
 
-function checkMedication(element){
+function checkNewEvent(element){
     if(element.value === "") {
-        console.log(document.getElementById('submit'))
         document.getElementById('submit').disabled = true
     }
     else {
