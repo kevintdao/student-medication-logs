@@ -1,6 +1,6 @@
 class FormsController < ApplicationController
   before_action :set_form, only: [:show, :edit, :update, :destroy]
-  before_action :is_nurse, only: [:new, :new_form]
+  before_action :is_nurse, only: [:new, :new_form, :change_body]
   after_action :clear_search, only: [:new, :new_form]
 
   # GET /forms
@@ -41,6 +41,21 @@ class FormsController < ApplicationController
 
   def clear_search
     session[:search_term] = nil
+  end
+
+
+  # POST /form/change_body
+  def change_body
+    if params[:body].nil?
+      flash[:error] = "There was a problem editing this form"
+      redirect_to :back
+    else
+      @newBody = params[:body][:body]
+      @id = params[:body][:id]
+      @item = Form.where(id: @id).update_all(body: @newBody, parent_approved: false)
+      flash[:notice] = "Form has been successfully updated. Guardian will have to approve again."
+      redirect_to forms_path
+    end
   end
 
   # GET /forms/1
