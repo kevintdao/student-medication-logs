@@ -50,3 +50,56 @@ When /^I select "(.*?)" from "(.*?)" dropdown$/ do |value, field|
     select(value, from: 'student_id')
   end
 end
+
+Given /^"(.*?)" is a child of "(.*?)"$/ do |child, parent|
+  the_child = User.where(first_name: child.split.first, last_name: child.split.last).first
+  the_child = Student.find(the_child.role_id)
+  the_parent = User.where(first_name: parent.split.first, last_name: parent.split.last).first
+  the_parent = Parent.find(the_parent.role_id)
+  expect(the_child).not_to be_nil
+  expect(the_parent).not_to be_nil
+  expect(the_parent.students.find { |s| s == the_child }).not_to be_nil
+  expect(the_child.parents.find { |p| p == the_parent }).not_to be_nil
+end
+
+Given /^A request by "(.*?)" has been made that is not verified by Parent or Nurse$/ do |student|
+  the_student = User.where(first_name: student.split.first, last_name: student.split.last).first
+  expect(Request.all.find { |r| r.student_id == the_student.id && r.parent_approved == false }).not_to be_nil
+end
+
+When /^I click the View Requests for Approval button$/ do
+  find(:id, 'view-requests').click
+end
+
+Then /^I should be on the requests page$/ do
+  expect(page.current_path).to eq('/requests')
+end
+
+Then /^I should see the request for "(.*?)" to take "(.*?)" with "(.*?)" daily doses$/ do |student, medication, doses|
+  matches = 0
+  page.all('tr').each do |tr|
+    # puts tr.text.to_s
+    row = tr.text
+    if row.include?(student) && row.include?(doses) && row.include?(medication) then matches += 1 end
+  end
+  expect(matches).to be > 0
+end
+
+When /^I click Approve Request for "(.*?)" with "(.*?)" daily doses$/ do |student, doses|
+  std_user = User.where(first_name: student.split.first, last_name: student.split.last).first
+  request = Request.where(student_id: std_user.id, daily_doses: doses).first
+  find(:id, 'approve-btn-' + request.id.to_s).click
+end
+
+Then /^The request for "(.*?)" with "(.*?)" daily doses should be "(.*?)" approved and "(.*?)" approved$/ do |student, doses, user1, user2|
+  std_user = User.where(first_name: student.split.first, last_name: student.split.last).first
+  request = Request.where(student_id: std_user.id, daily_doses: doses).first
+  case user1 + ' ' + user2
+  when 'parent nurse'
+    expect(request.parent_approved).to be_truthy
+    expect(request.nurse_approved).to be_truthy
+  when 'parent not nurse'
+    expect(request.parent_approved).to be_truthy
+    expect(request.nurse_approved).to be_falsey
+  end
+end

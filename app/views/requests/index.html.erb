@@ -46,7 +46,7 @@
             <% if @current_user.role == 'Parent' %>
               <%= form_for :request_approve, :url => requests_approve_path, :html => {:id => 'approve-request-form', :name => 'approve-request-form'} do |f| %>
                 <%= f.hidden_field :id, :value => request.id %>
-                <%=f.submit "Approve Request", class:"btn btn-primary profile-button"  %>
+                <%=f.submit "Approve Request", class:"btn btn-primary profile-button", id: 'approve-btn-' + request.id.to_s %>
               <% end %>
             <% else %>
               <span style="font-size: 25px; color: red;"><i class="fas fa-times-circle"></i></span>
@@ -59,7 +59,7 @@
             <% if @current_user.role == 'Nurse' %>
               <%= form_for :request_approve, :url => requests_approve_path, :html => {:id => 'approve-request-form', :name => 'approve-request-form'} do |f| %>
                 <%= f.hidden_field :id, :value => request.id %>
-                <%=f.submit "Approve Request", class:"btn btn-primary profile-button"  %>
+                <%=f.submit "Approve Request", class:"btn btn-primary profile-button", id: 'approve-btn-' + request.id.to_s  %>
               <% end %>
             <% else %>
               <span style="font-size: 25px; color: red;"><i class="fas fa-times-circle"></i></span>
