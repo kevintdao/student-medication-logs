@@ -13,6 +13,13 @@ Given /^I am logged in as an admin$/ do
   click_button('Login')
 end
 
+Given /^I am logged in as a nurse$/ do
+  visit login_path
+  fill_in('loginEmail', with: 'nurse1@gmail.com')
+  fill_in('loginPassword', with: '123456')
+  click_button('Login')
+end
+
 When /^I search by "(.*)" for the term "(.*)"$/ do |type, term|
   select(type, from: 'search_type')
   fill_in('search_term', with: term)
@@ -52,7 +59,7 @@ Then /^I should see the student dashboard$/ do
 end
 
 When /^I click the link called "(.*?)"$/ do |link|
-  click_link link
+  first(:link, link).click
 end
 
 Then /^I should see a page with content "(.*?)"$/ do |content|
