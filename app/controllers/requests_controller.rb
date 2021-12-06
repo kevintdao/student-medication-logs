@@ -76,8 +76,12 @@ class RequestsController < ApplicationController
       when 'Nurse'
         @request.update!(nurse_approved: true)
       end
-      flash[:notice] = 'Successfully approved.'
-      redirect_to requests_path
+      if @request.parent_approved && @request.nurse_approved
+        Event.create_event_from_request(@request)
+      else
+        flash[:notice] = 'Successfully approved.'
+        redirect_to requests_path
+      end
     end
   end
 
