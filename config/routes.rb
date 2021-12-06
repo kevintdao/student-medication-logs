@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :requests
   get 'users/register'
 
   get 'home/contact'
@@ -62,6 +63,9 @@ Rails.application.routes.draw do
   post 'forms/set_page_count'
 
   post 'forms/change_body'
+
+  post 'requests/create_request'
+
 
   resources :password_sets
   resources :districts
