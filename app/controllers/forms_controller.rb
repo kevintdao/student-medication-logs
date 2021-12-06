@@ -16,6 +16,18 @@ class FormsController < ApplicationController
   def new
   end
 
+  # POST /forms/new_form
+  def new_form
+    @form = params[:form]
+    if @form.nil?
+      flash[:error] = "There was a problem creating this form"
+      redirect_to :back
+    else
+      @studentName = @form[:studentName]
+      @body = @form[:body]
+    end
+  end
+
   # GET /forms/1/edit
   def edit
   end

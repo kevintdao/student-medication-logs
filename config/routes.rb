@@ -55,6 +55,8 @@ Rails.application.routes.draw do
 
   get 'forms/new'
 
+  post 'forms/new_form'
+
   resources :password_sets
   resources :districts
   resources :forms
