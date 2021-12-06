@@ -6,21 +6,21 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# require 'csv'
-#
-# csv_text = File.read(Rails.root.join('lib', 'seeds', 'drugs.csv'))
-# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-#
-# csv.each do |row|
-#   m = Medication.new
-#   m.brand_name = row['DrugName']
-#   m.active_ing = row['ActiveIngredient']
-#   m.method = row['Form']
-#   m.strength = row['Strength']
-#   m.save
-# end
-#
-# puts "There are now #{Medication.count} rows in the medications table"
+require 'csv'
+
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'drugs.csv'))
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
+
+csv.each do |row|
+  m = Medication.new
+  m.brand_name = row['DrugName']
+  m.active_ing = row['ActiveIngredient']
+  m.method = row['Form']
+  m.strength = row['Strength']
+  m.save
+end
+
+puts "There are now #{Medication.count} rows in the medications table"
 
 events = [{time: DateTime.new(2021, 12, 15, 15, 0, 0), student_id: 5, med_id: 35, complete: false, notes: "This is a notes field for this event.", district: 1},
           {time: DateTime.new(2021, 12, 14, 12, 0, 0), student_id: 6, med_id: 32, complete: false, district: 1},
@@ -54,33 +54,33 @@ end
 
 puts "There are now #{Inventory.count} rows in the inventories table"
 
-# users = [
-#   { email: 'admin1@gmail.com', first_name: 'Admin', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Admin', district_id: 1, text_notification: false, email_notification: false },
-#   { email: 'nurse1@gmail.com', first_name: 'Nurse', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Nurse', district_id: 1, text_notification: false, email_notification: false },
-#   { email: 'parent1a@gmail.com', first_name: 'Parent', last_name: '1A', password: '123456', password_confirmation: '123456', role: 'Parent', district_id: 1, text_notification: false, email_notification: false },
-#   { email: 'parent1b@gmail.com', first_name: 'Parent', last_name: '1B', password: '123456', password_confirmation: '123456', role: 'Parent', district_id: 1, text_notification: false, email_notification: false },
-#   { email: 'studenta@gmail.com', first_name: 'Student', last_name: 'A', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 1, text_notification: false, email_notification: false },
-#   { email: 'studentb@gmail.com', first_name: 'Student', last_name: 'B', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 1, text_notification: false, email_notification: false },
-#   { email: 'studentc@gmail.com', first_name: 'Student', last_name: 'C', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 1, text_notification: false, email_notification: false },
-#   { email: 'admin2@gmail.com', first_name: 'Admin', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Admin', district_id: 2, text_notification: false, email_notification: false },
-#   { email: 'nurse2@gmail.com', first_name: 'Nurse', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Nurse', district_id: 2, text_notification: false, email_notification: false },
-#   { email: 'parent2@gmail.com', first_name: 'Parent', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Parent', district_id: 2, text_notification: false, email_notification: false },
-#   { email: 'student2@gmail.com', first_name: 'Student', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 2, text_notification: false, email_notification: false }
-# ]
-#
-# users.each do |user|
-#   case user[:role]
-#   when 'Admin'
-#     user[:role_id] = Admin.create!.id
-#   when 'Nurse'
-#     user[:role_id] = Nurse.create!.id
-#   when 'Parent'
-#     user[:role_id] = Parent.create!.id
-#   when 'Student'
-#     user[:role_id] = Student.create!.id
-#   end
-#   User.create!(user)
-# end
+users = [
+  { email: 'admin1@gmail.com', first_name: 'Admin', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Admin', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'nurse1@gmail.com', first_name: 'Nurse', last_name: '1', password: '123456', password_confirmation: '123456', role: 'Nurse', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'parent1a@gmail.com', first_name: 'Parent', last_name: '1A', password: '123456', password_confirmation: '123456', role: 'Parent', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'parent1b@gmail.com', first_name: 'Parent', last_name: '1B', password: '123456', password_confirmation: '123456', role: 'Parent', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'studenta@gmail.com', first_name: 'Student', last_name: 'A', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'studentb@gmail.com', first_name: 'Student', last_name: 'B', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'studentc@gmail.com', first_name: 'Student', last_name: 'C', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 1, text_notification: false, email_notification: false },
+  { email: 'admin2@gmail.com', first_name: 'Admin', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Admin', district_id: 2, text_notification: false, email_notification: false },
+  { email: 'nurse2@gmail.com', first_name: 'Nurse', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Nurse', district_id: 2, text_notification: false, email_notification: false },
+  { email: 'parent2@gmail.com', first_name: 'Parent', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Parent', district_id: 2, text_notification: false, email_notification: false },
+  { email: 'student2@gmail.com', first_name: 'Student', last_name: '2', password: '123456', password_confirmation: '123456', role: 'Student', district_id: 2, text_notification: false, email_notification: false }
+]
+
+users.each do |user|
+  case user[:role]
+  when 'Admin'
+    user[:role_id] = Admin.create!.id
+  when 'Nurse'
+    user[:role_id] = Nurse.create!.id
+  when 'Parent'
+    user[:role_id] = Parent.create!.id
+  when 'Student'
+    user[:role_id] = Student.create!.id
+  end
+  User.create!(user)
+end
 
 # create one parent/student relationship
 student = Student.find(User.where(email: 'studenta@gmail.com')[0].role_id)
