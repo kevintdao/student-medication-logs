@@ -37,7 +37,6 @@ function checkNewEvent(element){
 }
 
 function getMedications(studentId){
-    console.log(studentId)
     $.ajax({
         type: 'GET',
         url: '/events/new',

@@ -138,8 +138,8 @@ class EventsController < ApplicationController
   # POST /events
   # POST /events.json
   def create
-    if event_params['med_id'].blank?
-      flash[:error] = "Medication ID can't be empty"
+    if event_params['med_id'].blank? || event_params['amount'].blank?
+      flash[:error] = "Empty medication/amount"
       redirect_to new_event_path and return
     end
     @event = Event.create!(event_params)
@@ -160,7 +160,7 @@ class EventsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def event_params
-      params.require(:event).permit(:time, :student_id, :med_id, :complete, :notes, :district)
+      params.require(:event).permit(:time, :student_id, :med_id, :complete, :notes, :district, :amount)
     end
 
     def is_nurse
