@@ -9,9 +9,9 @@
 </head>
 <body>
 <!--Section heading-->
-<h2 class="h1-responsive font-weight-bold text-center my-4">New Inventory Item</h2>
+<h2 class="h1-responsive font-weight-bold text-center my-4">New Form</h2>
 <!--Section description-->
-<p class="text-center w-responsive mx-auto mb-5">Fill out the fields below to add an item to the inventory. Required fields are marked with an *.</p>
+<p class="text-center w-responsive mx-auto mb-5">Fill out the fields below to create a new form. All fields are required.</p>
 <!--Grid column-->
 <%= form_for :form, :url => forms_new_form_path do |f|  %>
   <div class="row">
@@ -24,7 +24,14 @@
   <div class="row">
     <div class="md-form">
       <%= f.label :body, "Form Body:" %>
-      <%= f.text_area :body, :html => {:id => "body", :name => "body"}, class: "form-control md-textarea", id:"body" %>
+      <% @nurse = User.where(id: @current_user.id).first %>
+      <% @name = @nurse.first_name + ' ' + @nurse.last_name %>
+      <%= f.text_area :body, :html => {:id => "body", :name => "body"}, class: "form-control md-textarea", id:"body",
+                      value: "The following form is to be approved by medical faculty and a student guardian in compliance with district and state policy. Please review all below information carefully and contact the district for any problems or to request changes.\n
+                      Form created by: #{@name}\n
+                      -----------------------------------------------\n\n\n
+                      -----------------------------------------------\n
+                      Please click below to approve this form." %>
     </div>
   </div>
   <div class="text-center text-md-left">
