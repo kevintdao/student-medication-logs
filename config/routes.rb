@@ -57,6 +57,10 @@ Rails.application.routes.draw do
 
   post 'forms/new_form'
 
+  post 'forms/search_forms'
+
+  post 'forms/set_page_count'
+
   resources :password_sets
   resources :districts
   resources :forms
