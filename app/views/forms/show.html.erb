@@ -21,6 +21,24 @@
     <% end %>
   </p>
 
+  <p>
+  <strong> Form approved by Guardian: </strong>
+    <% if @form.parent_approved %>
+      Yes
+    <% else %>
+      No
+    <% end %>
+  </p>
+
+  <p>
+    <strong> Form approved by Nurse: </strong>
+    <% if @form.nurse_approved %>
+      Yes
+    <% else %>
+      No
+    <% end %>
+  </p>
+
   <div class="field">
     <%= form_for :body, :url => forms_change_body_path do |f| %>
       <div class="field">
@@ -28,7 +46,7 @@
         <%= f.text_area :body, value: @form.body ,class: "form-control", id:"body", :required => true %>
         <%= f.hidden_field :id, value: @form.id %>
       </div>
-      <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %> <%= link_to 'Delete Item', @form, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-outline-primary" %>
+      <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
 
     <% end %>
   </div>
