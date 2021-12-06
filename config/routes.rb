@@ -61,6 +61,8 @@ Rails.application.routes.draw do
 
   post 'forms/set_page_count'
 
+  post 'forms/change_body'
+
   resources :password_sets
   resources :districts
   resources :forms
