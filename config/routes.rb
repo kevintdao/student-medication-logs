@@ -53,6 +53,8 @@ Rails.application.routes.draw do
 
   post 'users/create_and_email'
 
+  get 'forms/parent_view'
+
   resources :password_sets
   resources :districts
   resources :forms
