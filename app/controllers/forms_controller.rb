@@ -1,11 +1,46 @@
 class FormsController < ApplicationController
   before_action :set_form, only: [:show, :edit, :update, :destroy]
   before_action :is_nurse, only: [:new, :new_form]
+  after_action :clear_search, only: [:new, :new_form]
 
   # GET /forms
   # GET /forms.json
   def index
-    @forms = Form.all
+    @pages = session[:page_count]
+    @selection = session[:search_term]
+    if @pages.nil?
+      if @selection.nil? or @selection.blank?
+        @forms = Form.where(districtID: @current_user.district_id).page(params[:page]).per_page(50)
+      else
+        @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(50)
+      end
+    else
+      if @selection.nil? or @selection.blank?
+        @forms = Form.where(districtID: @current_user.district_id).page(params[:page]).per_page(@pages)
+      else
+        @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(@pages)
+      end
+    end
+  end
+
+  def set_page_count
+    unless params[:page_count].nil?
+      @pages = params[:page_count][:page_count]
+      session[:page_count] = @pages.to_i
+    end
+    redirect_to forms_path
+  end
+
+  def search_forms
+    unless params[:search_term].nil?
+      @search = params[:search_term][:search_term]
+      session[:search_term] = @search
+    end
+    redirect_to forms_path
+  end
+
+  def clear_search
+    session[:search_term] = nil
   end
 
   # GET /forms/1
