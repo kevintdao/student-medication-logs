@@ -78,10 +78,11 @@ class RequestsController < ApplicationController
       end
       if @request.parent_approved && @request.nurse_approved
         Event.create_event_from_request(@request)
+        flash[:notice] = 'Successfully approved. Medication Events have been created.'
       else
         flash[:notice] = 'Successfully approved.'
-        redirect_to requests_path
       end
+      redirect_to requests_path
     end
   end
 
