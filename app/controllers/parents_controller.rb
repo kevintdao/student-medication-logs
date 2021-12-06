@@ -9,7 +9,7 @@ class ParentsController < ApplicationController
     unless @parent.nil?
       @parent.students.each do |student|
         user = User.where(role_id: student.id, role: 'Student')[0]
-        @pending_requests << Request.where(student_id: user.id)
+        @pending_requests << Request.where(student_id: user.id, parent_approved: false)
       end
     end
     m = 1

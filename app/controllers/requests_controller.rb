@@ -7,8 +7,22 @@ class RequestsController < ApplicationController
     if @current_user.nil?
       flash[:error] = 'Please login with correct account.'
       redirect_to login_path
+    else
+      case @current_user.role
+      when 'Student'
+        @requests = Request.where('student_id = ? AND (parent_approved = ? OR nurse_approved = ?)', @current_user.id, false, false)
+      when 'Parent'
+        @parent = Parent.find(@current_user.role_id)
+        @requests = Array.new
+        @parent.students.each do |student|
+          user = User.where(role_id: student.id, role: 'Student')[0]
+          Request.where(student_id: user.id, parent_approved: false).to_a.each do |request|
+            @requests << request
+          end
+        end
+      end
     end
-    @requests = Request.where('student_id = ? AND (parent_approved = ? OR nurse_approved = ?)', @current_user.id, false, false)
+
   end
 
   # GET /requests/1
