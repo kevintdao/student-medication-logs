@@ -123,7 +123,7 @@ class EventsController < ApplicationController
     district_id = @current_user.district_id
 
     student_id = params[:student_id]
-    @medications = Inventory.where('districtId = ? AND (studentId = ? OR studentId = ?)', district_id, student_id, nil)
+    @medications = Inventory.where(districtID: district_id, studentID: [student_id, nil]).reorder("medName ASC")
                             .collect { |med| ["#{med.medName} (Amount: #{med.amount})", med.id] }
     render :partial => 'medications' and return if request.xhr?
 
