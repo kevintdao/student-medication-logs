@@ -50,9 +50,7 @@ class EventsController < ApplicationController
   end
 
   def search_events
-    unless params[:search_term].nil?
-      session[:search_term] = params[:search_term][:search_term]
-    end
+    session[:search_term] = params[:search_term][:search_term] unless params[:search_term].nil?
     redirect_to events_path
   end
 
@@ -65,9 +63,7 @@ class EventsController < ApplicationController
   end
 
   def search_past_events
-    unless params[:search_term].nil?
-      session[:search_term] = params[:search_term][:search_term]
-    end
+    session[:search_term] = params[:search_term][:search_term] unless params[:search_term].nil?
     redirect_to events_past_events_path
   end
 
@@ -76,7 +72,19 @@ class EventsController < ApplicationController
       flash[:error] = "There was a problem marking this event as complete"
     else
       @eventID = params[:id]
+      student_id = params[:student_id]
+      med_id = params[:med_id]
+      med_amount = params[:amount]
+      district_id = params[:district_id]
+      current_inventory = Inventory.where(studentID: student_id, med_id: med_id, districtID: district_id)
+
+      if current_inventory.first.nil?
+        current_inventory = Inventory.where(studentID: nil, med_id: med_id, districtID: district_id)
+      end
+      total = current_inventory.first.amount
+
       @event = Event.where(id: @eventID).update_all(complete: true)
+      @inventory = current_inventory.update_all(amount: total - med_amount.to_i)
       flash[:notice] = "Event has been marked as complete"
     end
     redirect_to events_past_events_path
@@ -87,7 +95,19 @@ class EventsController < ApplicationController
       flash[:error] = "There was a problem marking this event as incomplete"
     else
       @eventID = params[:id]
+      student_id = params[:student_id]
+      med_id = params[:med_id]
+      med_amount = params[:amount]
+      district_id = params[:district_id]
+      current_inventory = Inventory.where(studentID: student_id, med_id: med_id, districtID: district_id)
+
+      if current_inventory.first.nil?
+        current_inventory = Inventory.where(studentID: nil, med_id: med_id, districtID: district_id)
+      end
+      total = current_inventory.first.amount
+
       @event = Event.where(id: @eventID).update_all(complete: false)
+      @inventory = current_inventory.update_all(amount: total + med_amount.to_i)
       flash[:notice] = "Event has been marked as incomplete"
     end
     redirect_to events_path
