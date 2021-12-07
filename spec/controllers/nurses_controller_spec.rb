@@ -6,6 +6,11 @@ describe NursesController do
     before :all do
       @nurse = User.find_by_email('nurse1@gmail.com')
     end
+    it "returns http success" do
+      controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+      get :index
+      expect(response).to have_http_status(:success)
+    end
     it 'should redirect to login if user is not logged in' do
       get :index
       expect(response).to redirect_to login_path
@@ -44,5 +49,4 @@ describe NursesController do
       expect(request.session[:search_term]).to be_nil
     end
   end
-
 end

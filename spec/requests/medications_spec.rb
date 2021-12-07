@@ -53,17 +53,17 @@ RSpec.describe "Medications", type: :request do
       expect(response).to redirect_to(medications_path)
     end
   end
-  describe "POST /search_events" do
-    it "redirects to events_path" do
-      post events_search_events_path
-      expect(response).to redirect_to(events_path)
-    end
-    it "sets the session correctly" do
-      post events_search_events_path, search_term: {search_term: "FName"}
-      expect(session[:search_term]).to eq("FName")
-      expect(response).to redirect_to(events_path)
-    end
-  end
+  # describe "POST /search_events" do
+  #   it "redirects to events_path" do
+  #     post events_search_events_path
+  #     expect(response).to redirect_to(events_path)
+  #   end
+  #   it "sets the session correctly" do
+  #     post events_search_events_path, search_term: {search_term: "FName"}
+  #     expect(session[:search_term]).to eq("FName")
+  #     expect(response).to redirect_to(events_path)
+  #   end
+  # end
   describe "POST /search_meds" do
     it "redirects to medications_path" do
       post medications_search_meds_path
