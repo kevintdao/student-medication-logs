@@ -15,7 +15,7 @@ class RequestsController < ApplicationController
         @parent = Parent.find(@current_user.role_id)
         @requests = Array.new
         @parent.students.each do |student|
-          @user = User.where(role_id: student.id, role: 'Student')[0]
+          @user = User.where(role_id: student.id, role: 'Student').first
           Request.where(student_id: @user.id, parent_approved: false).to_a.each do |request|
             @requests << request
           end
@@ -27,41 +27,15 @@ class RequestsController < ApplicationController
 
   end
 
-  # GET /requests/1
-  # GET /requests/1.json
-  def show
-  end
-
   # GET /requests/new
   def new
     if @current_user.nil?
       flash[:error] = 'Must be logged in.'
       redirect_to login_path
-    end
-    if @current_user.role == 'Parent'
-      @students = User.where(role: 'Student')
+    elsif @current_user.role == 'Parent'
+      @students = User.where(role: 'Student', district_id: @current_user.district_id)
     end
     @request = Request.new
-  end
-
-  # GET /requests/1/edit
-  def edit
-  end
-
-  # POST /requests
-  # POST /requests.json
-  def create
-    @request = Request.new(request_params)
-
-    respond_to do |format|
-      if @request.save
-        format.html { redirect_to @request, notice: 'Request was successfully created.' }
-        format.json { render :show, status: :created, location: @request }
-      else
-        format.html { render :new }
-        format.json { render json: @request.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   def approve
@@ -127,30 +101,6 @@ class RequestsController < ApplicationController
       when 'Student'
         redirect_to students_path
       end
-    end
-  end
-
-  # PATCH/PUT /requests/1
-  # PATCH/PUT /requests/1.json
-  def update
-    respond_to do |format|
-      if @request.update(request_params)
-        format.html { redirect_to @request, notice: 'Request was successfully updated.' }
-        format.json { render :show, status: :ok, location: @request }
-      else
-        format.html { render :edit }
-        format.json { render json: @request.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /requests/1
-  # DELETE /requests/1.json
-  def destroy
-    @request.destroy
-    respond_to do |format|
-      format.html { redirect_to requests_url, notice: 'Request was successfully destroyed.' }
-      format.json { head :no_content }
     end
   end
 
