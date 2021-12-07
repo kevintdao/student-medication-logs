@@ -81,3 +81,23 @@ users.each do |user|
   end
   User.create!(user)
 end
+
+# create one parent/student relationship
+student = Student.find(User.where(email: 'studenta@gmail.com')[0].role_id)
+parent = Parent.find(User.where(email: 'parent1a@gmail.com')[0].role_id)
+parent.students = [student]
+student.parents = [parent]
+student.save!
+parent.save!
+
+student_user = User.find_by_email('studenta@gmail.com')
+parent_user = User.find_by_email('parent1a@gmail.com')
+requests = [
+  {time1: DateTime.now, time2: 2.hours.from_now, time3: nil, time4:nil, daily_doses: '2', start_date: 5.days.from_now, end_date: 15.days.from_now, student_id: student_user.id, requestor_id: student_user.id, med_id: 130, district_id: student_user.district_id, notes: 'Please give me this medication.', parent_approved: false, nurse_approved: false, med_name: 'Benadryl'  },
+  {time1: DateTime.now, time2: 2.hours.from_now, time3: 4.hours.from_now, time4:nil, daily_doses: '3', start_date: 5.days.from_now, end_date: 25.days.from_now, student_id: student_user.id, requestor_id: parent_user.id, med_id: 130, district_id: parent_user.district_id, notes: 'Please give my child this medication.', parent_approved: true, nurse_approved: false, med_name: 'Ibuprofen'  },
+  {time1: DateTime.now, time2: 2.hours.from_now, time3: 4.hours.from_now, time4: 6.hours.from_now, daily_doses: '4', start_date: 5.days.from_now, end_date: 25.days.from_now, student_id: student_user.id, requestor_id: student_user.id, med_id: 1, district_id: parent_user.district_id, notes: 'Please give my child this medication.', parent_approved: false, nurse_approved: true, med_name: 'PAREDRINE'  }
+]
+
+requests.each do |request|
+  Request.create!(request)
+end

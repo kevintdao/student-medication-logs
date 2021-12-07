@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20211201192814) do
+ActiveRecord::Schema.define(version: 20211205231131) do
 
   create_table "admins", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -79,6 +79,34 @@ ActiveRecord::Schema.define(version: 20211201192814) do
     t.integer  "students_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "parents_students", id: false, force: :cascade do |t|
+    t.integer "parent_id",  null: false
+    t.integer "student_id", null: false
+  end
+
+  add_index "parents_students", ["parent_id", "student_id"], name: "index_parents_students_on_parent_id_and_student_id"
+  add_index "parents_students", ["student_id", "parent_id"], name: "index_parents_students_on_student_id_and_parent_id"
+
+  create_table "requests", force: :cascade do |t|
+    t.datetime "time1"
+    t.datetime "time2"
+    t.datetime "time3"
+    t.datetime "time4"
+    t.string   "daily_doses"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.integer  "student_id"
+    t.integer  "requestor_id"
+    t.integer  "med_id"
+    t.integer  "district_id"
+    t.string   "notes"
+    t.boolean  "parent_approved"
+    t.boolean  "nurse_approved"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "med_name"
   end
 
   create_table "students", force: :cascade do |t|

@@ -1,0 +1,170 @@
+<head>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-ui-timepicker-addon/1.6.3/jquery-ui-timepicker-addon.min.css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+</head>
+<body>
+<div class="container rounded bg-white mt-5 mb-5">
+  <div class="row">
+    <div class="col-md-3 border-right">
+      <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="mt-5" width="150px" src="https://www.pngplay.com/wp-content/uploads/7/Checklist-Logo-Transparent-Image.png"></div>
+    </div>
+    <div class="col-md-5 border-right">
+      <div class="p-3 py-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h4 class="text-right">Request Approval for Medication</h4>
+        </div>
+        <%= form_for :request, :url => requests_create_request_path, :html => {:id => 'request-form', :name => 'request-form'} do |f| %>
+
+          <div class="row mt-3">
+            <% if @current_user.role == 'Parent' %>
+              <div class="form-outline mb-4">
+                <%= f.label :student_id, "Your Student", class:"form-label" %>
+                <%= f.select :student_id, options_for_select(@students.collect {|s| [ s['first_name'] + ' ' +s['last_name'], s['id'] ] }),
+                             {}, {class:"form-control", required: true, id:'student_id'}  %>
+              </div>
+            <% end %>
+
+            <div class="form-outline mb-4">
+              <%= f.label :med_name, "Medication", class:"form-label" %>
+              <%= f.text_field :med_name, class:"form-control", required: true %>
+            </div>
+            <div class="form-outline mb-4">
+              <%= f.label :daily_doses, "Doses per Day", class:"form-label" %>
+              <%= f.select :daily_doses, options_for_select({'1' => '1', '2' => '2', '3' => '3', '4' => '4'}, @request.daily_doses),
+                           {}, {class:"form-control", required: true, id:'daily_doses', onchange: 'showTimes();'}  %>
+            </div>
+
+
+            <div class="form-group">
+              <div class="row mt-2" style="display: none" id="dose1">
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                  <%= f.label :time1, "First Dose", class:"form-label" %>
+                  <div class="input-group date"  id="timepicker1">
+                    <%= f.text_field :time1, class:"form-control stylish-time", id:'time1' %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row mt-2" style="display: none" id="dose2">
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                  <%= f.label :time2, "Second Dose", class:"form-label" %>
+                  <div class="input-group date"  id="timepicker2" data-target-input="nearest">
+                    <%= f.text_field :time2, class:"form-control stylish-time" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row mt-2" style="display: none" id="dose3">
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                  <%= f.label :time3, "Third Dose", class:"form-label" %>
+                  <div class="input-group date"  id="timepicker3" data-target-input="nearest">
+                    <%= f.text_field :time3, class:"form-control stylish-time" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="row mt-2" style="display: none" id="dose4">
+                <div class="col-md-6"></div>
+                <div class="col-md-6">
+                  <%= f.label :time4, "Fourth Dose", class:"form-label" %>
+                  <div class="input-group date"  id="timepicker4" data-target-input="nearest">
+                    <%= f.text_field :time4, class:"form-control stylish-time" %>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="form-outline mb-4">
+              <%= f.label :start_date, "Medication Start Date", class:"form-label" %>
+              <%=f.date_field :start_date, class:"form-control", id:'start_date' %>
+            </div>
+
+            <div class="form-outline mb-4">
+              <%= f.label :end_date, "Medication End Date", class:"form-label" %>
+              <%=f.date_field :end_date, class:"form-control", id:'end_date' %>
+            </div>
+
+              <div class="form-outline mb-6">
+                <%= f.label :notes, "Notes", class:"form-label" %>
+                <%= f.text_area :notes, class:"form-control" %>
+              </div>
+
+            <div class="mt-5 text-center">
+              <%=link_to "Cancel", students_path, class:"btn btn-danger profile-button"%>
+<!--              <button class="btn btn-primary profile-button" type="button">Submit Request</button>-->
+              <%=f.submit "Submit Request", class:"btn btn-primary profile-button"  %>
+            </div>
+        <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+</body>
+
+<script type="text/javascript">
+  function showTimes() {
+      let doses = $('#daily_doses').val();
+      if (doses == 1) {
+          $('#dose1').show();
+          $('#dose2').hide();
+          $('#dose3').hide();
+          $('#dose4').hide();
+      }
+      if (doses == 2) {
+          $('#dose1').show();
+          $('#dose2').show();
+          $('#dose3').hide();
+          $('#dose4').hide();
+      }
+      if (doses == 3) {
+          $('#dose1').show();
+          $('#dose2').show();
+          $('#dose3').show();
+          $('#dose4').hide();
+      }
+      if (doses == 4) {
+          $('#dose1').show();
+          $('#dose2').show();
+          $('#dose3').show();
+          $('#dose4').show();
+      }
+      if (doses == "") {
+          $('#dose1').hide();
+          $('#dose2').hide();
+          $('#dose3').hide();
+          $('#dose4').hide();
+      }
+  }
+
+      $('.stylish-time').timepicker({
+          timeFormat: 'h:mm p',
+          interval: 5,
+          minTime: '7',
+          maxTime: '10:00pm',
+          defaultTime: '12',
+          startTime: '7:00',
+          dynamic: false,
+          dropdown: true,
+          scrollbar: true
+      });
+
+
+
+
+</script>
