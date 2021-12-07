@@ -7,7 +7,7 @@ class Event < ActiveRecord::Base
     Date.new(start.year, start.month, start.day).upto(Date.new(end_date.year, end_date.month, end_date.day)) do |day|
       current_dose = 1
       unless weekend?(day)
-        request.daily_doses.to_i.times do |dose|
+        request.daily_doses.to_i.times do
           case current_dose
           when 1
             create_event(request, DateTime.new(day.year, day.month, day.day, request.time1.hour, request.time1.min, 0))
