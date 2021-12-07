@@ -1,7 +1,8 @@
 class FormsController < ApplicationController
-  before_action :set_form, only: [:show, :edit, :update, :destroy]
-  before_action :is_nurse, only: [:new, :new_form, :change_body]
-  after_action :clear_search, only: [:new, :new_form]
+  before_action :set_form, only: [:show, :destroy]
+  before_action :is_nurse, only: [:new, :new_form, :change_body, :index]
+  after_action :clear_search, only: [:new, :new_form, :change_body]
+  before_action :is_parent, only: [:parent_view]
 
   # GET /forms
   # GET /forms.json
@@ -21,6 +22,27 @@ class FormsController < ApplicationController
         @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(@pages)
       end
     end
+  end
+
+  # GET /forms/parent_view
+  def parent_view
+    #TODO: Only display entries where student id belongs to the parent
+    @pages = session[:page_count]
+    @selection = session[:search_term]
+    if @pages.nil?
+      if @selection.nil? or @selection.blank?
+        @forms = Form.where(districtID: @current_user.district_id).page(params[:page]).per_page(50)
+      else
+        @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(50)
+      end
+    else
+      if @selection.nil? or @selection.blank?
+        @forms = Form.where(districtID: @current_user.district_id).page(params[:page]).per_page(@pages)
+      else
+        @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(@pages)
+      end
+    end
+    render 'forms/index'
   end
 
   def set_page_count
@@ -128,4 +150,19 @@ class FormsController < ApplicationController
         end
       end
     end
+
+  def is_parent
+    if @current_user.nil?
+      # There is no logged in user
+      flash[:warning] = "You must be logged in as a parent to access this page."
+      redirect_to home_index_path
+    else
+      # The user is logged in
+      unless @current_user.role == "Parent"
+        # The user is not a nurse
+        flash[:warning] = "You must be a parent to access this page."
+        redirect_to home_index_path
+      end
+    end
+  end
 end

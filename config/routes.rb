@@ -63,6 +63,8 @@ Rails.application.routes.draw do
 
   post 'forms/change_body'
 
+  get 'forms/parent_view'
+
   resources :password_sets
   resources :districts
   resources :forms

@@ -4,11 +4,11 @@ Feature: Nurse can view all forms (complete and incomplete)
   I want to see a list of forms that can be searched
 
   Scenario: Nurse is not logged in
-    # For now, we are allowing this. The same page may be used for students and parents
+    #  We are no longer allowing this
     Given I am on the login page
     When I login with email = "parent1a@gmail.com", password = "123456"
     When I visit the forms page
-    Then I should see the "Forms" page
+    Then I should see the landing page
 
   Scenario: Nurse is logged in
     # In the future this will be a different path than another logged in user. For now it is the same
