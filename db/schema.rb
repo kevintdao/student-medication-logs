@@ -11,6 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 20211204193436) do
 
   create_table "admins", force: :cascade do |t|
@@ -44,9 +45,11 @@ ActiveRecord::Schema.define(version: 20211204193436) do
     t.boolean  "nurse_approved"
     t.boolean  "parent_approved"
     t.string   "complete_boolean"
-    t.string   "body"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.text     "body",             limit: 100000
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "studentID"
+    t.integer  "districtID"
   end
 
   create_table "inventories", force: :cascade do |t|
@@ -117,7 +120,7 @@ ActiveRecord::Schema.define(version: 20211204193436) do
     t.string   "password_digest"
     t.string   "role"
     t.integer  "role_id"
-    t.integer   "district_id"
+    t.string   "district_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
     t.string   "session_token"
