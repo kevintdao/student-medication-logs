@@ -45,9 +45,11 @@ ActiveRecord::Schema.define(version: 20211206212649) do
     t.boolean  "nurse_approved"
     t.boolean  "parent_approved"
     t.string   "complete_boolean"
-    t.string   "body"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.text     "body",             limit: 100000
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "studentID"
+    t.integer  "districtID"
   end
 
   create_table "inventories", force: :cascade do |t|

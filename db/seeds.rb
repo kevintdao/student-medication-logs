@@ -87,3 +87,14 @@ users.each do |user|
   end
   User.create!(user)
 end
+
+forms = [{studentID: 5, parent_approved: false, nurse_approved: true, body: "This is a seeded entry 1", districtID: 1},
+         {studentID: 6, parent_approved: false, nurse_approved: true, body: "This is a seeded entry 2", districtID: 1},
+         {studentID: 7, parent_approved: true, nurse_approved: false, body: "This is a seeded entry 3", districtID: 1},
+         {studentID: 5, parent_approved: true, nurse_approved: true, body: "This is a seeded entry 4", districtID: 2},]
+
+forms.each do |item|
+  Form.create!(item)
+end
+
+puts "There are now #{Form.count} rows in the forms table"

@@ -54,7 +54,18 @@ Rails.application.routes.draw do
 
   post 'users/create_and_email'
 
+  get 'forms/new'
+
+  post 'forms/new_form'
+
+  post 'forms/search_forms'
+
+  post 'forms/set_page_count'
+
+  post 'forms/change_body'
+
   post 'requests/create_request'
+
 
   resources :password_sets
   resources :districts
