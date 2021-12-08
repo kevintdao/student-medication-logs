@@ -3,6 +3,9 @@ Feature: Allow users who are a nurse to view information specific to them
   So that I can see my personal information
   I want to have a dashboard with links to events, medications, students, and forms
 
+  Background: Logged in as a nurse
+    Given I am logged in as an "nurse"
+
   Scenario: I can see the dashboard
     Given I am on the nurse dashboard
     Then I should see the nurse dashboard

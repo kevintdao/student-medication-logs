@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :requests
   get 'users/register'
 
   get 'home/contact'
@@ -68,6 +69,10 @@ Rails.application.routes.draw do
   get 'forms/parent_view'
 
   get 'forms/approve_form'
+
+  post 'requests/create_request'
+
+
 
   resources :password_sets
   resources :districts

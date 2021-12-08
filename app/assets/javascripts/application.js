@@ -27,12 +27,24 @@ function copyToClipboard(){
     temp.remove()
 }
 
-function checkMedication(element){
+function checkNewEvent(element){
     if(element.value === "") {
-        console.log(document.getElementById('submit'))
         document.getElementById('submit').disabled = true
     }
     else {
         document.getElementById('submit').disabled = false
     }
+}
+
+function getMedications(studentId){
+    $.ajax({
+        type: 'GET',
+        url: '/events/new',
+        data: {
+            student_id: studentId
+        },
+        success: function (data) {
+            $('#event_med_id').replaceWith(data)
+        }
+    })
 }
