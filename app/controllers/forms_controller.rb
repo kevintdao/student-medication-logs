@@ -26,21 +26,27 @@ class FormsController < ApplicationController
 
   # GET /forms/parent_view
   def parent_view
-    #TODO: Only display entries where student id belongs to the parent
+    #TODO: Can only be tested after parent/student association
     @pages = session[:page_count]
     @selection = session[:search_term]
-    if @pages.nil?
-      if @selection.nil? or @selection.blank?
-        @forms = Form.where(districtID: @current_user.district_id).page(params[:page]).per_page(50)
+    @students = User.where(role: "Student", role_id: Parent.where(id: @current_user.role_id).first.student_ids).all
+    unless @students.nil?
+      @ids = @students.map{|s| s.id}
+      if @pages.nil?
+        if @selection.nil? or @selection.blank?
+          @forms = Form.where(districtID: @current_user.district_id, studentID: @ids).page(params[:page]).per_page(50)
+        else
+          @forms = Form.where(districtID: @current_user.district_id, studentID: @ids).where('body LIKE ?', @selection).all.page(params[:page]).per_page(50)
+        end
       else
-        @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(50)
+        if @selection.nil? or @selection.blank?
+          @forms = Form.where(districtID: @current_user.district_id, studentID: @ids).page(params[:page]).per_page(@pages)
+        else
+          @forms = Form.where(districtID: @current_user.district_id, studentID: @ids).where('body LIKE ?', @selection).all.page(params[:page]).per_page(@pages)
+        end
       end
     else
-      if @selection.nil? or @selection.blank?
-        @forms = Form.where(districtID: @current_user.district_id).page(params[:page]).per_page(@pages)
-      else
-        @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(@pages)
-      end
+      flash[:warning] = "You have no students. Please contact the district admin."
     end
     render 'forms/index'
   end

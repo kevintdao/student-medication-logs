@@ -92,3 +92,25 @@ forms.each do |item|
 end
 
 puts "There are now #{Form.count} rows in the forms table"
+
+students = [{medications_id: nil, events_id: nil, year: "Junior", parents_id: nil},
+            {medications_id: nil, events_id: nil, year: "Junior", parents_id: nil},
+            {medications_id: nil, events_id: nil, year: "Junior", parents_id: nil},
+            {medications_id: nil, events_id: nil, year: "Junior", parents_id: nil},
+            {medications_id: nil, events_id: nil, year: "Junior", parents_id: nil},
+            {medications_id: nil, events_id: nil, year: "Junior", parents_id: nil},
+            {medications_id: nil, events_id: nil, year: "Junior", parents_id: nil},
+            {medications_id: nil, events_id: nil, year: "Junior", parents_id: nil},]
+
+students.each do |student|
+  Student.create!(student)
+end
+
+puts "There are now #{Student.count} rows in the students table"
+
+parents = [{student_ids: [5,7]}, {student_ids: [5]}, {student_ids: [7]}, {student_ids: [5,6,7]}]
+
+parents.each do |parent|
+  Parent.create!(parent)
+end
+
