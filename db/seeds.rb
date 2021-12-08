@@ -8,25 +8,27 @@
 
 require 'csv'
 
-# csv_text = File.read(Rails.root.join('lib', 'seeds', 'drugs.csv'))
-# csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
-#
-# csv.each do |row|
-#   m = Medication.new
-#   m.brand_name = row['DrugName']
-#   m.active_ing = row['ActiveIngredient']
-#   m.method = row['Form']
-#   m.strength = row['Strength']
-#   m.save
-# end
-#
-# puts "There are now #{Medication.count} rows in the medications table"
+csv_text = File.read(Rails.root.join('lib', 'seeds', 'drugs.csv'))
+csv = CSV.parse(csv_text, :headers => true, :encoding => 'ISO-8859-1')
 
-events = [{time: DateTime.new(2021, 12, 15, 15, 0, 0), student_id: 5, med_id: 35, complete: false, notes: "This is a notes field for this event.", district: 1},
-          {time: DateTime.new(2021, 12, 14, 12, 0, 0), student_id: 6, med_id: 32, complete: false, district: 1},
-          {time: DateTime.new(2021, 12, 1, 9, 45, 0), student_id: 11, med_id: 400, complete: false, notes: "Here is a note for this event", district: 2},
-          {time: DateTime.new(2021, 12, 5, 14, 30, 0), student_id: 5, med_id: 345, complete: false, notes: "Notes go into this field", district: 1},
-          {time: DateTime.new(2021, 12, 10, 8, 0, 0), student_id: 7, med_id: 554, complete: true, notes: "This is an example of a completed event"}, district: 1]
+csv.each do |row|
+  m = Medication.new
+  m.brand_name = row['DrugName']
+  m.active_ing = row['ActiveIngredient']
+  m.method = row['Form']
+  m.strength = row['Strength']
+  m.save
+end
+
+puts "There are now #{Medication.count} rows in the medications table"
+
+events = [
+  {time: DateTime.new(2021, 12, 15, 15, 0, 0), student_id: 5, med_id: 415, complete: false, notes: "This is a notes field for this event.", district: 1, amount: 1},
+  {time: DateTime.new(2021, 12, 14, 12, 0, 0), student_id: 6, med_id: 34, complete: false, district: 1, amount: 2},
+  {time: DateTime.new(2021, 12, 1, 9, 45, 0), student_id: 11, med_id: 1234, complete: false, notes: "Here is a note for this event", district: 2, amount: 1},
+  {time: DateTime.new(2021, 12, 5, 14, 30, 0), student_id: 5, med_id: 400, complete: false, notes: "Notes go into this field", district: 1, amount: 1},
+  {time: DateTime.new(2021, 12, 10, 8, 0, 0), student_id: 7, med_id: 6087, complete: true, notes: "This is an example of a completed event", district: 1, amount: 1}
+]
 
 events.each do |user|
   Event.create!(user)
@@ -43,10 +45,14 @@ districts.each do |district|
   District.create!(district)
 end
 
-inventory = [{med_id: 34, amount: 50, studentID: 6, districtID: 1, notes: "These are notes for this medication", medName: Medication.where(id: 34).first.brand_name},
-             {med_id: 415, amount: 10, studentID: 5, districtID: 1, notes: nil, medName: Medication.where(id: 415).first.brand_name},
-             {med_id: 1064, amount: 1, studentID: 5, districtID: 1, notes: "Some more notes can go here", medName: Medication.where(id: 1064).first.brand_name},
-             {med_id: 6087, amount: 100, studentID: 7, districtID: 2, notes: "This is a medication for district 2", medName: Medication.where(id: 6087).first.brand_name}]
+inventory = [
+  {med_id: 34, amount: 50, studentID: 6, districtID: 1, notes: "These are notes for this medication", medName: Medication.where(id: 34).first.brand_name},
+  {med_id: 415, amount: 10, studentID: 5, districtID: 1, notes: nil, medName: Medication.where(id: 415).first.brand_name},
+  {med_id: 400, amount: 20, studentID: nil, districtID: 1, notes: nil, medName: Medication.where(id: 400).first.brand_name},
+  {med_id: 1064, amount: 1, studentID: 5, districtID: 1, notes: "Some more notes can go here", medName: Medication.where(id: 1064).first.brand_name},
+  {med_id: 6087, amount: 100, studentID: 7, districtID: 1, notes: "This is a medication for district 1", medName: Medication.where(id: 6087).first.brand_name},
+  {med_id: 1234, amount: 20, studentID: 11, districtID: 2, notes: "This is a medication for district 2", medName: Medication.where(id: 1234).first.brand_name}
+]
 
 inventory.each do |item|
   Inventory.create!(item)

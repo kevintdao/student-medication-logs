@@ -28,6 +28,11 @@
 </p>
 
 <p>
+  <strong>Amount:</strong>
+  <%= @event.amount %>
+</p>
+
+<p>
   <strong>Complete:</strong>
   <% if @event.complete %>
     Yes --
@@ -35,9 +40,9 @@
     No --
   <% end %>
   <% if @event.complete%>
-    <%= link_to "Mark Incomplete", events_incomplete_path(:id => @event.id), class: "btn btn-primary btn-small" %>
+    <%= link_to "Mark Incomplete", events_incomplete_path(:id => @event.id, :student_id => @event.student_id, :med_id => @event.med_id, :amount => @event.amount, :district_id => @event.district), class: "btn btn-primary btn-small" %>
   <% else %>
-    <%= link_to "Mark Complete", events_complete_path(:id => @event.id), class: "btn btn-primary btn-small" %>
+    <%= link_to "Mark Complete", events_complete_path(:id => @event.id, :student_id => @event.student_id, :med_id => @event.med_id, :amount => @event.amount, :district_id => @event.district), class: "btn btn-primary btn-small" %>
   <% end %>
 </p>
 
