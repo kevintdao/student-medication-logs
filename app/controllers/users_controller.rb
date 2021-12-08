@@ -190,37 +190,42 @@ class UsersController < ApplicationController
 
   def create_and_email
     @user = @current_user
-    @new_user = params[:new_user]
-    pass = SecureRandom.hex # generate random hex value as password
-    user = User.new(
-      first_name: @new_user[:first_name],
-      last_name: @new_user[:last_name],
-      email: @new_user[:email],
-      password: pass,
-      password_confirmation: pass
-    )
-    user.role = @new_user[:user_type]
-    if !user.valid?
-      error_message = user.errors.full_messages[0]
-      flash[:error] = error_message
-      redirect_to new_user_path
+    if @user.nil? || @user.role != 'Admin'
+      flash[:error] = 'Please login as an Admin to continue.'
+      redirect_to login_path
     else
-      case user.role
-      when 'Admin'
-        role = Admin.new
-      when 'Student'
-        role = Student.new
-      when 'Nurse'
-        role = Nurse.new
-      when 'Parent'
-        role = Parent.new
+      @new_user = params[:new_user]
+      pass = SecureRandom.hex # generate random hex value as password
+      user = User.new(
+        first_name: @new_user[:first_name],
+        last_name: @new_user[:last_name],
+        email: @new_user[:email],
+        password: pass,
+        password_confirmation: pass
+      )
+      user.role = @new_user[:user_type]
+      if !user.valid?
+        error_message = user.errors.full_messages[0]
+        flash[:error] = error_message
+        redirect_to new_user_path
+      else
+        case user.role
+        when 'Admin'
+          role = Admin.new
+        when 'Student'
+          role = Student.new
+        when 'Nurse'
+          role = Nurse.new
+        when 'Parent'
+          role = Parent.new
+        end
+        role.save!
+        user.role_id = role.id
+        user.district_id = @user.district_id
+        user.save!
+        user.send_password_set
+        redirect_to admins_path
       end
-      role.save!
-      user.role_id = role.id
-      user.district_id = @user.district_id
-      user.save!
-      user.send_password_set
-      redirect_to home_index_path
     end
   end
 
