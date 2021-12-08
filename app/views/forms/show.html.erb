@@ -53,7 +53,11 @@
     <% else %>
     <strong> Form Contents: </strong><br>
     <p><%= @form.body %></p><br>
+    <% if @form.parent_approved %>
+      <p>This form has already been approved</p>
+      <% else %>
     <%= link_to 'Approve Form', forms_approve_form_path(:id => @form.id), class: "btn btn-primary btn-small" %>
+    <% end %>
     <% end %>
   </div>
 
