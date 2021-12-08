@@ -26,7 +26,6 @@ class FormsController < ApplicationController
 
   # GET /forms/parent_view
   def parent_view
-    #TODO: Can only be tested after parent/student association
     @pages = session[:page_count]
     @selection = session[:search_term]
     @students = User.where(role: "Student", role_id: Parent.where(id: @current_user.role_id).first.student_ids).all
@@ -54,14 +53,13 @@ class FormsController < ApplicationController
 
   #GET /forms/approve_form
   def approve_form
-    id = params[:id]
-    puts id
-    form = Form.where(id: id).first
-    if form.nil?
+    @id = params[:id]
+    @form = Form.where(id: @id).first
+    if @form.nil?
       flash[:error] = "There was a problem approving this form. Please contact the district admin."
       redirect_to :back
     else
-    Form.where(id: id).first.update(parent_approved: true)
+    Form.where(id: @id).first.update(parent_approved: true)
     flash[:notice] = "Form has been successfully approved"
     redirect_to forms_parent_view_path
     end
