@@ -15,12 +15,12 @@ describe EventsController do
     it 'should flash error message when med_id is empty' do
       controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
       post :create, event: { time: '2021-11-28 15:00:00', student_id: '1', med_id: '', complete: false, notes: '', district: '1' }
-      expect(flash[:error]).to eq("Medication ID can't be empty")
+      expect(flash[:error]).to eq("Empty medication/amount")
       expect(response).to redirect_to(new_event_path)
     end
     it 'should create an event with current user district_id' do
       controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
-      post :create, event: { time: '2021-11-28 15:00:00', student_id: '1', med_id: '1', complete: false, notes: '', district: '1' }
+      post :create, event: { time: '2021-11-28 15:00:00', student_id: '1', med_id: '100', amount: '2', complete: false, notes: '', district: '1' }
       expect(flash[:notice]).to eq('Event was successfully created.')
       expect(response).to redirect_to(events_path)
     end
@@ -188,7 +188,7 @@ describe EventsController do
     end
     it "creates a success message when the params are not nil" do
       controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
-      get :complete, id:1
+      get :complete, id:1, student_id:5, med_id:400, med_amount:1, district_id:1
       expect(assigns(:eventID)).to eq("1")
       expect(flash[:notice]).to eq("Event has been marked as complete")
       expect(response).to redirect_to(events_past_events_path)
@@ -208,7 +208,7 @@ describe EventsController do
     end
     it "creates a success message when the params are not nil" do
       controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
-      get :incomplete, id:1
+      get :incomplete, id:1, student_id:5, med_id:400, med_amount:1, district_id:1
       expect(assigns(:eventID)).to eq("1")
       expect(flash[:notice]).to eq("Event has been marked as incomplete")
       expect(response).to redirect_to(events_path)
