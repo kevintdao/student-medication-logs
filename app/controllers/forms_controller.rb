@@ -51,6 +51,22 @@ class FormsController < ApplicationController
     render 'forms/index'
   end
 
+
+  #GET /forms/approve_form
+  def approve_form
+    id = params[:id]
+    puts id
+    form = Form.where(id: id).first
+    if form.nil?
+      flash[:error] = "There was a problem approving this form. Please contact the district admin."
+      redirect_to :back
+    else
+    Form.where(id: id).first.update(parent_approved: true)
+    flash[:notice] = "Form has been successfully approved"
+    redirect_to forms_parent_view_path
+    end
+  end
+
   def set_page_count
     unless params[:page_count].nil?
       @pages = params[:page_count][:page_count]

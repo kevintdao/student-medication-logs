@@ -67,6 +67,8 @@ Rails.application.routes.draw do
 
   get 'forms/parent_view'
 
+  get 'forms/approve_form'
+
   resources :password_sets
   resources :districts
   resources :forms
