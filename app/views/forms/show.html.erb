@@ -1,24 +1,56 @@
+<html>
+<head>
+  <title>Selt2021Proj02 Form Information</title>
+  <%= stylesheet_link_tag    'events', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag asset_path('favicon.ico') %>
+</head>
+<body>
 <p id="notice"><%= notice %></p>
+<div class = 'container'>
 
-<p>
-  <strong>Nurse approved:</strong>
-  <%= @form.nurse_approved %>
-</p>
+  <p>
+    <strong>Student: </strong>
+    <% if @form.studentID.nil? %>
+      This is a testing form with no assigned student
+    <% else %>
+      <% @student = User.where(id: @form.studentID).first%>
+      <%= @student.first_name + " " + @student.last_name + " " + "(ID: " + @student.id.to_s + ")" %> --
+      <%= link_to 'More Information', @student, class: "btn btn-primary btn-small" %>
+    <% end %>
+  </p>
 
-<p>
-  <strong>Parent approved:</strong>
-  <%= @form.parent_approved %>
-</p>
+  <p>
+  <strong> Form approved by Guardian: </strong>
+    <% if @form.parent_approved %>
+      Yes
+    <% else %>
+      No
+    <% end %>
+  </p>
 
-<p>
-  <strong>Complete boolean:</strong>
-  <%= @form.complete_boolean %>
-</p>
+  <p>
+    <strong> Form approved by Nurse: </strong>
+    <% if @form.nurse_approved %>
+      Yes
+    <% else %>
+      No
+    <% end %>
+  </p>
 
-<p>
-  <strong>Body:</strong>
-  <%= @form.body %>
-</p>
+  <div class="field">
+    <%= form_for :body, :url => forms_change_body_path do |f| %>
+      <div class="field">
+        <strong><%= f.label :body, "Form Body:" %></strong>
+        <%= f.text_area :body, value: @form.body ,class: "form-control", id:"body", :required => true %>
+        <%= f.hidden_field :id, value: @form.id %>
+      </div>
+      <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
 
-<%= link_to 'Edit', edit_form_path(@form) %> |
-<%= link_to 'Back', forms_path %>
+    <% end %>
+  </div>
+
+</div>
+</body>
+</html>

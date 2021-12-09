@@ -38,15 +38,18 @@ ActiveRecord::Schema.define(version: 20211209202621) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "district"
+    t.integer  "amount"
   end
 
   create_table "forms", force: :cascade do |t|
     t.boolean  "nurse_approved"
     t.boolean  "parent_approved"
     t.string   "complete_boolean"
-    t.string   "body"
-    t.datetime "created_at",       null: false
-    t.datetime "updated_at",       null: false
+    t.text     "body",             limit: 100000
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.integer  "studentID"
+    t.integer  "districtID"
   end
 
   create_table "inventories", force: :cascade do |t|
@@ -130,9 +133,9 @@ ActiveRecord::Schema.define(version: 20211209202621) do
     t.integer  "district_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
-    t.string   "session_token"
     t.string   "password_set_token"
     t.datetime "password_set_sent_at"
+    t.string   "session_token"
     t.string   "phone"
     t.boolean  "text_notification",    default: false
     t.boolean  "email_notification",   default: false

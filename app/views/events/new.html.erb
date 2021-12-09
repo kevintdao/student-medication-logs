@@ -2,4 +2,11 @@
   <h1>New Event</h1>
 
   <%= render 'form' %>
+
+  <script type='text/javascript'>
+    $(document).ready(function () {
+        let studentId = $('#event_student_id').val();
+        getMedications(studentId);
+    })
+  </script>
 </div>

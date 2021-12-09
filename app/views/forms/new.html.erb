@@ -1,5 +1,42 @@
-<h1>New Form</h1>
-
-<%= render 'form' %>
-
-<%= link_to 'Back', forms_path %>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Selt2021Proj02 New Form</title>
+  <%= stylesheet_link_tag    'contact', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag asset_path('favicon.ico') %>
+</head>
+<body>
+<!--Section heading-->
+<h2 class="h1-responsive font-weight-bold text-center my-4">New Form</h2>
+<!--Section description-->
+<p class="text-center w-responsive mx-auto mb-5">Fill out the fields below to create a new form. All fields are required.</p>
+<!--Grid column-->
+<%= form_for :form, :url => forms_new_form_path do |f|  %>
+  <div class="row">
+    <div class="md-form mb-0">
+      <% @students = User.where(role: "Student", district_id: @current_user.district_id).map{|s| s.first_name + " " + s.last_name } %>
+      <%= f.label :studentName, "Name of Student for Form:" %><br>
+      <%= f.select :studentName, @students, class: "form-control", id: "studentName"%>
+    </div>
+  </div>
+  <div class="row">
+    <div class="md-form">
+      <%= f.label :body, "Form Body:" %>
+      <% @nurse = User.where(id: @current_user.id).first %>
+      <% @name = @nurse.first_name + ' ' + @nurse.last_name %>
+      <%= f.text_area :body, :html => {:id => "body", :name => "body"}, class: "form-control md-textarea", id:"body",
+                      value: "The following form is to be approved by medical faculty and a student guardian in compliance with district and state policy. Please review all below information carefully and contact the district for any problems or to request changes.\n
+                      Form created by: #{@name}\n
+                      -----------------------------------------------\n\n\n
+                      -----------------------------------------------\n
+                      Please click below to approve this form." %>
+    </div>
+  </div>
+  <div class="text-center text-md-left">
+    <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
+  </div>
+<% end %>
+</body>
+</html>
