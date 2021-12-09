@@ -70,7 +70,9 @@ class RequestsController < ApplicationController
       nurse_approved: false,
       notes: @request[:notes],
       district_id: @current_user.district_id,
-      med_name: @request[:med_name]
+      med_name: @request[:med_name],
+      amount: @request[:amount],
+      units: @request[:units]
     )
     case @current_user.role
     when 'Parent'
