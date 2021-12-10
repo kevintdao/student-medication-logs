@@ -64,5 +64,10 @@ describe NursesController do
       expect(flash[:notice]).to be_present
       expect(flash[:notice]).to eq('Student and Parent are already associated')
     end
+    it 'show students and parents correctly' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+      get :associate
+      expect(response).to have_http_status(:ok)
+    end
   end
 end
