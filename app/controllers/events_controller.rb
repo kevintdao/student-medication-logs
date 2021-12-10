@@ -83,6 +83,11 @@ class EventsController < ApplicationController
       end
       total = current_inventory.first.amount
 
+      if (total - med_amount.to_i).negative?
+        flash[:error] = "Unable to mark event as complete. You want to remove #{med_amount} doses, but you only have #{total} doses left!"
+        redirect_to events_path and return
+      end
+
       @event = Event.where(id: @eventID).update_all(complete: true)
       @inventory = current_inventory.update_all(amount: total - med_amount.to_i)
       flash[:notice] = "Event has been marked as complete"
