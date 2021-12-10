@@ -9,7 +9,9 @@ describe RequestsController do
                                       :time1 => DateTime.now,
                                       :start_date => Date.today,
                                       :end_date => 2.days.from_now,
-                                      :notes => 'Test Notes'}}
+                                      :notes => 'Test Notes',
+                                      :amount => 2,
+                                      :units => 'capsule'  }}
       @student = User.find_by_email('studenta@gmail.com')
       @parent = User.find_by_email('parent1a@gmail.com')
       @parent_request_params = @student_request_params.deep_dup
@@ -81,6 +83,15 @@ describe RequestsController do
       expect(response).not_to redirect_to(parents_path)
       expect(flash[:error]).to be_present
       expect(flash[:error]).to eq("Student can't be blank")
+    end
+    it 'should flash error message for empty amount field' do
+      login(@parent)
+      no_amount_params = @parent_request_params.deep_dup
+      no_amount_params[:request][:amount] = ''
+      post :create_request, no_amount_params
+      expect(response).not_to redirect_to(parents_path)
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq("Amount can't be blank")
     end
   end
   describe "GET :index" do
