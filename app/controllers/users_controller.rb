@@ -70,10 +70,8 @@ class UsersController < ApplicationController
         redirect_to users_path
       end
     when 'Parent'
-      if Parent.where(id: @current_user.role_id, students_id: user_id).nil?
-        flash[:error] = "You don't have access to this"
-        redirect_to parents_path
-      end
+      flash[:error] = "You don't have access to this"
+      redirect_to parents_path
     when 'Student'
       flash[:error] = "You don't have access to this"
       redirect_to students_path

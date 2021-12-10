@@ -34,10 +34,6 @@ RSpec.describe "Homes", type: :request do
     end
   end
   describe "GET /medications" do
-    it "returns http success" do
-      get "/home/medications"
-      expect(response).to have_http_status(:success)
-    end
   end
   describe "POST /send_contact_message" do
     it "returns http redirect and flashes a notice" do
