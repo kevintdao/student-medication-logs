@@ -8,7 +8,7 @@ Feature:
     Given I am logged in as a nurse
     Given I am on the associate page
 
-  Scenario: Correctly input student name and parent name
+  Scenario: Correctly select student and parent
     When I select "Student A" in "student" menu
     And I select "Parent 2" in "parent" menu
     And I click "submit"
