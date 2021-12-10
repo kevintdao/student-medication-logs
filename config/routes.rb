@@ -58,6 +58,9 @@ Rails.application.routes.draw do
 
   post 'requests/approve'
 
+  get 'nurses/associate_page', to: 'nurses#associate'
+  post 'nurses/associate', to: 'nurses#associatestudentparent'
+
   resources :password_sets
   resources :districts
   resources :forms
@@ -77,6 +80,7 @@ Rails.application.routes.draw do
   match '/login', to: 'sessions#new', via: :get
   match '/login_create', to: 'sessions#create', via: :post
   match '/logout', to: 'sessions#destroy', via: :delete
+
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
