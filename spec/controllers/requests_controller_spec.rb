@@ -9,7 +9,9 @@ describe RequestsController do
                                       :time1 => DateTime.now,
                                       :start_date => Date.today,
                                       :end_date => 2.days.from_now,
-                                      :notes => 'Test Notes'}}
+                                      :notes => 'Test Notes',
+                                      :amount => 2,
+                                      :units => 'capsule'  }}
       @student = User.find_by_email('studenta@gmail.com')
       @parent = User.find_by_email('parent1a@gmail.com')
       @parent_request_params = @student_request_params.deep_dup
@@ -82,6 +84,15 @@ describe RequestsController do
       expect(flash[:error]).to be_present
       expect(flash[:error]).to eq("Student can't be blank")
     end
+    it 'should flash error message for empty amount field' do
+      login(@parent)
+      no_amount_params = @parent_request_params.deep_dup
+      no_amount_params[:request][:amount] = ''
+      post :create_request, no_amount_params
+      expect(response).not_to redirect_to(parents_path)
+      expect(flash[:error]).to be_present
+      expect(flash[:error]).to eq("Amount can't be blank")
+    end
   end
   describe "GET :index" do
     before :all do
@@ -133,7 +144,11 @@ describe RequestsController do
     end
     it 'should set a students variable for parents to choose their student from when user is parent' do
       login(@parent)
-      students = User.where(role: 'Student', district_id: @parent.district_id)
+      the_parent = Parent.find(@parent.role_id)
+      students = Array.new
+      the_parent.students.each do |student|
+        students << User.where(role_id: student.id, role: 'Student').first
+      end
       get :new
       expect(response).to have_http_status(:ok)
       expect(assigns(:students)).to eq(students)
