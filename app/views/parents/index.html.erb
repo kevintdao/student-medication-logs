@@ -27,6 +27,16 @@
       </table>
     <% end %>
   </div>
+  <div>
+    <% unless @pending_forms.empty? %>
+      <table class="table text-center mt-4">
+        <tr class="table-warning">
+          <td class="h5">You have forms from your district pending your approval.</td>
+          <td><%= link_to "View Forms for Approval", forms_parent_view_path, class: "btn btn-warning profile-button", id: 'view-forms' %></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
   <div class="album py-5">
     <div class="container homeContainer">
       <div class="row">

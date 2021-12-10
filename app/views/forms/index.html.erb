@@ -2,6 +2,7 @@
   <title>Selt2021Proj02 Forms Page</title>
   <%= stylesheet_link_tag    'events', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <script src="https://kit.fontawesome.com/9c8e310799.js" crossorigin="anonymous"></script>
   <%= csrf_meta_tags %>
   <%= favicon_link_tag asset_path('favicon.ico') %>
 </head>
@@ -59,8 +60,16 @@
       <% else %>
         <td><%= @student.first_name + ' ' + @student.last_name %></td>
       <% end %>
-      <td><%= item.parent_approved %></td>
-      <td><%= item.nurse_approved %></td>
+      <td><% if item.parent_approved %>
+          <span style="font-size: 25px; color: green;"><i class="fas fa-check-circle"></i></span>
+        <% else %>
+          <span style="font-size: 25px; color: red;"><i class="fas fa-times-circle"></i></span>
+          <% end %></td>
+      <td><% if item.nurse_approved %>
+          <span style="font-size: 25px; color: green;"><i class="fas fa-check-circle"></i></span>
+        <% else %>
+          <span style="font-size: 25px; color: red;"><i class="fas fa-times-circle"></i></span>
+        <% end %></td>
       <td><%= item.body %></td>
       <td class="btn-center"><%= link_to 'More Information', item, id:item.id, class: "btn btn-primary btn-small" %></td>
     </tr>
