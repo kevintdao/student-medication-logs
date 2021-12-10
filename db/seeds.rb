@@ -27,7 +27,8 @@ events = [
   {time: DateTime.new(2021, 12, 14, 12, 0, 0), student_id: 6, med_id: 34, complete: false, district: 1, amount: 2},
   {time: DateTime.new(2021, 12, 1, 9, 45, 0), student_id: 11, med_id: 1234, complete: false, notes: "Here is a note for this event", district: 2, amount: 1},
   {time: DateTime.new(2021, 12, 5, 14, 30, 0), student_id: 5, med_id: 400, complete: false, notes: "Notes go into this field", district: 1, amount: 1},
-  {time: DateTime.new(2021, 12, 10, 8, 0, 0), student_id: 7, med_id: 6087, complete: true, notes: "This is an example of a completed event", district: 1, amount: 1}
+  {time: DateTime.new(2021, 12, 10, 8, 0, 0), student_id: 7, med_id: 6087, complete: true, notes: "This is an example of a completed event", district: 1, amount: 1},
+  {time: DateTime.new(2021, 12, 16, 16, 0, 0), student_id: 5, med_id: 415, complete: false, notes: "Event with amount greater than amount in inventory", district: 1, amount: 11}
 ]
 
 events.each do |user|
