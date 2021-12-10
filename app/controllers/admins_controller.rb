@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-  before_action :set_admin, only: [:show, :edit, :update, :destroy]
+  before_action :is_admin, only: [:index]
 
   # GET /admins
   # GET /admins.json
@@ -62,13 +62,19 @@ class AdminsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_admin
-      @admin = Admin.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def admin_params
-      params.fetch(:admin, {})
+  def is_admin
+    if @current_user.nil?
+      # There is no logged in user
+      flash[:warning] = "You must be logged in as an admin to access this page."
+      redirect_to home_index_path
+    else
+      # The user is logged in
+      unless @current_user.role == 'Admin'
+        # The user is not a admin
+        flash[:warning] = "You must be an admin to access this page."
+        redirect_to home_index_path
+      end
     end
+  end
 end
