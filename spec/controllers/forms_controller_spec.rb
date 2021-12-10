@@ -136,5 +136,83 @@ describe FormsController do
       expect(flash[:notice]).to eq("Form has been successfully created pending guardian approval")
       expect(response).to redirect_to(nurses_path)
     end
+  end
+  describe "GET /parent_view" do
+    it "renders the proper template" do
+      controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com').first)
+      get :parent_view
+      expect(response).not_to redirect_to(forms_path)
+    end
+
+    it "reads the session correctly" do
+      controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com').first)
+      allow_any_instance_of(FormsController).to receive(:session) {{"page_count": 25, "search_term": "Ibuprofen"}}
+      get :parent_view
+      expect(response).to have_http_status(:success)
+      expect(assigns(:pages)).to eq(25)
+      expect(assigns(:selection)).to eq("Ibuprofen")
+    end
+
+    it "loads when pages and the search term are nil" do
+      controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com').first)
+      get :parent_view
+      expect(response).to have_http_status(:success)
+      expect(assigns(:forms)).not_to eq(nil)
+    end
+
+    it "loads when pages and the search term are not nil" do
+      controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com').first)
+      allow_any_instance_of(FormsController).to receive(:session) {{"page_count": 25, "search_term": "Ibuprofen"}}
+      get :parent_view
+      expect(response).to have_http_status(:success)
+      expect(assigns(:forms)).not_to eq(nil)
+    end
+
+    it "loads when pages are nil and search term is not" do
+      controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com').first)
+      allow_any_instance_of(FormsController).to receive(:session) {{"search_term": "Ibuprofen"}}
+      get :parent_view
+      expect(response).to have_http_status(:success)
+      expect(assigns(:forms)).not_to eq(nil)
+    end
+
+
+    it "loads when pages are not nil and search term is" do
+      controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com').first)
+      allow_any_instance_of(FormsController).to receive(:session) {{"page_count": 25}}
+      get :parent_view
+      expect(response).to have_http_status(:success)
+      expect(assigns(:forms)).not_to eq(nil)
     end
   end
+  describe "GET /approve_form" do
+    before(:each) do
+      request.env["HTTP_REFERER"] = "where_i_came_from"
+    end
+    it "correctly assigns the id variable" do
+    controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com').first)
+    get :approve_form, id:1
+    expect(assigns(:id)).to eq("1")
+    end
+    it "correctly assigns the form variable" do
+      controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com').first)
+      get :approve_form, id:1
+      expect(assigns(:form)).to eq(Form.where(id: 1).first)
+    end
+    it "correctly errors out when form is nil" do
+      controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com').first)
+      get :approve_form, id:-1
+      expect(assigns(:form)).to eq(nil)
+      expect(flash[:error]).to eq("There was a problem approving this form. Please contact the district admin.")
+      expect(response).to redirect_to('http://test.hostwhere_i_came_from')
+    end
+    it "correctly approves a valid form" do
+      controller.instance_variable_set(:@current_user, User.where(email: 'parent1a@gmail.com').first)
+      get :approve_form, id:1
+      expect(Form.where(id: 1).first.parent_approved).to be_truthy
+      expect(flash[:notice]).to eq("Form has been successfully approved")
+      expect(response).to redirect_to(forms_parent_view_path)
+    end
+  end
+end
+

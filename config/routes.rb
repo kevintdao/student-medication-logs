@@ -64,6 +64,12 @@ Rails.application.routes.draw do
 
   post 'forms/change_body'
 
+  get 'forms/parent_view'
+
+  get 'forms/parent_view'
+
+  get 'forms/approve_form'
+
   post 'requests/create_request'
 
   post 'requests/approve'
@@ -90,7 +96,7 @@ Rails.application.routes.draw do
   match '/login', to: 'sessions#new', via: :get
   match '/login_create', to: 'sessions#create', via: :post
   match '/logout', to: 'sessions#destroy', via: :delete
-
+  match "*path" => "home#index", via: [:get, :post]
   # You can have the root of your site routed with "root"
   # root 'welcome#index'
 
