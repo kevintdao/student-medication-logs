@@ -34,6 +34,8 @@
     </th>
     <th class="th-sm">Medication
     </th>
+    <th class="th-sm">Amount
+    </th>
     <th class="th-sm">Notes
     </th>
   </tr>
@@ -50,7 +52,8 @@
       <% end %>
       <td><%= event.student_id %></td>
       <td><%= event.time %></td>
-      <td><%= Medication.where(id: event.med_id).first.brand_name %></td>
+      <td><%= Inventory.where(med_id: event.med_id).first.medName %></td>
+      <td><%= event.amount %></td>
       <td><%= event.notes %></td>
       <td class="btn-center"><%= link_to 'More Information', event, id:event.student_id, class: "btn btn-primary btn-small" %></td>
     </tr>
