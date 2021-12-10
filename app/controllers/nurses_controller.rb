@@ -35,7 +35,6 @@ class NursesController < ApplicationController
   end
 
   def associatestudentparent
-
     parent_info = params[:parent]
     parent_id = parent_info
     parent = Parent.find(parent_id)

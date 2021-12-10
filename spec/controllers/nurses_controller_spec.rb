@@ -6,7 +6,7 @@ describe NursesController do
     before :all do
       @nurse = User.find_by_email('nurse1@gmail.com')
     end
-    it "returns http success" do
+    it 'returns http success' do
       controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
       get :index
       expect(response).to have_http_status(:success)
@@ -36,7 +36,7 @@ describe NursesController do
       expect(response).to have_http_status(:ok)
       expect(assigns(:pending_requests)).to eq([])
     end
-    it "should have pending requests equal the requests for district that nurse has not approved" do
+    it 'should have pending requests equal the requests for district that nurse has not approved' do
       login(@nurse)
       requests = Request.where(district_id: @nurse.district_id, nurse_approved: false)
       get :index
@@ -47,6 +47,22 @@ describe NursesController do
       request.session[:search_term] = 'test search'
       get :index
       expect(request.session[:search_term]).to be_nil
+    end
+  end
+  describe 'associate student and parent' do
+    it 'should correctly associate student and parent' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+      post :associatestudentparent, student: "1", parent: "2"
+      expect(response).to redirect_to(nurses_associate_page_path)
+      expect(flash[:notice]).to be_present
+      expect(flash[:notice]).to eq('Student and Parent successfully associated')
+    end
+    it 'should indicate when student and parent are already associated' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+      post :associatestudentparent, student: "1", parent: "1"
+      expect(response).to redirect_to(nurses_associate_page_path)
+      expect(flash[:notice]).to be_present
+      expect(flash[:notice]).to eq('Student and Parent are already associated')
     end
   end
 end
