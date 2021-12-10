@@ -1,6 +1,6 @@
 <html lang="en">
 <head>
-  <title>Selt2021Proj02 Parent Dashboard</title>
+  <title>Selt2021Proj02 Nurse Dashboard</title>
   <%= stylesheet_link_tag    'nurses', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
@@ -12,20 +12,30 @@
   <div class="jumbotron">
     <div class="container mb">
       <h1 class="display-3 ">Welcome, <%= @current_user.first_name %></h1>
+      <p>Click the button below to see upcoming events. You can also browse the dashboard for information on students, medications, past events, and more.</p>
+      <%= link_to "Upcoming Events", events_path, class: "btn btn-primary btn-lg"%>
     </div>
   </div>
 
   <div class="container">
+    <% unless @pending_requests.empty? %>
+      <table class="table text-center mt-4">
+        <tr class="table-warning">
+          <td class="h5">You have medication requests awaiting your approval.</td>
+          <td><%= link_to "View Requests for Approval", requests_path, class: "btn btn-warning profile-button", id: 'view-requests' %></td>
+        </tr>
+      </table>
+    <% end %>
     <!-- Example row of columns -->
     <div class="album py-5">
       <div class="container homeContainer">
-        <div class="row justify-content-center">
-          <!--          <div class="col-md-4">-->
-          <!--            <div class="card mb-4 box-shadow">-->
-          <!--              <h2 class="top-content">View Past Events</h2>-->
-          <%#= link_to "Past Events", events_past_events_path, class: "btn btn-secondary"%>
-          <!--            </div>-->
-          <!--          </div>-->
+        <div class="row">
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <h2 class="top-content">View Past Events</h2>
+              <%= link_to "Past Events", events_past_events_path, class: "btn btn-secondary"%>
+            </div>
+          </div>
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
               <h2 class="top-content">View Parents and Students</h2>
@@ -49,15 +59,27 @@
           </div>
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
-              <h2 class="top-content">View Forms</h2>
-              <%= link_to "Forms", forms_path, class: "btn btn-secondary"%>
+              <h2 class="top-content">Create a Form</h2>
+              <%= link_to "New Form", forms_new_path, class: "btn btn-secondary"%>
             </div>
           </div>
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
-              <h2 class="top-content">Add User to District</h2>
-              <%= link_to "Invite User", new_user_path, class: "btn btn-secondary"%>
+              <h2 class="top-content">View Forms</h2>
+              <%= link_to "Forms", forms_path, class: "btn btn-secondary"%>
             </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+          </div>
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <h2 class="top-content">View Inventory</h2>
+              <%= link_to "Inventory", inventories_path, class: "btn btn-secondary"%>
+            </div>
+          </div>
+          <div class="col-md-4">
           </div>
         </div>
       </div>
@@ -65,5 +87,7 @@
     <hr>
 
   </div> <!-- /container -->
+
 </main>
 </body>
+</html>
