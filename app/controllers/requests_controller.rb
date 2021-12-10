@@ -33,7 +33,12 @@ class RequestsController < ApplicationController
       flash[:error] = 'Must be logged in.'
       redirect_to login_path
     elsif @current_user.role == 'Parent'
-      @students = User.where(role: 'Student', district_id: @current_user.district_id)
+      @parent = Parent.find(@current_user.role_id)
+      @students = Array.new
+      @parent.students.each do |student|
+        @student = User.where(role_id: student.id, role: 'Student').first
+        @students << @student
+      end
     end
     @request = Request.new
   end

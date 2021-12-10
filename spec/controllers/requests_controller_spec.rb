@@ -144,7 +144,11 @@ describe RequestsController do
     end
     it 'should set a students variable for parents to choose their student from when user is parent' do
       login(@parent)
-      students = User.where(role: 'Student', district_id: @parent.district_id)
+      the_parent = Parent.find(@parent.role_id)
+      students = Array.new
+      the_parent.students.each do |student|
+        students << User.where(role_id: student.id, role: 'Student').first
+      end
       get :new
       expect(response).to have_http_status(:ok)
       expect(assigns(:students)).to eq(students)
