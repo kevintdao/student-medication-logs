@@ -12,6 +12,14 @@ class UsersController < ApplicationController
     district_id = @current_user.district_id
     role = @current_user.role
 
+    if role == 'Parent'
+      flash[:error] = "You don't have access to this"
+      redirect_to parents_path
+    elsif role == 'Student'
+      flash[:error] = "You don't have access to this"
+      redirect_to students_path
+    end
+
     if params[:search].present?
       type = params[:search][:type]
       term = params[:search][:term]
