@@ -29,7 +29,7 @@
     <!-- Example row of columns -->
     <div class="album py-5">
       <div class="container homeContainer">
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
               <h2 class="top-content">View Past Events</h2>
@@ -42,19 +42,19 @@
               <%= link_to "New Medication", new_request_path, class: "btn btn-secondary"%>
             </div>
           </div>
+        </div>
+
+        <div class="row">
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
               <h2>Pending Requests</h2>
               <%= link_to "View Requests", requests_path, class: "btn btn-secondary"%>
             </div>
           </div>
-        </div>
-
-        <div class="row">
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
               <h2 class="top-content">View Forms</h2>
-              <%= link_to "Forms", forms_path, class: "btn btn-secondary"%>
+              <%= link_to "View Forms", forms_path, class: "btn btn-secondary"%>
             </div>
           </div>
           <div class="col-md-4">
