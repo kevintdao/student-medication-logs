@@ -15,9 +15,12 @@ Feature:
     Then I should see "Student and Parent successfully associated" notice
 
   Scenario: Input a student and parent that are already associated
-    Given "Student A" and "Parent 2" are already associated
     When I select "Student A" in "student" menu
     And I select "Parent 2" in "parent" menu
+    And I click "submit"
+    When I select "Student A" in "student" menu
+    And I select "Parent 2" in "parent" menu
+    And I click "submit"
     Then I should see "Student and Parent are already associated" notice
 
 
