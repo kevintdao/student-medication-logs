@@ -79,7 +79,7 @@ Rails.application.routes.draw do
   resources :forms
   resources :events
   resources :inventories
-  resources :medications
+  resources :medications, only: [:index, :show]
   resources :admins, only: [:index]
   resources :nurses, only: [:index]
   resources :students, only: [:index]
