@@ -1,0 +1,10 @@
+<div class="container">
+  <%= form_for nurses_associate_page_path, url:nurses_associate_path do %>
+    <h3> Select parent to associate from dropdown menu</h3>
+    <%= select_tag :parent, options_for_select(@parents_info) %>
+    <h3> Select student to associate from dropdown menu</h3>
+    <%= select_tag :student, options_for_select(@students_info) %>
+
+    <%= submit_tag 'Submit'%>
+  <% end %>
+</div>
