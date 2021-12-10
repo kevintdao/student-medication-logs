@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Selt2021Proj02 New Form</title>
-  <%= stylesheet_link_tag    'contact', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
-<body>
+<% content_for(:html_title) { "New Form" } %>
+<%= stylesheet_link_tag    'contact', media: 'all' %>
+
 <!--Section heading-->
 <h2 class="h1-responsive font-weight-bold text-center my-4">New Form</h2>
 <!--Section description-->
@@ -38,5 +31,3 @@
     <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
   </div>
 <% end %>
-</body>
-</html>
