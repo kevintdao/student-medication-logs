@@ -1,5 +1,5 @@
 <% content_for(:html_title) { "Parent Dashboard" } %>
-<%= stylesheet_link_tag    'events', media: 'all' %>
+<%= stylesheet_link_tag    'nurses', media: 'all' %>
 
 <div class="container">
   <!-- Example row of columns -->
@@ -20,6 +20,16 @@
       </table>
     <% end %>
   </div>
+  <div>
+    <% unless @pending_forms.empty? %>
+      <table class="table text-center mt-4">
+        <tr class="table-warning">
+          <td class="h5">You have forms from your district pending your approval.</td>
+          <td><%= link_to "View Forms for Approval", forms_parent_view_path, class: "btn btn-warning profile-button", id: 'view-forms' %></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
   <div class="album py-5">
     <div class="container homeContainer">
       <div class="row">
@@ -28,34 +38,13 @@
             <h2>View Past Events</h2>
             <%= link_to "Past Events", parents_path, class: "btn btn-secondary"%>
           </div>
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <h2>View Parents and Students</h2>
-              <%= link_to "People", parents_path, class: "btn btn-secondary"%>
-            </div>
-          </div>
         </div>
-        <div class="col-md-4">
-          <div class="card mb-4 box-shadow">
-            <h2>See Medication Information</h2>
-            <%= link_to "All Medications", medications_path, class: "btn btn-secondary"%>
-          </div>
-        </div>
-
-        <div class="row">
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
               <h2>Request Medication</h2>
               <%= link_to "Request Medication", new_request_path, class: "btn btn-secondary"%>
             </div>
           </div>
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <h2>Create a Form</h2>
-              <%= link_to "New Form", parents_path, class: "btn btn-secondary"%>
-            </div>
-          </div>
-        </div>
         <div class="col-md-4">
           <div class="card mb-4 box-shadow">
             <h2>View Forms</h2>
@@ -63,8 +52,18 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <h2>View All Requests</h2>
+            <%= link_to "Requests", requests_path, class: "btn btn-secondary"%>
+          </div>
+        </div>
+        <div class="col-md-4">
+        </div>
+      </div>
     </div>
-    <hr>
-
   </div> <!-- /container -->
 </div>

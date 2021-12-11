@@ -1,7 +1,16 @@
 <% content_for(:html_title) { "Student Dashboard" } %>
+<%= stylesheet_link_tag    'nurses', media: 'all' %>
+<script src="https://kit.fontawesome.com/9c8e310799.js" crossorigin="anonymous"></script>
 
   <div class="container">
     <!-- Example row of columns -->
+    <div class="jumbotron">
+      <div class="container mb">
+        <h1 class="display-3 ">Welcome, <%= @current_user.first_name %></h1>
+        <p>Click the button below to see upcoming events.</p>
+        <%= link_to "Upcoming Events", events_path, class: "btn btn-primary btn-lg"%>
+      </div>
+    </div>
     <div class="album py-5">
       <div class="container homeContainer">
         <div class="row">
@@ -13,35 +22,14 @@
           </div>
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
-              <h2>View Parents and Students</h2>
-              <%= link_to "People", students_path, class: "btn btn-secondary"%>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="card mb-4 box-shadow">
-            <h2>See Medication Information</h2>
-            <%= link_to "All Medications", medications_path, class: "btn btn-secondary"%>
-          </div>
-        </div>
-
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
               <h2>Request a Medication</h2>
-              <%= link_to "New Event", new_request_path, class: "btn btn-secondary"%>
+              <%= link_to "New Request", new_request_path, class: "btn btn-secondary"%>
             </div>
           </div>
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
               <h2>Pending Requests</h2>
-              <%= link_to "New Form", requests_path, class: "btn btn-secondary"%>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <h2>View Forms</h2>
-              <%= link_to "Forms", students_path, class: "btn btn-secondary"%>
+              <%= link_to "View Requests", requests_path, class: "btn btn-secondary"%>
             </div>
           </div>
         </div>
