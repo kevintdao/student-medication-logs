@@ -74,6 +74,8 @@ Rails.application.routes.draw do
 
   post 'requests/approve'
 
+  get 'nurses/associate_page', to: 'nurses#associate'
+  post 'nurses/associate', to: 'nurses#associatestudentparent'
 
   resources :password_sets
   resources :forms
