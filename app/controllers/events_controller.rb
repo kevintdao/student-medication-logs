@@ -87,25 +87,18 @@ class EventsController < ApplicationController
   def parent_past_events
     @pages = session[:page_count]
     @selection = session[:search_term]
-
-    @students = User.where(role: "Student", role_id: Parent.where(id: @current_user.role_id).first.student_ids).all
-    unless @students.nil?
-      @ids = @students.map{|s| s.id}
-      if @pages.nil?
-        if @selection.nil? or @selection.blank?
-          @events = Event.where(districtID: @current_user.district_id, studentID: @ids).page(params[:page]).per_page(50)
-        else
-          @events = Event.where(districtID: @current_user.district_id, studentID: @ids).where('body LIKE ?', @selection).all.page(params[:page]).per_page(50)
-        end
+    if @pages.nil?
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: true).reorder("time ASC").page(params[:page]).per_page(50)
       else
-        if @selection.nil? or @selection.blank?
-          @events = Event.where(districtID: @current_user.district_id, studentID: @ids).page(params[:page]).per_page(@pages)
-        else
-          @events = Event.where(districtID: @current_user.district_id, studentID: @ids).where('body LIKE ?', @selection).all.page(params[:page]).per_page(@pages)
-        end
+        @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(50)
       end
     else
-      flash[:warning] = "You have no students. Please contact the district admin."
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: true).reorder("time ASC").page(params[:page]).per_page(@pages)
+      else
+        @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+      end
     end
     render 'events/past_events'
   end
