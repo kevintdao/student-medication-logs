@@ -6,8 +6,8 @@
   <div class="jumbotron">
     <div class="container mb">
       <h1 class="display-3 ">Welcome, <%= @current_user.first_name %></h1>
-      <p>Click the button below to see upcoming events.</p>
-      <%= link_to "Upcoming Events", events_path, class: "btn btn-primary btn-lg"%>
+      <p>Click the button below to see upcoming events. You can also browse the dashboard for information on students, medications, past events, and more.</p>
+      <%= link_to "Upcoming Events", events_parent_view_path, class: "btn btn-primary btn-lg"%>
     </div>
   </div>
   <div class="container">
@@ -40,26 +40,27 @@
             <%= link_to "Past Events", parents_path, class: "btn btn-secondary"%>
           </div>
         </div>
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <h2>Request Medication</h2>
-              <%= link_to "Request Medication", new_request_path, class: "btn btn-secondary"%>
-            </div>
-          </div>
         <div class="col-md-4">
           <div class="card mb-4 box-shadow">
-            <h2>View Forms</h2>
-            <%= link_to "Forms", forms_parent_view_path, class: "btn btn-secondary"%>
+            <h2>Pending Requests</h2>
+            <%= link_to "View Requests", requests_path, class: "btn btn-secondary"%>
           </div>
         </div>
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <h2 class="top-content">View Forms</h2>
+            <%= link_to "View Forms", forms_parent_view_path, class: "btn btn-secondary"%>
+          </div>
+        </div>
+
       </div>
       <div class="row">
         <div class="col-md-4">
         </div>
         <div class="col-md-4">
           <div class="card mb-4 box-shadow">
-            <h2>View All Requests</h2>
-            <%= link_to "Requests", requests_path, class: "btn btn-secondary"%>
+            <h2 class="top-content">See Medication Information</h2>
+            <%= link_to "All Medications", medications_path, class: "btn btn-secondary"%>
           </div>
         </div>
         <div class="col-md-4">
