@@ -188,6 +188,7 @@ describe UsersController do
       expect(post_admin_length).to eq(pre_admin_length + 1)
     end
     it 'should validate that first name is present' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
       allow(@new_user).to receive(:send_password_set)
       no_first_name = @new_user.deep_dup
       no_first_name[:new_user][:first_name] = ' '
@@ -196,6 +197,7 @@ describe UsersController do
       expect(flash[:error]).to eq("First name can't be blank")
     end
     it 'should validate that last name is present' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'admin1@gmail.com')[0])
       allow(@new_user).to receive(:send_password_set)
       no_last_name = @new_user.deep_dup
       no_last_name[:new_user][:last_name] = ' '

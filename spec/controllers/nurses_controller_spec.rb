@@ -13,16 +13,16 @@ describe NursesController do
     end
     it 'should redirect to login if user is not logged in' do
       get :index
-      expect(response).to redirect_to login_path
-      expect(flash[:error]).to be_present
-      expect(flash[:error]).to eq('Please login as a Nurse.')
+      expect(response).to redirect_to home_index_path
+      expect(flash[:warning]).to be_present
+      expect(flash[:warning]).to eq('You must be logged in as a nurse to access this page.')
     end
     it 'should redirect to login if not a nurse' do
       login(User.find_by_email('studenta@gmail.com'))
       get :index
-      expect(response).to redirect_to login_path
-      expect(flash[:error]).to be_present
-      expect(flash[:error]).to eq('Please login as a Nurse.')
+      expect(response).to redirect_to home_index_path
+      expect(flash[:warning]).to be_present
+      expect(flash[:warning]).to eq('You must be a registered nurse to access this page.')
     end
     it 'should set nurse variable to Nurse model object' do
       login(@nurse)
@@ -42,11 +42,6 @@ describe NursesController do
       get :index
       expect(response).to have_http_status(:ok)
       expect(assigns(:pending_requests)).to eq(requests)
-    end
-    it 'should clear the session search_term value after action' do
-      request.session[:search_term] = 'test search'
-      get :index
-      expect(request.session[:search_term]).to be_nil
     end
   end
   describe 'associate student and parent' do

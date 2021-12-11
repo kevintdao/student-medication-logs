@@ -188,10 +188,16 @@ describe EventsController do
     end
     it "creates a success message when the params are not nil" do
       controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
-      get :complete, id:1, student_id:5, med_id:400, med_amount:1, district_id:1
+      get :complete, id:1, student_id:5, med_id:400, amount:1, district_id:1
       expect(assigns(:eventID)).to eq("1")
       expect(flash[:notice]).to eq("Event has been marked as complete")
       expect(response).to redirect_to(events_past_events_path)
+    end
+    it 'should flash error message when med amount in event will cause inventory amount to go negative' do
+      controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
+      get :complete, id: 1, student_id: 5, med_id: 415, amount: 11, district_id: 1
+      expect(response).to redirect_to(events_path)
+      expect(flash[:error]).to eq("Unable to mark event as complete. You want to remove 11 doses, but you only have 10 doses left!")
     end
   end
   describe "GET events/incomplete" do
@@ -208,7 +214,7 @@ describe EventsController do
     end
     it "creates a success message when the params are not nil" do
       controller.instance_variable_set(:@current_user, User.where(email: 'nurse1@gmail.com')[0])
-      get :incomplete, id:1, student_id:5, med_id:400, med_amount:1, district_id:1
+      get :incomplete, id:1, student_id:5, med_id:400, amount:1, district_id:1
       expect(assigns(:eventID)).to eq("1")
       expect(flash[:notice]).to eq("Event has been marked as incomplete")
       expect(response).to redirect_to(events_path)

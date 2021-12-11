@@ -2,10 +2,6 @@ require 'rails_helper'
 
 RSpec.describe "Medications", type: :request do
   describe "GET /index" do
-    it "returns http success" do
-      get "/home/medications"
-      expect(response).to have_http_status(:success)
-    end
     it "properly reads the session" do
       allow_any_instance_of(MedicationsController).to receive(:session) {{"page_count": 25, "search_term": "Ibuprofen"}}
       get medications_path
