@@ -2,6 +2,7 @@
   "GROUP": "G002",
   "ALL_SPRINTS": {
     "SPRINT1_URL": "https://selt2021-g002-sml-s1.herokuapp.com",
-    "SPRINT2_URL": "https://selt2021-g002-sml-s2.herokuapp.com"
+    "SPRINT2_URL": "https://selt2021-g002-sml-s2.herokuapp.com",
+    "SPRINT3_URL": "https://selt2021-g002-sml-s3.herokuapp.com/"
   }
 }
