@@ -3,7 +3,6 @@
 
 <!--Section: Contact v.2-->
 <div class="container">
-  <section class="mb-4">
 
     <!--Section heading-->
     <h2 class="h1-responsive font-weight-bold text-center my-4">New Inventory Item</h2>
@@ -23,7 +22,7 @@
           <% @students = User.where(role: "Student", district_id: @current_user.district_id).map{|s| s.first_name + " " + s.last_name } %>
           <% @students.unshift("No Student") %>
           <%= f.label :studentName, "Name of Student Medication Belongs To:" %><br>
-          <%= f.select :studentName, @students, class: "form-control", id: "studentName"%>
+          <%= f.select :studentName, @students, {}, class: "form-select", id: "studentName"%>
         </div>
       </div>
       <div class="row">
@@ -38,10 +37,9 @@
           <%= f.text_area :notes, :html => {:id => "notes", :name => "notes"}, class: "form-control md-textarea", id:"notes" %>
         </div>
       </div>
-      <div class="text-center text-md-left">
+      <div class="text-center text-md-left mt-2 mb-2">
         <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
       </div>
     <% end %>
 
-  </section>
 </div>
