@@ -4,16 +4,17 @@
 <div class = 'container'>
 <p>
   <strong>Time:</strong>
-  <%= @event.time %>
+  <%= time_tag(@event.time, format: '%B %d, %Y %H:%M') %>
 </p>
 
-<p>
-  <strong>Student:</strong>
-  <%= @event.student_id %> --
-<!--  <%#= User.where(role: "student", role_id: @event.student_id).first.first_name %> <%#= User.where(role: "student", role_id: @event.student_id).first.last_name %> ---->
-  <%= link_to 'Student Information', User.where(role: "student", role_id: @event.student_id).first, class: "btn btn-primary btn-small" %>
-</p>
-
+<% if @current_user.role == 'Nurse' %>
+  <p>
+    <strong>Student:</strong>
+    <%= @event.student_id %> --
+  <!--  <%#= User.where(role: "student", role_id: @event.student_id).first.first_name %> <%#= User.where(role: "student", role_id: @event.student_id).first.last_name %> ---->
+    <%= link_to 'Student Information', User.where(role: "student", role_id: @event.student_id).first, class: "btn btn-primary btn-small" %>
+  </p>
+<% end %>
 <p>
   <strong>Medication:</strong>
   <%= Medication.where(id: @event.med_id).first.brand_name %> --
@@ -32,24 +33,32 @@
   <% else %>
     No --
   <% end %>
-  <% if @event.complete%>
-    <%= link_to "Mark Incomplete", events_incomplete_path(:id => @event.id, :student_id => @event.student_id, :med_id => @event.med_id, :amount => @event.amount, :district_id => @event.district), class: "btn btn-primary btn-small" %>
-  <% else %>
-    <%= link_to "Mark Complete", events_complete_path(:id => @event.id, :student_id => @event.student_id, :med_id => @event.med_id, :amount => @event.amount, :district_id => @event.district), class: "btn btn-primary btn-small" %>
+  <% if @current_user.role == 'Nurse' %>
+    <% if @event.complete%>
+      <%= link_to "Mark Incomplete", events_incomplete_path(:id => @event.id, :student_id => @event.student_id, :med_id => @event.med_id, :amount => @event.amount, :district_id => @event.district), class: "btn btn-primary btn-small" %>
+    <% else %>
+      <%= link_to "Mark Complete", events_complete_path(:id => @event.id, :student_id => @event.student_id, :med_id => @event.med_id, :amount => @event.amount, :district_id => @event.district), class: "btn btn-primary btn-small" %>
+    <% end %>
   <% end %>
 </p>
 
   <div class="field">
-<%= form_for :notes, :url => events_change_notes_path do |f| %>
-    <div class="field">
-      <strong><%= f.label :notes, "Notes:" %></strong>
-  <%= f.text_area :notes, value: @event.notes ,class: "form-control", :required => true, id:"notes" %>
-  <%= f.hidden_field :id, value: @event.id %>
-  <%= f.hidden_field :complete, value: @event.complete, class: "field" %>
-    </div>
-  <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
-  <%= link_to 'Back', events_path, {class: 'btn btn-secondary'} %>
-<% end %>
+    <% if @current_user.role == 'Nurse' %>
+      <%= form_for :notes, :url => events_change_notes_path do |f| %>
+        <div class="field">
+          <strong><%= f.label :notes, "Notes:" %></strong>
+          <%= f.text_area :notes, value: @event.notes ,class: "form-control", :required => true, id:"notes" %>
+          <%= f.hidden_field :id, value: @event.id %>
+          <%= f.hidden_field :complete, value: @event.complete, class: "field" %>
+        </div>
+        <%= f.submit :Submit, class: "btn btn-primary", id:"submit" %>
+        <%= link_to 'Back', events_path, {class: 'btn btn-secondary'} %>
+      <% end %>
+    <% else %>
+      <b><%= label_tag 'Notes: '%></b>
+      <p><%= @event.notes %></p>
+    <% end %>
+
   </div>
 
 
