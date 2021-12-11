@@ -1,7 +1,7 @@
 <% content_for(:html_title) { "Parent Dashboard" } %>
 <%= stylesheet_link_tag    'nurses', media: 'all' %>
 
-<div class="container">
+<main role="main">
   <!-- Example row of columns -->
   <div class="jumbotron">
     <div class="container mb">
@@ -10,7 +10,7 @@
       <%= link_to "Upcoming Events", events_path, class: "btn btn-primary btn-lg"%>
     </div>
   </div>
-  <div>
+  <div class="container">
     <% unless @pending_requests.empty? %>
       <table class="table text-center mt-4">
         <tr class="table-warning">
@@ -20,7 +20,7 @@
       </table>
     <% end %>
   </div>
-  <div>
+  <div class="container">
     <% unless @pending_forms.empty? %>
       <table class="table text-center mt-4">
         <tr class="table-warning">
@@ -30,6 +30,7 @@
       </table>
     <% end %>
   </div>
+  <div class="container">
   <div class="album py-5">
     <div class="container homeContainer">
       <div class="row">
@@ -66,4 +67,6 @@
       </div>
     </div>
   </div> <!-- /container -->
-</div>
+  <hr>
+  </div>
+</main>

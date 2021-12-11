@@ -2,15 +2,15 @@
 <%= stylesheet_link_tag    'nurses', media: 'all' %>
 <script src="https://kit.fontawesome.com/9c8e310799.js" crossorigin="anonymous"></script>
 
-  <div class="container">
-    <!-- Example row of columns -->
-    <div class="jumbotron">
-      <div class="container mb">
-        <h1 class="display-3 ">Welcome, <%= @current_user.first_name %></h1>
-        <p>Click the button below to see upcoming events.</p>
-        <%= link_to "Upcoming Events", events_path, class: "btn btn-primary btn-lg"%>
-      </div>
+<main class="main">
+  <div class="jumbotron">
+    <div class="container mb">
+      <h1 class="display-3 ">Welcome, <%= @current_user.first_name %></h1>
+      <p>Click the button below to see upcoming events.</p>
+      <%= link_to "Upcoming Events", events_path, class: "btn btn-primary btn-lg"%>
     </div>
+  </div>
+  <div class="container">
     <div class="album py-5">
       <div class="container homeContainer">
         <div class="row">
@@ -38,4 +38,4 @@
     <hr>
 
   </div>
-
+</main>
