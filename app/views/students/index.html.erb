@@ -1,7 +1,10 @@
+<<<<<<<<< Temporary merge branch 1
 <% content_for(:html_title) { "Student Dashboard" } %>
 <%= stylesheet_link_tag    'nurses', media: 'all' %>
 <script src="https://kit.fontawesome.com/9c8e310799.js" crossorigin="anonymous"></script>
 
+
+<main role="main">
   <div class="container">
     <!-- Example row of columns -->
     <div class="jumbotron">
@@ -33,6 +36,14 @@
             </div>
           </div>
         </div>
+        <div class="row justify-content-center">
+          <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <h2 class="top-content">See Medication Information</h2>
+              <%= link_to "All Medications", medications_path, class: "btn btn-secondary"%>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <hr>
@@ -40,3 +51,4 @@
   </div> <!-- /container -->
 
 </body>
+</main>

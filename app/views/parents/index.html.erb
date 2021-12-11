@@ -1,7 +1,8 @@
+<<<<<<<<< Temporary merge branch 1
 <% content_for(:html_title) { "Parent Dashboard" } %>
 <%= stylesheet_link_tag    'nurses', media: 'all' %>
 
-<div class="container">
+<main class="main">
   <!-- Example row of columns -->
   <div class="jumbotron">
     <div class="container mb">
@@ -21,7 +22,8 @@
       </table>
     <% end %>
   </div>
-  <div>
+
+  <div class="container">
     <% unless @pending_forms.empty? %>
       <table class="table text-center mt-4">
         <tr class="table-warning">
