@@ -36,19 +36,6 @@
   </thead>
   <tbody>
   <% @events.each do |event| %>
-    <% @student = User.where(id: event.student_id).first %>
-    <tr>
-      <% unless @student.nil? %>
-        <td><%= @student.first_name + @student.last_name %></td>
-      <% else %>
-        <td>No Student Found</td>
-      <% end %>
-      <td><%= event.student_id %></td>
-      <td><%= time_tag(event.time, format: '%B %d, %Y %H:%M') %></td>
-      <td><%= Medication.where(id: event.med_id).first.brand_name %></td>
-      <td><%= event.notes %></td>
-      <td class="btn-center"><%= link_to 'More Information', event, id:event.student_id, class: "btn btn-primary btn-small" %></td>
-    </tr>
   <% if @current_user.role == "Nurse" %>
     <% @events.each do |event| %>
       <% @student = User.where(id: event.student_id).first %>
