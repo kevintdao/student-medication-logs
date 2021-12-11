@@ -50,7 +50,7 @@
         <td><%= event.student_id %></td>
         <td><%= event.time %></td>
         <% if !Inventory.where(med_id: event.med_id).first.nil? %>
-          <td><%= Inventory.where(med_id: event.med_id).first.medName %></td>
+          <td><%= Inventory.where(med_id: event.med_id).medName %></td>
         <% elsif !Medication.find(event.med_id).nil? %>
           <td><%= Medication.find(event.med_id).brand_name %></td>
         <% else %>
