@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
   before_action :is_nurse, only: [:index, :past_events, :complete, :incomplete, :change_notes]
-  before_action :is_parent, only: [:parent_past_events]
+  before_action :is_parent, only: [:parent_past_events, :parent_view]
   before_action :is_student, only: [:student_past_events]
   before_action :belongs_to_district, only: [:show]
   # GET /events
@@ -23,6 +23,26 @@ class EventsController < ApplicationController
         @events = Event.where(complete: false, district: @current_user.district_id.to_i).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
       end
     end
+  end
+
+  def parent_view
+    @pages = session[:page_count]
+    @selection = session[:search_term]
+
+    if @pages.nil?
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).reorder("time ASC").page(params[:page]).per_page(50)
+      else
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(50)
+      end
+    else
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).reorder("time ASC").page(params[:page]).per_page(@pages)
+      else
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+      end
+    end
+    render 'events/index'
   end
 
   def past_events
