@@ -82,17 +82,18 @@ Rails.application.routes.draw do
 
   post 'requests/approve'
 
+  get 'nurses/associate_page', to: 'nurses#associate'
+  post 'nurses/associate', to: 'nurses#associatestudentparent'
 
   resources :password_sets
-  resources :districts
   resources :forms
   resources :events
   resources :inventories
-  resources :medications
-  resources :admins
-  resources :nurses
-  resources :students
-  resources :parents
+  resources :medications, only: [:index, :show]
+  resources :admins, only: [:index]
+  resources :nurses, only: [:index]
+  resources :students, only: [:index]
+  resources :parents, only: [:index]
   resources :users
 
   # The priority is based upon order of creation: first created -> highest priority.

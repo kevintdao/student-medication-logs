@@ -1,24 +1,17 @@
-<html lang="en">
-<head>
-  <title>Selt2021Proj02 Student Dashboard</title>
-  <%= stylesheet_link_tag    'nurses', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
+<% content_for(:html_title) { "Student Dashboard" } %>
+<%= stylesheet_link_tag    'nurses', media: 'all' %>
+<script src="https://kit.fontawesome.com/9c8e310799.js" crossorigin="anonymous"></script>
 
-<body>
 <main role="main">
-  <div class="jumbotron">
-    <div class="container mb">
-      <h1 class="display-3 ">Welcome, <%= @current_user.first_name %></h1>
-      <p>Click the button below to see upcoming events. You can also browse the dashboard for information on students, medications, past events, and more.</p>
-      <%= link_to "Upcoming Events", events_student_view_path, class: "btn btn-primary btn-lg"%>
-    </div>
-  </div>
-
   <div class="container">
     <!-- Example row of columns -->
+    <div class="jumbotron">
+      <div class="container mb">
+        <h1 class="display-3 ">Welcome, <%= @current_user.first_name %></h1>
+        <p>Click the button below to see upcoming events.</p>
+        <%= link_to "Upcoming Events", events_path, class: "btn btn-primary btn-lg"%>
+      </div>
+    </div>
     <div class="album py-5">
       <div class="container homeContainer">
         <div class="row">
@@ -31,7 +24,7 @@
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
               <h2>Request a Medication</h2>
-              <%= link_to "New Medication", new_request_path, class: "btn btn-secondary"%>
+              <%= link_to "New Request", new_request_path, class: "btn btn-secondary"%>
             </div>
           </div>
           <div class="col-md-4">
@@ -52,9 +45,5 @@
       </div>
     </div>
     <hr>
-
   </div> <!-- /container -->
-
 </main>
-</body>
-</html>

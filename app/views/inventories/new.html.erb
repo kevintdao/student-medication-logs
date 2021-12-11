@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Selt2021Proj02 New Inventory Item</title>
-  <%= stylesheet_link_tag    'contact', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
-<body>
+<% content_for(:html_title) { "New Inventory" } %>
+<%= stylesheet_link_tag    'contact', media: 'all' %>
+
 <!--Section: Contact v.2-->
 <div class="container">
   <section class="mb-4">
@@ -52,6 +45,3 @@
 
   </section>
 </div>
-</body>
-</html>
-

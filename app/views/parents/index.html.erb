@@ -1,14 +1,8 @@
-<html lang="en">
-<head>
-  <title>Selt2021Proj02 Nurse Dashboard</title>
-  <%= stylesheet_link_tag    'nurses', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
+<% content_for(:html_title) { "Parent Dashboard" } %>
+<%= stylesheet_link_tag    'nurses', media: 'all' %>
 
-<body>
-<main role="main">
+<main class="main">
+  <!-- Example row of columns -->
   <div class="jumbotron">
     <div class="container mb">
       <h1 class="display-3 ">Welcome, <%= @current_user.first_name %></h1>
@@ -26,50 +20,53 @@
         </tr>
       </table>
     <% end %>
-    <!-- Example row of columns -->
-    <div class="album py-5">
-      <div class="container homeContainer">
-        <div class="row justify-content-center">
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <h2 class="top-content">View Past Events</h2>
-              <%= link_to "Past Events", events_parent_past_events_path, class: "btn btn-secondary"%>
-            </div>
+  </div>
+
+  <div class="container">
+    <% unless @pending_forms.empty? %>
+      <table class="table text-center mt-4">
+        <tr class="table-warning">
+          <td class="h5">You have forms from your district pending your approval.</td>
+          <td><%= link_to "View Forms for Approval", forms_parent_view_path, class: "btn btn-warning profile-button", id: 'view-forms' %></td>
+        </tr>
+      </table>
+    <% end %>
+  </div>
+  <div class="album py-5">
+    <div class="container homeContainer">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <h2>View Past Events</h2>
+            <%= link_to "Past Events", parents_path, class: "btn btn-secondary"%>
           </div>
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <h2>Request a Medication</h2>
-              <%= link_to "New Medication", new_request_path, class: "btn btn-secondary"%>
-            </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <h2>Pending Requests</h2>
+            <%= link_to "View Requests", requests_path, class: "btn btn-secondary"%>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <h2 class="top-content">View Forms</h2>
+            <%= link_to "View Forms", forms_parent_view_path, class: "btn btn-secondary"%>
           </div>
         </div>
 
-        <div class="row">
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <h2>Pending Requests</h2>
-              <%= link_to "View Requests", requests_path, class: "btn btn-secondary"%>
-            </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+        </div>
+        <div class="col-md-4">
+          <div class="card mb-4 box-shadow">
+            <h2 class="top-content">See Medication Information</h2>
+            <%= link_to "All Medications", medications_path, class: "btn btn-secondary"%>
           </div>
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <h2 class="top-content">View Forms</h2>
-              <%= link_to "View Forms", forms_parent_view_path, class: "btn btn-secondary"%>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <h2 class="top-content">See Medication Information</h2>
-              <%= link_to "All Medications", medications_path, class: "btn btn-secondary"%>
-            </div>
-          </div>
+        </div>
+        <div class="col-md-4">
         </div>
       </div>
     </div>
-    <hr>
-
-  </div> <!-- /container -->
-
+  </div>
 </main>
-</body>
-</html>

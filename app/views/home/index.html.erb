@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Selt2021Proj02 Home Page</title>
-  <%= stylesheet_link_tag    'home', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
-<body>
-<main role="main" class="main">
+<% content_for(:html_title) { "Home" } %>
+<%= stylesheet_link_tag    'home', media: 'all' %>
 
+<main role="main" class="main">
   <section class="jumbotron text-center">
     <div class="mainTitle">
       <h1 class="jumbotron-heading">Welcome to Student Medication Log</h1>
@@ -60,7 +52,7 @@
           <div class="card mb-4 box-shadow">
             <%=image_tag asset_path('phone1.jpg'), id: 'phone1', alt: "Cell Phone", class: "card-img-top" %>
             <div class="card-body">
-              <p class="card-text">SML provides timely text notifications to students when it is almost time to take a scheduled medication allowing nurses to do more with ease.</p>
+              <p class="card-text">Soon, SML will provide timely notifications to students when it is almost time to take a scheduled medication allowing nurses to do more with ease.</p>
               <div class="d-flex justify-content-between align-items-center">
               </div>
             </div>
@@ -92,7 +84,7 @@
           <div class="card mb-4 box-shadow">
             <%=image_tag asset_path('writing1.jpg'), id: 'writing1', alt: "Person Writing", class: "card-img-top" %>
             <div class="card-body">
-              <p class="card-text">We provide daily event lists to nurses and faculty allowing for them to easily prepare for the day with the information that matters.</p>
+              <p class="card-text">We provide event lists to nurses and faculty allowing for them to easily prepare for the day with the information that matters.</p>
               <div class="d-flex justify-content-between align-items-center">
             </div>
           </div>
@@ -124,5 +116,3 @@
   </div>
 
 </main>
-</body>
-</html>

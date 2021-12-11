@@ -1,13 +1,6 @@
-<html lang="en">
-<head>
-  <title>Selt2021Proj02 Nurse Dashboard</title>
-  <%= stylesheet_link_tag    'nurses', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
+<% content_for(:html_title) { "Nurse Dashboard" } %>
+<%= stylesheet_link_tag    'nurses', media: 'all' %>
 
-<body>
 <main role="main">
   <div class="jumbotron">
     <div class="container mb">
@@ -72,6 +65,10 @@
     </div>
         <div class="row">
           <div class="col-md-4">
+            <div class="card mb-4 box-shadow">
+              <h2 class="top-content">Associate Students with Parents</h2>
+              <%= link_to "Association", nurses_associate_page_path, class: "btn btn-secondary"%>
+            </div>
           </div>
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
@@ -89,5 +86,3 @@
   </div> <!-- /container -->
 
 </main>
-</body>
-</html>
