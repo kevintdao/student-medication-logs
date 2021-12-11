@@ -85,6 +85,9 @@ Rails.application.routes.draw do
   get 'nurses/associate_page', to: 'nurses#associate'
   post 'nurses/associate', to: 'nurses#associatestudentparent'
 
+  get 'admins/associate_page', to: 'admins#associate'
+  post 'admins/associate', to: 'admins#associatestudentparent'
+
   resources :password_sets
   resources :forms
   resources :events

@@ -127,12 +127,26 @@ class EventsController < ApplicationController
       @pages = params[:page_count][:page_count]
       session[:page_count] = @pages.to_i
     end
-    redirect_to events_path
+    case @current_user.role
+    when 'Parent'
+      redirect_to events_parent_view_path
+    when 'Student'
+      redirect_to events_student_view_path
+    when 'Nurse'
+      redirect_to events_path
+    end
   end
 
   def search_events
     session[:search_term] = params[:search_term][:search_term] unless params[:search_term].nil?
-    redirect_to events_path
+    case @current_user.role
+    when 'Parent'
+      redirect_to events_parent_view_path
+    when 'Student'
+      redirect_to events_student_view_path
+    when 'Nurse'
+      redirect_to events_path
+    end
   end
 
   def set_past_page_count
@@ -140,12 +154,26 @@ class EventsController < ApplicationController
       @pages = params[:page_count][:page_count]
       session[:page_count] = @pages.to_i
     end
-    redirect_to events_past_events_path
+    case @current_user.role
+    when 'Parent'
+      redirect_to events_parent_past_events_path
+    when 'Student'
+      redirect_to events_student_past_events_path_path
+    when 'Nurse'
+      redirect_to events_past_events_path
+    end
   end
 
   def search_past_events
     session[:search_term] = params[:search_term][:search_term] unless params[:search_term].nil?
-    redirect_to events_past_events_path
+    case @current_user.role
+    when 'Parent'
+      redirect_to events_parent_past_events_path
+    when 'Student'
+      redirect_to events_student_past_events_path_path
+    when 'Nurse'
+      redirect_to events_past_events_path
+    end
   end
 
   def complete

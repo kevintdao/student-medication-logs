@@ -22,7 +22,7 @@
     <%= form_for :amount, :url => inventories_change_amount_path do |f| %>
       <strong>Amount:</strong>
       <%= @inventory.amount %> -- <strong>Update Amount:</strong> <%= f.text_field :amount, value: @inventory.amount, id:"amount" %>
-    <%= f.hidden_field :id, value: @inventory.id %>
+    <%= f.hidden_field :id, value: @inventory.id %> <%= f.submit 'Change Amount', class: "btn btn-primary", id:"submit-amount"%>
     <% end %>
   </p>
 

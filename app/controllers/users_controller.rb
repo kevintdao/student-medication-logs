@@ -232,6 +232,7 @@ class UsersController < ApplicationController
         user.district_id = @user.district_id
         user.save!
         user.send_password_set
+        flash[:notice] = "Successfully invited #{user.first_name} #{user.last_name} as a #{user.role}!"
         redirect_to admins_path
       end
     end

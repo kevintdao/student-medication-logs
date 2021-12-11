@@ -13,12 +13,6 @@
     <div class="album py-5">
       <div class="container homeContainer">
         <div class="row justify-content-center">
-<!--          <div class="col-md-4">-->
-<!--            <div class="card mb-4 box-shadow">-->
-<!--              <h2 class="top-content">View Past Events</h2>-->
-              <%#= link_to "Past Events", events_past_events_path, class: "btn btn-secondary"%>
-<!--            </div>-->
-<!--          </div>-->
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
               <h2 class="top-content">View Parents and Students</h2>
@@ -33,17 +27,11 @@
           </div>
         </div>
 
-        <div class="row">
+        <div class="row justify-content-center">
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
-              <h2 class="top-content">Create an Event</h2>
-              <%= link_to "New Event", new_event_path, class: "btn btn-secondary"%>
-            </div>
-          </div>
-          <div class="col-md-4">
-            <div class="card mb-4 box-shadow">
-              <h2 class="top-content">View Forms</h2>
-              <%= link_to "Forms", forms_path, class: "btn btn-secondary"%>
+              <h2 class="top-content">Associate Students with Parents</h2>
+              <%= link_to "Association", admins_associate_page_path, class: "btn btn-secondary"%>
             </div>
           </div>
           <div class="col-md-4">

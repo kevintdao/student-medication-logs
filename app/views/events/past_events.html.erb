@@ -35,6 +35,7 @@
   </tr>
   </thead>
   <tbody>
+  <% @events.each do |event| %>
   <% if @current_user.role == "Nurse" %>
     <% @events.each do |event| %>
       <% @student = User.where(id: event.student_id).first %>
@@ -94,6 +95,7 @@
         <% end %>
       </tr>
     <% end %>
+  <% end %>
   <% end %>
   </tbody>
 </table>

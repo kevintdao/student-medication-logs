@@ -1,5 +1,5 @@
 class NursesController < ApplicationController
-  before_action :is_nurse, only: [:index]
+  before_action :is_nurse, only: [:index, :associate]
   after_action :clear_search
 
 
@@ -21,7 +21,7 @@ class NursesController < ApplicationController
   end
 
   def associate
-    district_id = User.where(role: "Nurse", role_id: @current_user.id)[0].district_id
+    district_id = User.where(role: "Nurse", id: @current_user.id)[0].district_id
 
     @parents = User.where(district_id: district_id, role: "Parent")
     @parents_info = []
