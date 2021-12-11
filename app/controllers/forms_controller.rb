@@ -9,17 +9,30 @@ class FormsController < ApplicationController
   def index
     @pages = session[:page_count]
     @selection = session[:search_term]
-    if @pages.nil?
-      if @selection.nil? or @selection.blank?
-        @forms = Form.where(districtID: @current_user.district_id).page(params[:page]).per_page(50)
+    if @current_user.role == 'Nurse'
+      if @pages.nil?
+        if @selection.nil? or @selection.blank?
+          @forms = Form.where(districtID: @current_user.district_id).page(params[:page]).per_page(50)
+        else
+          @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(50)
+        end
       else
-        @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(50)
+        if @selection.nil? or @selection.blank?
+          @forms = Form.where(districtID: @current_user.district_id).page(params[:page]).per_page(@pages)
+        else
+          @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(@pages)
+        end
       end
-    else
-      if @selection.nil? or @selection.blank?
-        @forms = Form.where(districtID: @current_user.district_id).page(params[:page]).per_page(@pages)
-      else
-        @forms = Form.where(districtID: @current_user.district_id).where('body LIKE ?', @selection).all.page(params[:page]).per_page(@pages)
+    elsif @current_user.role == 'Parent'
+      @parent = Parent.find(@current_user.role_id)
+      @forms = Array.new
+      unless @parent.nil?
+        @parent.students.each do |student|
+          user = User.where(role_id: student.id, role: 'Student').first
+          Form.where(studentID: user.id, parent_approved: false).each do |form|
+            @pending_forms << form
+          end
+        end
       end
     end
   end
