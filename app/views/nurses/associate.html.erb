@@ -1,12 +1,30 @@
-<div class="container">
-  <%= form_for nurses_associate_page_path, url:nurses_associate_path do %>
-    <h3> Select parent to associate from dropdown menu</h3>
-    <%= label_tag :parent, "Parent" %>
-    <%= select_tag :parent, options_for_select(@parents_info) %>
-    <h3> Select student to associate from dropdown menu</h3>
-    <%= label_tag :student, "Student" %>
-    <%= select_tag :student, options_for_select(@students_info) %>
+<div class="container rounded bg-white mt-5 mb-5">
+  <div class="row">
+    <div class="col-md-3 border-right">
+    </div>
+    <div class="col-md-5 border-right">
+      <div class="p-3 py-5">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+          <h3>Associate a Parent and Student</h3>
+        </div>
+        <%= form_for nurses_associate_page_path, url:nurses_associate_path do %>
 
-    <%= submit_tag 'Submit', name: 'submit'%>
-  <% end %>
+          <div class="form-outline mb-4">
+            <%= label_tag :parent, "Parent", class:"form-label" %>
+            <%= select_tag :parent, options_for_select(@parents_info), class:"form-control" %>
+          </div>
+          <div class="form-outline mb-4">
+            <%= label_tag :student, "Student", class:"form-label" %>
+            <%= select_tag :student, options_for_select(@students_info), class:"form-control" %>
+          </div>
+
+          <div class="mt-5 text-center">
+            <%=link_to "Cancel", nurses_path, class:"btn btn-danger profile-button"%>
+            <%= submit_tag 'Submit', name: 'submit', class:"btn btn-primary profile-button"%>
+          </div>
+
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
