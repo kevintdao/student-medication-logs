@@ -47,7 +47,7 @@
         <td>No Student Found</td>
       <% end %>
       <td><%= event.student_id %></td>
-      <td><%= event.time %></td>
+      <td><%= time_tag(event.time, format: '%H:%M %B %d, %Y') %></td>
       <td><%= Inventory.where(med_id: event.med_id).first.medName %></td>
       <td><%= event.amount %></td>
       <td><%= event.notes %></td>
