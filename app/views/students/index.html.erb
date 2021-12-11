@@ -8,7 +8,7 @@
       <div class="container mb">
         <h1 class="display-3 ">Welcome, <%= @current_user.first_name %></h1>
         <p>Click the button below to see upcoming events.</p>
-        <%= link_to "Upcoming Events", events_path, class: "btn btn-primary btn-lg"%>
+        <%= link_to "Upcoming Events", events_student_view_path, class: "btn btn-primary btn-lg"%>
       </div>
     </div>
     <div class="album py-5">
@@ -16,8 +16,8 @@
         <div class="row">
           <div class="col-md-4">
             <div class="card mb-4 box-shadow">
-              <h2>View Past Events</h2>
-              <%= link_to "Past Events", students_path, class: "btn btn-secondary"%>
+              <h2 class="top-content">View Past Events</h2>
+              <%= link_to "Past Events", events_student_past_events_path, class: "btn btn-secondary"%>
             </div>
           </div>
           <div class="col-md-4">
@@ -37,5 +37,6 @@
     </div>
     <hr>
 
-  </div>
+  </div> <!-- /container -->
 
+</body>

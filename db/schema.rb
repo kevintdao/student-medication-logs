@@ -133,9 +133,9 @@ ActiveRecord::Schema.define(version: 20211209202621) do
     t.integer  "district_id"
     t.datetime "created_at",                           null: false
     t.datetime "updated_at",                           null: false
-    t.string   "session_token"
     t.string   "password_set_token"
     t.datetime "password_set_sent_at"
+    t.string   "session_token"
     t.string   "phone"
     t.boolean  "text_notification",    default: false
     t.boolean  "email_notification",   default: false
