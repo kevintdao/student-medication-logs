@@ -1,17 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Selt2021Proj02 Home Page</title>
-  <%= stylesheet_link_tag    'about', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-</head>
-<body>
+<% content_for(:html_title) { "About" } %>
+<%= stylesheet_link_tag    'about', media: 'all' %>
+
 <main role="main">
   <div class="container marketing">
 
@@ -79,5 +68,3 @@
 
   </div><!-- /.container -->
 </main>
-</body>
-</html>

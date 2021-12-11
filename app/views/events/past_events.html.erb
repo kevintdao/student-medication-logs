@@ -1,10 +1,6 @@
-<head>
-  <title>Selt2021Proj02 Past Events Page</title>
-  <%= stylesheet_link_tag    'events', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
+<% content_for(:html_title) { "Past Events" } %>
+<%= stylesheet_link_tag    'events', media: 'all' %>
+
 <div class="container">
   <h1>Completed Events</h1>
   <div class="input-group">
@@ -59,5 +55,3 @@
 <div class="pagination">
   <%= will_paginate @events, renderer: WillPaginate::ActionView::BootstrapLinkRenderer%>
 </div>
-</div>
-<br>

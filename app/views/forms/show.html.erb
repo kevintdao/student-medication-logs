@@ -1,15 +1,7 @@
-<html>
-<head>
-  <title>Selt2021Proj02 Form Information</title>
-  <%= stylesheet_link_tag    'events', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
-<body>
-<p id="notice"><%= notice %></p>
-<div class = 'container'>
+<% content_for(:html_title) { "Form Information" } %>
+<%= stylesheet_link_tag    'events', media: 'all' %>
 
+<div class = 'container'>
   <p>
     <strong>Student: </strong>
     <% if @form.studentID.nil? %>
@@ -62,5 +54,3 @@
   </div>
 
 </div>
-</body>
-</html>

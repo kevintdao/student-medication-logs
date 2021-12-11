@@ -33,7 +33,12 @@ class RequestsController < ApplicationController
       flash[:error] = 'Must be logged in.'
       redirect_to login_path
     elsif @current_user.role == 'Parent'
-      @students = User.where(role: 'Student', district_id: @current_user.district_id)
+      @parent = Parent.find(@current_user.role_id)
+      @students = Array.new
+      @parent.students.each do |student|
+        @student = User.where(role_id: student.id, role: 'Student').first
+        @students << @student
+      end
     end
     @request = Request.new
   end
@@ -70,7 +75,9 @@ class RequestsController < ApplicationController
       nurse_approved: false,
       notes: @request[:notes],
       district_id: @current_user.district_id,
-      med_name: @request[:med_name]
+      med_name: @request[:med_name],
+      amount: @request[:amount],
+      units: @request[:units]
     )
     case @current_user.role
     when 'Parent'

@@ -1,7 +1,5 @@
-<head>
-  <script src="https://kit.fontawesome.com/9c8e310799.js" crossorigin="anonymous"></script>
-</head>
-<body>
+<% content_for(:html_title) { "Requests" } %>
+
 <div class="container">
   <h1>Pending Requests</h1>
 
@@ -75,6 +73,3 @@
     <%= link_to 'New Request', new_request_path, class:"btn btn-primary profile-button" %>
   <% end %>
 </div>
-</body>
-
-

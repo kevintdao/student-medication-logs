@@ -30,6 +30,6 @@ class Event < ActiveRecord::Base
   end
 
   def self.create_event(request, time)
-    Event.create!(time: time, student_id: request.student_id, med_id: request.med_id, complete: false, notes: request.notes, district: request.district_id)
+    Event.create!(time: time, student_id: request.student_id, med_id: request.med_id, complete: false, notes: request.notes, district: request.district_id, amount: request.amount)
   end
 end

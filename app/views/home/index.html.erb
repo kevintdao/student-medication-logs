@@ -1,15 +1,7 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Selt2021Proj02 Home Page</title>
-  <%= stylesheet_link_tag    'home', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
-<body>
-<main role="main" class="main">
+<% content_for(:html_title) { "Home" } %>
+<%= stylesheet_link_tag    'home', media: 'all' %>
 
+<main role="main" class="main">
   <section class="jumbotron text-center">
     <div class="mainTitle">
       <h1 class="jumbotron-heading">Welcome to Student Medication Log</h1>
@@ -124,5 +116,3 @@
   </div>
 
 </main>
-</body>
-</html>

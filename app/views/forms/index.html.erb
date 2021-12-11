@@ -1,11 +1,7 @@
-<head>
-  <title>Selt2021Proj02 Forms Page</title>
-  <%= stylesheet_link_tag    'events', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <script src="https://kit.fontawesome.com/9c8e310799.js" crossorigin="anonymous"></script>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
+<% content_for(:html_title) { "Forms" } %>
+<%= stylesheet_link_tag    'events', media: 'all' %>
+<script src="https://kit.fontawesome.com/9c8e310799.js" crossorigin="anonymous"></script>
+
 <div class="container">
   <% if District.where(id: @current_user.district_id).first.nil? %>
     <h1>Forms</h1>
@@ -81,5 +77,3 @@
 <div class="pagination">
   <%= will_paginate @inventory, renderer: WillPaginate::ActionView::BootstrapLinkRenderer%>
 </div>
-</div>
-<br>
