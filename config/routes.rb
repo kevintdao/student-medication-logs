@@ -26,6 +26,14 @@ Rails.application.routes.draw do
 
   get 'events/past_events'
 
+  get 'events/parent_past_events'
+
+  get 'events/student_past_events'
+
+  get 'events/student_view'
+
+  get 'events/parent_view'
+
   post 'events/set_past_page_count'
 
   post 'events/search_past_events'

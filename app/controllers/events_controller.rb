@@ -1,6 +1,8 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :is_nurse, only: [:index, :past_events, :search_events, :search_past_events, :set_page_count, :set_past_page_count, :complete, :incomplete, :change_notes]
+  before_action :is_nurse, only: [:index, :past_events, :complete, :incomplete, :change_notes]
+  before_action :is_parent, only: [:parent_past_events, :parent_view]
+  before_action :is_student, only: [:student_past_events, :student_view]
   before_action :belongs_to_district, only: [:show]
   # GET /events
   # GET /events.json
@@ -23,6 +25,46 @@ class EventsController < ApplicationController
     end
   end
 
+  def parent_view
+    @pages = session[:page_count]
+    @selection = session[:search_term]
+
+    if @pages.nil?
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).reorder("time ASC").page(params[:page]).per_page(50)
+      else
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(50)
+      end
+    else
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).reorder("time ASC").page(params[:page]).per_page(@pages)
+      else
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+      end
+    end
+    render 'events/index'
+  end
+
+  def student_view
+    @pages = session[:page_count]
+    @selection = session[:search_term]
+
+    if @pages.nil?
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).reorder("time ASC").page(params[:page]).per_page(50)
+      else
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(50)
+      end
+    else
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).reorder("time ASC").page(params[:page]).per_page(@pages)
+      else
+        @events = Event.where(complete: false, district: @current_user.district_id.to_i).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+      end
+    end
+    render 'events/index'
+  end
+
   def past_events
     @pages = session[:page_count]
     @selection = session[:search_term]
@@ -39,6 +81,45 @@ class EventsController < ApplicationController
         @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
       end
     end
+  end
+
+  # GET /events/parent_past_events
+  def parent_past_events
+    @pages = session[:page_count]
+    @selection = session[:search_term]
+    if @pages.nil?
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: true).reorder("time ASC").page(params[:page]).per_page(50)
+      else
+        @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(50)
+      end
+    else
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: true).reorder("time ASC").page(params[:page]).per_page(@pages)
+      else
+        @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+      end
+    end
+    render 'events/past_events'
+  end
+
+  def student_past_events
+    @pages = session[:page_count]
+    @selection = session[:search_term]
+    if @pages.nil?
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: true).reorder("time ASC").page(params[:page]).per_page(50)
+      else
+        @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(50)
+      end
+    else
+      if @selection.nil? or @selection.blank?
+        @events = Event.where(complete: true).reorder("time ASC").page(params[:page]).per_page(@pages)
+      else
+        @events = Event.where(complete: true).where("lower(student_id) LIKE ? OR lower(med_id) LIKE ? OR lower(notes) LIKE ?", @selection.downcase, @selection.downcase, @selection.downcase).reorder("time ASC").page(params[:page]).per_page(@pages)
+      end
+    end
+    render 'events/past_events'
   end
 
   def set_page_count
@@ -198,6 +279,36 @@ class EventsController < ApplicationController
         unless @current_user.role == 'Nurse'
           # The user is not a nurse
           flash[:warning] = "You must be a registered nurse to access this page."
+          redirect_to home_index_path
+        end
+      end
+    end
+
+    def is_parent
+      if @current_user.nil?
+        # There is no logged in user
+        flash[:warning] = "You must be logged in as a parent to access this page."
+        redirect_to home_index_path
+      else
+        # The user is logged in
+        unless @current_user.role == "Parent"
+          # The user is not a parent
+          flash[:warning] = "You must be a parent to access this page."
+          redirect_to home_index_path
+        end
+      end
+    end
+
+    def is_student
+      if @current_user.nil?
+        # There is no logged in user
+        flash[:warning] = "You must be logged in as a student to access this page."
+        redirect_to home_index_path
+      else
+        # The user is logged in
+        unless @current_user.role == "Student"
+          # The user is not a parent
+          flash[:warning] = "You must be a student to access this page."
           redirect_to home_index_path
         end
       end
