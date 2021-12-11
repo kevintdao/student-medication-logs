@@ -6,7 +6,7 @@ Feature:
   Scenario: Request to take a new medication
     Given I am logged in as an "parent"
     Given I am on the create request page
-    When I select "Student B" from "Your Student" dropdown
+    When I select "Student A" from "Your Student" dropdown
     And I enter "Ibuprofen" as "Medication"
     And I select "1" from "daily_doses"
     And I set time for "7:00 AM"
