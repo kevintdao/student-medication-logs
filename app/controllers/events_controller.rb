@@ -1,8 +1,8 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-  before_action :is_nurse, only: [:past_events, :search_events, :search_past_events, :set_page_count, :set_past_page_count, :complete, :incomplete, :change_notes]
+  before_action :is_nurse, only: [:past_events,  :search_past_events, :set_past_page_count, :complete, :incomplete, :change_notes]
   before_action :belongs_to_district, only: [:show]
-  before_action :is_nurse_or_student, only: [:index]
+  before_action :is_nurse_or_student, only: [:index, :search_events, :set_page_count]
   # GET /events
   # GET /events.json
   def index
