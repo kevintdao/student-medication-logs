@@ -63,6 +63,12 @@
     <% @events.each do |event| %>
       <% @student = User.where(id: event.student_id).first %>
       <tr>
+        <% @children = User.where(role: "Student", role_id: Parent.where(id: @current_user.role_id).first.student_ids).all %>
+        <% unless @children.nil? %>
+          <% @ids = @children.map{|s| s.id} %>
+        <% end %>
+
+        <% if @ids.include?(@student.id) %>
         <% unless @student.nil? %>
           <td><%= @student.first_name + @student.last_name %></td>
         <% else %>
@@ -73,6 +79,7 @@
         <td><%= Medication.where(id: event.med_id).first.brand_name %></td>
         <td><%= event.notes %></td>
         <td class="btn-center"><%= link_to 'More Information', event, id:event.student_id, class: "btn btn-primary btn-small" %></td>
+        <% end %>
       </tr>
     <% end %>
   <% end %>
