@@ -4,12 +4,12 @@
 <div class="container">
 <h1>Medications</h1>
   <div class="input-group">
-    <div class="form-outline fl">
-      <%= form_for :search_term, :url => medications_search_meds_path do |f|  %>
-        <%= f.text_field :search_term, class: "form-control", :html => {:id => "form1", :name => "form1"}, id:"form1"%>
-        </div>
-        <%= f.submit :Search, class: "btn btn-primary", id: "submit"%>
-      <% end %>
+    <%= form_for :search_term, url: medications_search_meds_path do |f|  %>
+      <div class="input-group">
+        <%= f.text_field :search_term, class: "form-control", :html => {:id => "form1", :name => "form1"}, id:"form1" %>
+        <%= f.submit :Search, class: "btn btn-primary",  id: "submit"%>
+      </div>
+    <% end %>
   </div>
   <div class="fr">
     <%= form_for :page_count, :url => medications_set_page_count_path do |f|  %>
