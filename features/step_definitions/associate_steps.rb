@@ -4,8 +4,12 @@ When /^I enter "(.*)" into "(.*)" fields$/ do |name, field|
   fill_in("#{field}_last", with: name_split[1])
 end
 
-Given(/^I am on the associate page$/) do
+Given(/^I am on the nurse associate page$/) do
   visit nurses_associate_page_path
+end
+
+Given(/^I am on the admin associate page$/) do
+  visit admins_associate_page_path
 end
 
 When /^I select "(.*)" in "(.*)" menu$/ do |name, menu|
