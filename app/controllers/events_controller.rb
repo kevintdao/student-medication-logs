@@ -158,7 +158,7 @@ class EventsController < ApplicationController
     when 'Parent'
       redirect_to events_parent_past_events_path
     when 'Student'
-      redirect_to events_student_past_events_path_path
+      redirect_to events_student_past_events_path
     when 'Nurse'
       redirect_to events_past_events_path
     end
@@ -170,7 +170,7 @@ class EventsController < ApplicationController
     when 'Parent'
       redirect_to events_parent_past_events_path
     when 'Student'
-      redirect_to events_student_past_events_path_path
+      redirect_to events_student_past_events_path
     when 'Nurse'
       redirect_to events_past_events_path
     end
