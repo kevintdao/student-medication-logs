@@ -9,15 +9,15 @@ class InventoriesController < ApplicationController
     @selection = session[:search_term]
     if @pages.nil?
       if @selection.nil? or @selection.blank?
-        @inventory = Inventory.where(districtID: @current_user.district_id).reorder("medName ASC").page(params[:page]).per_page(50)
+        @inventory = Inventory.where(districtID: @current_user.district_id).reorder("inventories.medName ASC").page(params[:page]).per_page(50)
       else
-        @inventory = Inventory.where(districtID: @current_user.district_id).where("lower(medName) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase).reorder("medName ASC").page(params[:page]).per_page(50)
+        @inventory = Inventory.where(districtID: @current_user.district_id).where("lower(medName) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase).reorder("inventories.medName ASC").page(params[:page]).per_page(50)
       end
     else
       if @selection.nil? or @selection.blank?
-        @inventory = Inventory.where(districtID: @current_user.district_id).reorder("medName ASC").page(params[:page]).per_page(@pages)
+        @inventory = Inventory.where(districtID: @current_user.district_id).reorder("inventories.medName ASC").page(params[:page]).per_page(@pages)
       else
-        @inventory = Inventory.where(districtID: @current_user.district_id).where("lower(medName) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase).reorder("medName ASC").page(params[:page]).per_page(@pages)
+        @inventory = Inventory.where(districtID: @current_user.district_id).where("lower(medName) LIKE ? OR lower(notes) LIKE ?", session[:search_term].downcase, session[:search_term].downcase).reorder("inventories.medName ASC").page(params[:page]).per_page(@pages)
       end
     end
   end
