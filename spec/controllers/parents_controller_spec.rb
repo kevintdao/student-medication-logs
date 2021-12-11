@@ -9,16 +9,16 @@ describe ParentsController do
     end
     it 'should redirect to login if user is not logged in' do
       get :index
-      expect(response).to redirect_to login_path
-      expect(flash[:error]).to be_present
-      expect(flash[:error]).to eq('Please login as a Parent.')
+      expect(response).to redirect_to home_index_path
+      expect(flash[:warning]).to be_present
+      expect(flash[:warning]).to eq('You must be logged in as a parent to access this page.')
     end
     it 'should redirect to login if not a parent' do
       login(User.find_by_email('studenta@gmail.com'))
       get :index
-      expect(response).to redirect_to login_path
-      expect(flash[:error]).to be_present
-      expect(flash[:error]).to eq('Please login as a Parent.')
+      expect(response).to redirect_to home_index_path
+      expect(flash[:warning]).to be_present
+      expect(flash[:warning]).to eq('You must be a parent to access this page.')
     end
     it 'should set parent variable to Parent model object' do
       login(@parent_u)

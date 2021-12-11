@@ -1,13 +1,6 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Selt2021Proj02 Home Page</title>
-  <%= stylesheet_link_tag    'contact', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <%= favicon_link_tag asset_path('favicon.ico') %>
-</head>
-<body>
+<% content_for(:html_title) { "Contact Us" } %>
+<%= stylesheet_link_tag    'contact', media: 'all' %>
+
 <!--Section: Contact v.2-->
 <div class="container">
 <section class="mb-4">
@@ -21,15 +14,15 @@
         <!--Grid row-->
         <div class="row">
             <div class="md-form mb-0">
-              <%= f.text_field :name, :html => {:id => "name", :name => "name"}, class: "form-control", :required => true, id: "name"%>
               <%= f.label :name, "Your Name" %>
+              <%= f.text_field :name, :html => {:id => "name", :name => "name"}, class: "form-control", :required => true, id: "name"%>
             </div>
         </div>
 
         <div class="row">
             <div class="md-form mb-0">
-              <%= f.email_field :email, :html => {:id => "email", :name => "email"}, class: "form-control", :required => true, id: "email" %>
               <%= f.label :email, "Your Email" %>
+              <%= f.email_field :email, :html => {:id => "email", :name => "email"}, class: "form-control", :required => true, id: "email" %>
             </div>
         </div>
         <!--Grid row-->
@@ -37,8 +30,8 @@
         <!--Grid row-->
         <div class="row">
             <div class="md-form mb-0">
-              <%= f.text_field :subject, :html => {:id => "subject", :name => "subject"}, class: "form-control", :required => true, id:"subject" %>
               <%= f.label :subject, "Subject" %>
+              <%= f.text_field :subject, :html => {:id => "subject", :name => "subject"}, class: "form-control", :required => true, id:"subject" %>
             </div>
         </div>
         <!--Grid row-->
@@ -49,8 +42,8 @@
           <!--Grid column-->
 
             <div class="md-form">
-              <%= f.text_area :message, :html => {:id => "message", :name => "message"}, class: "form-control md-textarea", :required => true, id:"message" %>
               <%= f.label :message, "Message" %>
+              <%= f.text_area :message, :html => {:id => "message", :name => "message"}, class: "form-control md-textarea", :required => true, id:"message" %>
             </div>
 
         </div>
@@ -62,5 +55,3 @@
 
 </section>
 </div>
-</body>
-</html>
