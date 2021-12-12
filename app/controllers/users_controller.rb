@@ -85,7 +85,7 @@ class UsersController < ApplicationController
       redirect_to students_path
     end
 
-    @events = Event.where(student_id: params[:id])
+    @events = Event.where(student_id: params[:id]).reorder("time ASC")
   end
 
   # GET /users/new
