@@ -19,6 +19,7 @@ class MedicationsController < ApplicationController
         @medications = Medication.where("lower(brand_name) LIKE ? OR lower(active_ing) LIKE ? OR lower(method) LIKE ?", session[:search_term].downcase, session[:search_term].downcase, session[:search_term].downcase).reorder("brand_name ASC").page(params[:page]).per_page(@pages)
       end
     end
+    clear_search
   end
   
   def set_page_count
@@ -34,6 +35,10 @@ class MedicationsController < ApplicationController
       session[:search_term] = params[:search_term][:search_term]
     end
     redirect_to medications_path
+  end
+
+  def clear_search
+    session[:search_term] = nil
   end
 
   # GET /medications/1
