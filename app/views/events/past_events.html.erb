@@ -5,8 +5,9 @@
   <h1>Completed Events</h1>
   <div class="input-group">
     <%= form_for :search_term, url: events_search_past_events_path do |f|  %>
-      <div class="input-group">
-        <%= f.text_field :search_term, class: "form-control", :html => {:id => "form1", :name => "form1"}, id:"form1" %>
+      <div class="input-group align-items-center">
+        <%= f.label :search_term, "Student ID: ", class: "form-label" %>
+        <%= f.number_field :search_term, class: "form-control", :html => {:id => "form1", :name => "form1"}, id:"form1" %>
         <%= f.submit :Search, class: "btn btn-primary",  id: "submit"%>
       </div>
     <% end %>
