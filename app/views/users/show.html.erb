@@ -28,9 +28,9 @@
     <%= render 'medications_table' %>
   <% end %>
   <div class="mb-2">
-    <% if @current_user.role == 'Admin' %>
-      <%= link_to 'Edit', edit_user_path(@user), {class: 'btn btn-primary'} %>
-    <% end %>
+    <%# if @current_user.role == 'Admin' %>
+      <%#= link_to 'Edit', edit_user_path(@user), {class: 'btn btn-primary'} %>
+    <%# end %>
     <%= link_to 'Back', users_path, {class: 'btn btn-secondary'} %>
   </div>
 </div>
