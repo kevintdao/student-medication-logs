@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "contact.sml.team@gmail.com"
+  default from: "StudentMedLog@sml-team02.com"
   layout 'mailer'
 
   def set_password(user)
