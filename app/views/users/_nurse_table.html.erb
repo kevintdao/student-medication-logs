@@ -30,7 +30,7 @@
           <% @events.each do |event| %>
             <% @medications << Medication.where(id: event.med_id).first.brand_name %>
           <% end %>
-          <%= @medications.join(', ') %>
+          <%= @medications.uniq.join(', ') %>
       <% else %>
           <%= 'N/A' %>
         <% end %>
