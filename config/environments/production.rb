@@ -87,5 +87,7 @@ Rails.application.configure do
     authentication:       'plain',
     enable_starttls_auto: true }
 
+  # Configure default URL for action mailer
+  config.action_mailer.default_url_options = {host: 'selt2021-g002-sml-s3.herokuapp.com', protocol: 'https://'}
 
 end
