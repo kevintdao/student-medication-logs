@@ -79,9 +79,9 @@ class InventoriesController < ApplicationController
           @studentName = @studentName.split
           @fname = @studentName[0]
           @lname = @studentName[1]
-          Inventory.create!(medName: @medName, med_id: @medID, studentID: User.where(first_name: @fname, last_name: @lname).first.id, notes: @notes, amount: @amount, districtID: @current_user.district_id)
+          Inventory.create!(medName: @medName.upcase, med_id: @medID, studentID: User.where(first_name: @fname, last_name: @lname).first.id, notes: @notes, amount: @amount, districtID: @current_user.district_id)
         else
-          Inventory.create!(medName: @medName, med_id: @medID, studentID: nil, notes: @notes, amount: @amount, districtID: @current_user.district_id)
+          Inventory.create!(medName: @medName.upcase, med_id: @medID, studentID: nil, notes: @notes, amount: @amount, districtID: @current_user.district_id)
         end
         flash[:notice] = "Inventory item created successfully"
         redirect_to inventories_path
